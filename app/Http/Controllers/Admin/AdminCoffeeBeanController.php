@@ -58,7 +58,7 @@ class AdminCoffeeBeanController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect()->route('coffee-beans.index')->with('success', 'Coffee Bean added successfully');
+        return redirect()->route('admin.coffee-beans.index')->with('success', 'Coffee Bean added successfully');
     }
 
     /**
@@ -133,7 +133,7 @@ class AdminCoffeeBeanController extends Controller
             ]);
         }
 
-        return redirect()->route('coffee-beans.index')->with('success', 'Coffee Bean updated successfully');
+        return redirect()->route('admin.coffee-beans.index')->with('success', 'Coffee Bean updated successfully');
     }
 
     /**
@@ -154,6 +154,6 @@ class AdminCoffeeBeanController extends Controller
         // Delete the coffee bean
         $coffeeBean->delete();
 
-        return redirect()->route('coffee-beans.index')->with('success', 'Coffee Bean deleted successfully');
+        return redirect()->route('admin.coffee-beans.index')->with('success', 'Coffee Bean deleted successfully');
     }
 }

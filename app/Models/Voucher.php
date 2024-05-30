@@ -9,6 +9,8 @@ class Voucher extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'name',
+        'limit',
         'code',
         'discount',
         'expired_at',

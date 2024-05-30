@@ -53,6 +53,20 @@ class UserOrderController extends Controller
         // Address "Ambil data dari field address yang dimiliki user"
         $address = Address::where('id', auth()->id())->first()->address;
 
+        // Update LIMIT Voucher
+        if ($request->voucherCode != null) {
+            $voucher = Voucher::where('code', $request->voucherCode)->first();
+            $voucher->update([
+                'limit' => $voucher->limit - 1,
+            ]);
+        }
+
+        if ($request->voucherCode == null) {
+            $voucherDiscount = 0;
+        } else {
+            $voucherDiscount = Voucher::where('code', $request->voucherCode)->first()->discount;
+        }
+
         // Create a new order
         Order::create([
             'order_id'       => $idOrder,
@@ -62,8 +76,13 @@ class UserOrderController extends Controller
             'address'        => $address,
             'products'       => $request->products,
             'paymentMethod'  => $request->paymentMethod,
+            'type'           => $request->type,
             'subTotal'       => $request->subTotal,
-            'total'          => $request->subTotal,
+            'cost'           => $request->cost,
+            'orderStatus'    => 'pending',
+            'voucherCode'    => $request->voucherCode,
+            'voucherDiscount' => $voucherDiscount,
+            'total'          => $request->subTotal + $request->cost,
         ]);
 
         // Clear the cart
@@ -109,5 +128,57 @@ class UserOrderController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    /**
+     * Show the upload payment view.
+     */
+    public function uploadPaymentView(string $id)
+    {
+        // Find the order
+        $order = Order::findOrFail($id);
+
+        // Return the upload payment view
+        return view('user.orders.upload-payment', compact('order'));
+    }
+
+    /**
+     * Upload the payment proof.
+     */
+    public function uploadPayment(Request $request, string $id)
+    {
+        // Validate the request
+        $request->validate([
+            'paymentProof' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        // Find the order
+        $order = Order::findOrFail($id);
+
+        // Upload the payment proof
+        $paymentProof = $request->file('paymentProof');
+        $paymentProofName = time() . '.' . $paymentProof->extension();
+        $paymentProof->move(public_path('storage/payments'), $paymentProofName);
+
+        // Update the order
+        $order->update([
+            'paymentReference'  => $paymentProofName,
+            'paymentStatus'      => 'paid',
+        ]);
+
+        // Return & redirect to order page
+        return redirect()->route('orders.index')->with('success', 'Payment proof has been uploaded successfully!');
+    }
+
+    /**
+     * Show the order status.
+     */
+    public function showStatus(string $id)
+    {
+        // Find the order
+        $order = Order::findOrFail($id);
+
+        // Return the order status
+        return view('user.orders.status', compact('order'));
     }
 }

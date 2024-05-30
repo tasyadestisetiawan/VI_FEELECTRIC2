@@ -15,7 +15,7 @@ class AdminOrderController extends Controller
     public function index()
     {
         $title = 'Orders';
-        $orders = Order::all();
+        $orders = Order::where('type', 'drink')->get();
         $coffees = Product::all();
 
         return view('admin.orders.index', compact('orders', 'title', 'coffees'));

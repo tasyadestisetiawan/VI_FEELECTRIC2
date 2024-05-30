@@ -14,13 +14,14 @@ return new class extends Migration
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('product_id')->constrained()->onDelete('cascade');
+            $table->foreignId('product_id');
             $table->integer('quantity');
             $table->decimal('price', 10, 0);
 
             // Variants
             $table->string('size')->nullable();
             $table->string('temperature')->nullable();
+            $table->string('type')->nullable();
 
             // Notes
             $table->text('notes')->nullable();

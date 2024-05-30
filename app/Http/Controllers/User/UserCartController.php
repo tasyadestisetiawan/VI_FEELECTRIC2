@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
 use App\Models\Cart;
-use App\Models\Product;
 use App\Models\User;
+use App\Models\Order;
+use App\Models\Product;
 use App\Models\Voucher;
-use Illuminate\Support\Facades\Auth;
+use App\Models\CoffeeBean;
 use Illuminate\Http\Request;
+use App\Models\CoffeeMachine;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class UserCartController extends Controller
 {
@@ -16,11 +19,15 @@ class UserCartController extends Controller
     // List of Cart Items
     public function index()
     {
-        $user = Auth::user();
-        $cartItems = Cart::where('user_id', $user->id)->get();
-        $coffees = Product::all();
+        $user       =  Auth::user();
+        $cartItems  = Cart::where('user_id', $user->id)->get();
+        $coffees    = Product::all();
+        $beans      = CoffeeBean::all();
+        $machines   = CoffeeMachine::all();
+        $vouchers   = Voucher::all();
+        $orders     = Order::where('user_id', auth()->id())->latest()->get();
 
-        return view('user.cart.index', compact('cartItems', 'coffees'));
+        return view('user.cart.index', compact('cartItems', 'coffees', 'beans', 'machines', 'vouchers', 'orders'));
     }
 
     // Add to Cart
@@ -53,7 +60,8 @@ class UserCartController extends Controller
                     'size'        => $request->size,
                     'temperature' => $request->temperature,
                     'notes'       => $request->notes,
-                    'total_price' => $request->quantity * $request->price
+                    'total_price' => $request->quantity * $request->price,
+                    'type'        => $request->type,
                 ]);
             }
         } else {
@@ -67,7 +75,8 @@ class UserCartController extends Controller
                 'size'        => $request->size,
                 'temperature' => $request->temperature,
                 'notes'       => $request->notes,
-                'total_price' => $request->quantity * $request->price
+                'total_price' => $request->quantity * $request->price,
+                'type'        => $request->type
             ]);
         }
 
@@ -84,7 +93,7 @@ class UserCartController extends Controller
             'temperature' => $request->temperature,
             'quantity'    => $request->quantity,
             'notes'       => $request->notes,
-            'total_price' => $request->quantity * $cart->price
+            'total_price' => $request->quantity * $cart->price,
         ]);
 
         return redirect()->back()->with('success', 'Cart updated successfully');

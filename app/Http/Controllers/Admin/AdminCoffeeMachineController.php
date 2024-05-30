@@ -113,7 +113,7 @@ class AdminCoffeeMachineController extends Controller
             ]);
         }
 
-        return redirect()->route('coffee-machines.index')->with('success', 'Product updated successfully');
+        return redirect()->route('admin.coffee-machines.index')->with('success', 'Product updated successfully');
     }
 
     /**
@@ -134,6 +134,6 @@ class AdminCoffeeMachineController extends Controller
         // Delete Product
         $product->delete();
 
-        return redirect()->route('coffee-machines.index')->with('success', 'Product deleted successfully');
+        return redirect()->route('admin.coffee-machines.index')->with('success', 'Product deleted successfully');
     }
 }

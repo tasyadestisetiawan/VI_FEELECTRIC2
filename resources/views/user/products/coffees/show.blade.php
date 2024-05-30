@@ -58,6 +58,7 @@
 
                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                 <input type="hidden" name="name" value="{{ $product->name }}">
+                <input type="hidden" name="type" value="drink">
 
                 {{-- Variant HOT/ICE --}}
                 <label for="" class="form-label">
@@ -84,12 +85,13 @@
                 <input type="hidden" name="price" id="priceBoth">
                 @endif
 
+                
 
                 {{-- Notes --}}
                 <label for="" class="form-label">
                     <strong>Notes</strong>
                 </label>
-                <textarea class="form-control mb-3" rows="3" placeholder="Lorem ipsum dolor sit amet"
+                <textarea class="form-control mb-3" rows="3" placeholder="Example: Less sugar, etc"
                     name="notes"></textarea>
 
                 {{-- Quantity --}}
@@ -115,17 +117,19 @@
     <div class="row row-cols-1 row-cols-md-3 g-4">
         @foreach ($recommendedProducts as $recommendedProduct)
         <div class="col">
-            <div class="card shadow-sm rounded border-0 pb-3">
-                @if ($recommendedProduct->variant == 'hot')
+            <div class="card shadow-sm rounded-3 pb-3 mb-3" style="border: solid 2px #3b2621">
+                <div class="m-3">
+                    @if ($recommendedProduct->variant == 'hot')
                     <img src="{{ asset('storage/img/products/coffees/' . $recommendedProduct->imageHot) }}"
-                    class="card-img-top" alt="Espresso Single">
-                @elseif ($recommendedProduct->variant == 'ice')
+                        class="card-img-top" alt="Espresso Single">
+                    @elseif ($recommendedProduct->variant == 'ice')
                     <img src="{{ asset('storage/img/products/coffees/' . $recommendedProduct->imageIce) }}"
-                    class="card-img-top" alt="Espresso Single">
-                @else
+                        class="card-img-top" alt="Espresso Single">
+                    @else
                     <img src="{{ asset('storage/img/products/coffees/' . $recommendedProduct->imageHot) }}"
-                    class="card-img-top" alt="Espresso Single">
-                @endif
+                        class="card-img-top" alt="Espresso Single">
+                    @endif
+                </div>
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">
                         {{ $recommendedProduct->name }}
@@ -144,7 +148,7 @@
                 <div class="card-footer bg-white border-0">
                     <div class="d-flex justify-content-between">
                         <a href="{{ route('products.show', $recommendedProduct->id) }}" class="btn text-light rounded"
-                            style="background-color: #3b2621">Lihat</a>
+                            style="background-color: #3b2621">Buy</a>
                     </div>
                 </div>
             </div>

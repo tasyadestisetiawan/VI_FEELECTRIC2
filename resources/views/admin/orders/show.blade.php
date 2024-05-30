@@ -112,7 +112,16 @@
                 <td>
                   @foreach ($coffees as $coffee)
                   @if($coffee->id == $item->product_id)
-                  <img src="{{ asset('storage/img/products/coffees/' . $coffee->image) }}" alt="{{ $coffee->name }}" class="img-fluid rounded" style="width: 70px;">
+                  @if ($coffee->variant == 'hot')
+                  <img src="{{ asset('storage/img/products/coffees/' . $coffee->imageHot) }}" alt="{{ $coffee->name }}"
+                    class="img-fluid rounded" style="width: 70px;">
+                  @elseif ($coffee->variant == 'ice')
+                  <img src="{{ asset('storage/img/products/coffees/' . $coffee->imageIce) }}" alt="{{ $coffee->name }}"
+                    class="img-fluid rounded" style="width: 70px;">
+                  @else
+                  <img src="{{ asset('storage/img/products/coffees/' . $coffee->imageHot) }}" alt="{{ $coffee->name }}"
+                    class="img-fluid rounded" style="width: 70px;">
+                  @endif
                   @endif
                   @endforeach
                 </td>

@@ -17,7 +17,9 @@
               <div class="card bg-white border-0" style="max-width: 540px;">
                 <div class="row g-0">
                   <div class="col-md-3">
-                    <img src="https://i0.wp.com/www.cssscript.com/wp-content/uploads/2020/12/Customizable-SVG-Avatar-Generator-In-JavaScript-Avataaars.js.png?fit=438%2C408&ssl=1" class="img-fluid rounded-start" alt="...">
+                    <img
+                      src="https://i0.wp.com/www.cssscript.com/wp-content/uploads/2020/12/Customizable-SVG-Avatar-Generator-In-JavaScript-Avataaars.js.png?fit=438%2C408&ssl=1"
+                      class="img-fluid rounded-start" alt="...">
                   </div>
                   <div class="col-md-9">
                     <div class="card-body">
@@ -53,7 +55,8 @@
                 <div class="card rounded-4 border-0 shadow-sm" style="background-color: #f0f9ff;">
                   <div class="card-body">
                     <div class="gopay d-flex align-items-center py-2">
-                      <img src="{{ asset('frontend/img/icons/gopay.png') }}" alt="Gopay" class="img-fluid pe-3" style="width: 50px;"></i> <span class="ms-2">Gopay</span>
+                      <img src="{{ asset('frontend/img/icons/gopay.png') }}" alt="Gopay" class="img-fluid pe-3"
+                        style="width: 50px;"></i> <span class="ms-2">Gopay</span>
                       <p class="btn text-success ms-auto mb-0">Aktifkan</p>
                     </div>
                   </div>
@@ -65,7 +68,8 @@
                 <div class="card rounded-4 border-0 shadow-sm" style="background-color: #f0f9ff;">
                   <div class="card-body">
                     <div class="member-card d-flex align-items-center py-2">
-                      <img src="{{ asset('frontend/img/icons/payment.png') }}" alt="Gopay" class="img-fluid pe-3" style="width: 50px;"></i> <span class="ms-2">Member Card</span>
+                      <img src="{{ asset('frontend/img/icons/payment.png') }}" alt="Gopay" class="img-fluid pe-3"
+                        style="width: 50px;"></i> <span class="ms-2">Member Card</span>
                       <p class="btn text-success ms-auto mb-0">Aktifkan</p>
                     </div>
                   </div>
@@ -77,7 +81,8 @@
                 <div class="card rounded-4 border-0 shadow-sm" style="background-color: #f0f9ff;">
                   <div class="card-body">
                     <div class="saldo d-flex align-items-center py-2">
-                      <img src="{{ asset('frontend/img/icons/saldo.png') }}" alt="Gopay" class="img-fluid pe-3" style="width: 50px;"></i> <span class="ms-2">Saldo</span>
+                      <img src="{{ asset('frontend/img/icons/saldo.png') }}" alt="Gopay" class="img-fluid pe-3"
+                        style="width: 50px;"></i> <span class="ms-2">Saldo</span>
                       <span class="ms-auto fw-bold">Rp. 50.000</span>
                     </div>
                   </div>
@@ -92,20 +97,30 @@
             <div class="card-header bg-white border-0 mt-2">
               <ul class="nav nav-pills gap-3">
                 <li class="nav-item">
-                  <a class="nav-link active rounded-pill" style="background-color: #fff7e8;  color: #3b2621;" href="{{route('user.profile')}}">
+                  <a class="nav-link active rounded-pill" style="background-color: #fff7e8;  color: #3b2621;"
+                    href="{{route('user.profile')}}">
                     Profile
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link rounded-pill border-2" style="background-color: #fff7e8; color: #3b2621" href="{{route('orders.index')}}">
+                  <a class="nav-link rounded-pill border-2" style="background-color: #fff7e8; color: #3b2621"
+                    href="{{route('orders.index')}}">
                     Orders
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active rounded-pill" style="background-color: #3b2621;  color: #fff7e8;" href="{{route('user.address')}}">Address</a>
+                  <a class="nav-link rounded-pill border-2" style="background-color: #fff7e8; color: #3b2621"
+                    href="{{ route('user.reservations.my') }}">
+                    Reservations
+                  </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link rounded-pill border-2" style="background-color: #fff7e8; color: #3b2621" href="#latteNonCoffe">Vouchers</a>
+                  <a class="nav-link rounded-pill border-2" style="background-color: #3b2621; color: #fff7e8"
+                    href="{{route('user.address')}}">Address</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link rounded-pill border-2" style="background-color: #fff7e8; color: #3b2621"
+                    href="{{route('vouchers.index')}}">Vouchers</a>
                 </li>
               </ul>
             </div>
@@ -125,16 +140,17 @@
                       <!-- Radio Checked -->
                       <input type="radio" name="address" id="address" checked>
                       Address <span class="badge rounded bg-success">
-                        Home
+                        {{ $item->type }}
                       </span>
                     </h6>
                     <p>
                       {{ $item->address }}
                     </p>
                     <!-- Edit Button -->
-                    <a href="{{ route('user.address.edit', $item->id) }}" style="color: #3b2621; text-decoration: none;">
-                      Update Address
-                    </a>
+                    <button type="button" class="btn rounded-4" style="background-color: #3b2621; color: #fff7e8;"
+                      data-bs-toggle="modal" data-bs-target="#updateAddress{{ $item->id }}">
+                      Edit
+                    </button>
                   </div>
                 </div>
                 @empty
@@ -143,7 +159,8 @@
 
                 <div class="row mt-3">
                   <div class="col-12">
-                    <button type="button" class="btn rounded-4" style="background-color: #3b2621; color: #fff7e8;" data-bs-toggle="modal" data-bs-target="#newAddress">
+                    <button type="button" class="btn rounded-4" style="background-color: #3b2621; color: #fff7e8;"
+                      data-bs-toggle="modal" data-bs-target="#newAddress">
                       Add New Address
                     </button>
                   </div>
@@ -188,5 +205,40 @@
     </div>
   </div>
 </div>
+
+{{-- Modal Update --}}
+@foreach($data as $item)
+<div class="modal fade" id="updateAddress{{ $item->id }}" tabindex="-1"
+  aria-labelledby="updateAddressLabel{{ $item->id }}" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateAddressLabel{{ $item->id }}">Update Address</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body mx-2">
+        <form action="{{ route('user.address.update', $item->id) }}" method="POST">
+          @csrf
+          @method('PUT')
+          <div class="mb-3">
+            <label for="address" class="form-label">Address</label>
+            <input type="text" class="form-control" id="address" name="address" value="{{ $item->address }}" required>
+          </div>
+          <div class="mb-3">
+            <label for="type" class="form-label">Type</label>
+            <select class="form-select" id="type" name="type" required>
+              <option selected disabled>Select Type</option>
+              <option value="Home" {{ $item->type == 'Home' ? 'selected' : '' }}>Home</option>
+              <option value="Office" {{ $item->type == 'Office' ? 'selected' : '' }}>Office</option>
+              <option value="Other" {{ $item->type == 'Other' ? 'selected' : '' }}>Other</option>
+            </select>
+          </div>
+          <button type="submit" class="btn rounded-4" style="background-color: #3b2621; color: #fff7e8;">Save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+@endforeach
 
 @endsection

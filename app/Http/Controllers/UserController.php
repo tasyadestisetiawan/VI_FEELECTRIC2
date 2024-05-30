@@ -28,7 +28,9 @@ class UserController extends Controller
     public function updateProfileView()
     {
         $user = auth()->user();
-        return view('user.profile.edit', compact('user'));
+        $addresses = Address::where('user_id', $user->id)->first();
+
+        return view('user.profile.edit', compact('user', 'addresses'));
     }
 
     // Update User Profile
@@ -63,23 +65,36 @@ class UserController extends Controller
         return view('user.profile.address', compact('data'));
     }
 
+    public function addAddress(Request $request)
+    {
+        $request->validate([
+            'address' => 'required|string|max:255',
+            'type' => 'required|string|max:255',
+        ]);
+
+        $user = auth()->user();
+
+        Address::create([
+            'user_id' => $user->id,
+            'address' => $request->address,
+            'type' => $request->type,
+        ]);
+
+        return redirect()->back()->with('success', 'Address added successfully.');
+    }
 
     public function updateAddress(Request $request)
     {
         $request->validate([
             'address' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'state' => 'required|string|max:255',
-            'zip' => 'required|string|max:10',
+            'type' => 'required|string|max:255',
         ]);
 
         $user = auth()->user();
 
         Address::where('user_id', $user->id)->update([
             'address' => $request->address,
-            'city' => $request->city,
-            'state' => $request->state,
-            'zip' => $request->zip,
+            'type' => $request->type,
         ]);
 
         return redirect()->back()->with('success', 'Address updated successfully.');

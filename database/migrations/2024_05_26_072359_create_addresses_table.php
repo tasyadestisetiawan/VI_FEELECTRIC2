@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('state')->nullable();
             $table->string('zip')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-
+            $table->string('type')->nullable();
             $table->timestamps();
         });
     }

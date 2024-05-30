@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Bootcamp;
+use App\Models\BootcampRegistered;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -69,7 +70,7 @@ class AdminBootcampController extends Controller
             'image'       => $image->hashName(),
         ]);
 
-        return redirect()->route('bootcamps.index')->with('success', 'Bootcamp created successfully');
+        return redirect()->route('admin.bootcamps.index')->with('success', 'Bootcamp created successfully');
     }
 
     /**
@@ -77,7 +78,21 @@ class AdminBootcampController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // Get bootcamp by id
+        $bootcamp   = Bootcamp::find($id);
+        $title      = "Bootcamp Detail";
+        $status     = BootcampRegistered::where('bootcamp_id', $id)->count();
+        $participants = BootcampRegistered::where('bootcamp_id', $id)->get();
+
+        // If bootcamp is full
+        if ($status >= $bootcamp->kuota) {
+            $status = 'Full';
+        } else {
+            $status = 'Available';
+        }
+
+        // Redirect to bootcamp show page
+        return view('admin.courses.bootcamp.show', compact('bootcamp', 'title', 'status', 'participants'));
     }
 
     /**
@@ -136,7 +151,7 @@ class AdminBootcampController extends Controller
             ]);
         }
 
-        return redirect()->route('bootcamps.index')->with('success', 'Bootcamp updated successfully');
+        return redirect()->route('admin.bootcamps.index')->with('success', 'Bootcamp updated successfully');
     }
 
     /**
@@ -157,6 +172,38 @@ class AdminBootcampController extends Controller
         // Delete Bootcamp
         $bootcamp->delete();
 
-        return redirect()->route('bootcamps.index')->with('success', 'Bootcamp deleted successfully');
+        return redirect()->route('admin.bootcamps.index')->with('success', 'Bootcamp deleted successfully');
+    }
+
+    public function confirmPayment(string $id, Request $request)
+    {
+        // Get bootcamp registered by id
+        $bootcamp = BootcampRegistered::find($id);
+
+        // Validate the request
+        $request->validate([
+            'payment_status' => 'required',
+        ]);
+
+        // User ID
+        $user_id = $bootcamp->user_id;
+
+        // Update Bootcamp Registered
+        BootcampRegistered::where('id', $id)->update([
+            'payment_status' => $request->payment_status,
+        ]);
+
+        return redirect()->back()->with('success', 'Payment confirmed successfully');
+    }
+
+    public function deleteParticipant(string $id, string $user_id)
+    {
+        // Find Bootcamp Registered
+        $bootcamp = BootcampRegistered::find($id);
+
+        // Delete Bootcamp Registered
+        $bootcamp->delete();
+
+        return redirect()->back()->with('success', 'Participant deleted successfully');
     }
 }

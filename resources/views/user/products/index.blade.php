@@ -11,6 +11,16 @@
     border: 2px solid #3b2621 !important;
     border-left: none !important;
   }
+
+  .nav-link {
+    color: #3b2621 !important;
+    border: 2px solid #3b2621 !important;
+  }
+
+  .active {
+    background-color: #3b2621 !important;
+    color: white !important;
+  }
 </style>
 
 @section('content')
@@ -26,73 +36,202 @@
     </div>
     <ul class="nav nav-pills gap-3">
       <li class="nav-item">
-        <a class="nav-link active rounded-pill" style="background-color: #3b2621" href="#">Semua</a>
+        <a class="nav-link rounded-pill border-2" href="#all">Semua</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link rounded-pill border-2" style="background-color: #fff7e8; color: #3b2621"
-          href="#ordinaryCoffe">Ordinary Coffee</a>
+        <a class="nav-link rounded-pill border-2" href="#drinks">Coffee Drink's</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link rounded-pill border-2" style="background-color: #fff7e8; color: #3b2621"
-          href="#manualBrew">Manual Brew</a>
+        <a class="nav-link rounded-pill border-2" href="#beans">
+          Coffee Beans
+        </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link rounded-pill border-2" style="background-color: #fff7e8; color: #3b2621"
-          href="#latteNonCoffe">Latte Non Coffee</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link rounded-pill border-2" style="background-color: #fff7e8; color: #3b2621"
-          href="#feelTheSignature">Feel The Signature</a>
+        <a class="nav-link rounded-pill border-2" href="#machines">
+          Coffee Machines
+        </a>
       </li>
     </ul>
   </div>
 
   {{-- Menu Items --}}
-  <div class="container mt-5">
-    <h2 class="mb-4" id="#ordinaryCoffe">Ordinary Coffee</h2>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
-      @foreach ($coffees as $coffee)
-      <div class="col">
-        <div class="card border-0 shadow-sm product-card h-100" style="color: #3b2621">
-          <a href="menu-detail.html">
-            @if($coffee->variant == 'hot')
-            <img src="{{ asset('storage/img/products/coffees/' . $coffee->imageHot) }}"
-              class="card-img-top object-fit cover" alt="..." height="250px" />
-            @elseif ($coffee->variant == 'ice' || $coffee->variant == 'both')
-            <img src="{{ asset('storage/img/products/coffees/' . $coffee->imageIce) }}"
-              class="card-img-top object-fit cover" alt="..." height="250px" />
-            @endif
-          </a>
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title">
-              {{ $coffee->name }}
-            </h5>
-            <p class="card-text flex-grow-1">
-              {{ Str::limit($coffee->description, 50) }}
-            </p>
-          </div>
-          <div class="card-footer bg-white border-top-0 pb-3">
-            <div class="d-flex justify-content-between">
-              <span class="fw-bold pt-2">
-                @if ($coffee->variant == 'hot')
-                Rp {{ number_format($coffee->priceHot, 0, ',', '.') }}
-                @elseif ($coffee->variant == 'ice')
-                Rp {{ number_format($coffee->priceIce, 0, ',', '.') }}
-                @elseif ($coffee->variant == 'both')
-                Rp {{ number_format($coffee->priceHot, 0, ',', '.') }} -
-                {{ number_format($coffee->priceIce, 0, ',', '.') }}
+  <div class="container mt-5" id="all">
+
+    {{-- Coffees Drink --}}
+    <div class="coffes-drink" id="drinks">
+      <div class="d-flex justify-content-between mb-4">
+        <h2 class="float-start">
+          Coffees Drink
+        </h2>
+        <a href="{{ route('coffees.index') }}" class="btn text-light rounded"
+          style="background-color: #3b2621; padding-top: 10px">
+          Lihat Semua
+        </a>
+      </div>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+        @foreach ($coffees as $coffee)
+        <div class="col">
+          <div class="card rounded-3 shadow-sm product-card h-100"
+            style="color: #3b2621 !important; border: 2px solid #3b2621 !important;">
+            <div class="m-3 rounded" style="color: #3b2621 !important;">
+              <a href=" #">
+                @if($coffee->variant == 'hot')
+                <img src="{{ asset('storage/img/products/coffees/' . $coffee->imageHot) }}"
+                  class="card-img-top object-fit cover" alt="..." height="200px" width="300px" />
+                @elseif ($coffee->variant == 'ice' || $coffee->variant == 'both')
+                <img src="{{ asset('storage/img/products/coffees/' . $coffee->imageIce) }}"
+                  class="card-img-top object-fit cover" alt="..." height="200px" width="300px" />
                 @endif
-              </span>
-              <a href="{{ route('products.show', $coffee->id) }}" class="btn text-light rounded"
-                style="background-color: #3b2621">Lihat</a>
+              </a>
+            </div>
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">
+                {{ $coffee->name }}
+              </h5>
+              <p class="card-text flex-grow-1">
+                {{ Str::limit($coffee->description, 50) }}
+              </p>
+            </div>
+            <div class="card-footer bg-white border-top-0 pb-3">
+              <div class="d-flex justify-content-between">
+                <span class="fw-bold pt-2">
+                  @if ($coffee->variant == 'hot')
+                  Rp {{ number_format($coffee->priceHot, 0, ',', '.') }}
+                  @elseif ($coffee->variant == 'ice')
+                  Rp {{ number_format($coffee->priceIce, 0, ',', '.') }}
+                  @elseif ($coffee->variant == 'both')
+                  Rp {{ number_format($coffee->priceHot, 0, ',', '.') }} -
+                  {{ number_format($coffee->priceIce, 0, ',', '.') }}
+                  @endif
+                </span>
+                {{-- See --}}
+                <a href="{{ route('coffees.show', $coffee->id) }}" class="btn rounded"
+                  style="background-color: #3b2621; color: white">
+                  Buy
+                </a>
+              </div>
             </div>
           </div>
         </div>
+        @endforeach
       </div>
-      @endforeach
+    </div>
+
+    {{-- Coffee Beans --}}
+    <div class="coffee-beans mt-5" id="beans">
+      <div class="d-flex justify-content-between mb-4">
+        <h2 class="float-start">
+          Coffee Beans
+        </h2>
+        <a href="{{ route('coffee-beans.index') }}" class="btn text-light rounded"
+          style="background-color: #3b2621; padding-top: 10px">
+          Lihat Semua
+        </a>
+      </div>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+        @foreach ($coffeeBeans as $coffeeBean)
+        <div class="col">
+          <div class="card rounded-3 shadow-sm product-card h-100"
+            style="color: #3b2621 !important; border: 2px solid #3b2621;">
+            <div class="m-3 rounded" style="color: #3b2621 !important;>
+              <a href=" #">
+              <img src="{{ asset('storage/img/products/beans/' . $coffeeBean->image) }}"
+                class="card-img-top object-fit cover" alt="..." height="200px" width="300px" />
+              </a>
+            </div>
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title text-truncate">
+                {{ $coffeeBean->name }}
+              </h5>
+              <p class="card-text flex-grow-1">
+                {{ Str::limit($coffeeBean->description, 50) }}
+              </p>
+            </div>
+            <div class="card-footer bg-white border-top-0 pb-3">
+              <div class="d-flex justify-content-between">
+                <span class="fw-bold pt-2">
+                  Rp {{ number_format($coffeeBean->price, 0, ',', '.') }}
+                </span>
+                <a href="{{ route('coffee-beans.show', $coffeeBean->id) }}" class="btn rounded"
+                  style="background-color: #3b2621; color: white">
+                  Buy
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        @endforeach
+      </div>
+    </div>
+
+    {{-- Coffee Machines --}}
+    <div class="coffee-machines mt-5" id="machines">
+      <div class="d-flex justify-content-between mb-4">
+        <h2 class="float-start">
+          Coffee Machines
+        </h2>
+        <a href="{{ route('coffee-machines.index') }}" class="btn text-light rounded"
+          style="background-color: #3b2621; padding-top: 10px">
+          Lihat Semua
+        </a>
+      </div>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+        @foreach ($coffeeMachines as $coffeeMachine)
+        <div class="col">
+          <div class="card rounded-3 shadow-sm product-card h-100"
+            style="color: #3b2621 !important; border: 2px solid #3b2621;">
+            <div class="m-3 rounded" style="color: #3b2621 !important;>
+              <a href=" #">
+              <img src="{{ asset('storage/img/products/machines/' . $coffeeMachine->image) }}"
+                class="card-img-top object-fit cover" alt="..." height="200px" width="300px" />
+              </a>
+            </div>
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title text-truncate">
+                {{ $coffeeMachine->name }}
+              </h5>
+              <p class="card-text flex-grow-1">
+                {{ Str::limit($coffeeMachine->description, 50) }}
+              </p>
+            </div>
+            <div class="card-footer bg-white border-top-0 pb-3">
+              <div class="d-flex justify-content-between">
+                <span class="fw-bold pt-2">
+                  Rp {{ number_format($coffeeMachine->price, 0, ',', '.') }}
+                </span>
+                <a href="{{ route('coffee-machines.show', $coffeeMachine->id) }}" class="btn rounded"
+                  style="background-color: #3b2621; color: white">
+                  Buy
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        @endforeach
+      </div>
     </div>
   </div>
-  {{-- End of Menu Items --}}
+</div>
+{{-- End of Menu Items --}}
 
 </div>
+
+<script>
+  // Pill Active
+  const pills = document.querySelectorAll('.nav-link');
+
+  // Default Active
+  pills[0].classList.add('active');
+
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      pills.forEach(pill => {
+        pill.classList.remove('active');
+      });
+      pill.classList.add('active');
+    });
+  });
+
+</script>
+
 @endsection
