@@ -21,5 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ProvinceSeeder::class);
         $this->call(RoomSeeder::class);
         $this->call(ReservationSeeder::class);
+        $this->call(QuizzesSeeder::class);
+        $this->call(QuestionsSeeder::class);
     }
 }

@@ -127,6 +127,13 @@
                   <td>:</td>
                   <td>{{ $order->paymentMethod }}</td>
                 </tr>
+                <tr>
+                  <td>Voucher</td>
+                  <td>:</td>
+                  <td>
+                    {{ $order->voucherDiscount }} % ({{ $order->voucherCode }})
+                  </td>
+                </tr>
               </table>
 
               @if ($order->type == 'bean' || $order->type == 'machine')
@@ -149,6 +156,13 @@
                 </div>
               </div>
               @endif
+              @endif
+
+              @if ($order->type == 'drink')
+              <form id="pay" onsubmit="return submitForm();" class="my-3">
+                @csrf @method('PUT') <input type="hidden" id="amount" name="amount" value="{{ $order->total }}">
+                <button type="submit" class="btn" style="background-color: #3b2621; color: white;">Pay Now</button>
+              </form>
               @endif
 
               <!-- List Products Order -->
@@ -182,7 +196,11 @@
                       </td>
                       <td>Rp. {{ number_format($item->price) }}</td>
                       <td>{{ $item->quantity }}</td>
-                      <td>Rp. {{ number_format($item->price * $item->quantity) }}</td>
+                      <td>
+                        {{-- Price * Quantity - VoucherDiscount --}}
+                        Rp. {{ number_format($item->price * $item->quantity )}} - Rp. {{ number_format($item->price *
+                        $item->quantity * $order->voucherDiscount / 100) }} ({{ $order->voucherDiscount }}%)
+                      </td>
                     </tr>
                     @endforeach
                     <!-- Total -->
@@ -197,9 +215,36 @@
 
             </div>
           </div>
-
+          
         </div>
       </div>
     </div>
 
-    @endsection
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js"
+  data-client-key="{{ config('services.midtrans.clientKey') }}"></script>
+
+<script>
+  // Pay with Midtrans
+  function submitForm() {
+    snap.pay('{{ $order->snap_token }}', {
+      onSuccess: function(result) {
+        console.log('success');
+        console.log(result);
+        location.href = '{{ route('orders.index') }}';
+      },
+      onPending: function(result) {
+        console.log('pending');
+        console.log(result);
+        location.href = '{{ route('orders.index') }}';
+      },
+      onError: function(result) {
+        console.log('error');
+        console.log(result);
+        location.href = '{{ route('orders.index') }}';
+      }
+    });
+    return false;
+  }
+
+</script>
+@endsection

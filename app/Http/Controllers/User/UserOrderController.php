@@ -2,28 +2,41 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
-use App\Models\Order;
-use App\Models\Product;
-use App\Models\ProductCategory;
-use App\Models\User;
-use App\Models\Voucher;
+use Log;
+use Midtrans\Snap;
 use App\Models\Cart;
+use App\Models\User;
+use Midtrans\Config;
+use App\Models\Order;
 use App\Models\Address;
+use App\Models\Product;
+use App\Models\Voucher;
+use Midtrans\Notification;
 use Illuminate\Http\Request;
+use App\Models\ProductCategory;
+use App\Http\Controllers\Controller;
 
 class UserOrderController extends Controller
 {
+
+    public function __construct()
+    {
+        \Midtrans\Config::$serverKey    = config('services.midtrans.serverKey');
+        \Midtrans\Config::$isProduction = config('services.midtrans.isProduction');
+        \Midtrans\Config::$isSanitized  = config('services.midtrans.isSanitized');
+        \Midtrans\Config::$is3ds        = config('services.midtrans.is3ds');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         // List all orders by the authenticated user
-        $orders = Order::where('user_id', auth()->id())->latest()->get();
-        $coffees = Product::all();
+        $orders     = Order::where('user_id', auth()->id())->latest()->get();
+        $coffees    = Product::all();
         $categories = ProductCategory::all();
-        $vouchers = Voucher::all();
+        $vouchers   = Voucher::all();
 
         return view('user.orders.index', compact('orders', 'coffees', 'categories', 'vouchers'));
     }
@@ -67,6 +80,30 @@ class UserOrderController extends Controller
             $voucherDiscount = Voucher::where('code', $request->voucherCode)->first()->discount;
         }
 
+        // Create Snap Token
+        $payload = [
+            'transaction_details' => [
+                'order_id'      => $idOrder,
+                'gross_amount'  => $request->total,
+            ],
+            'customer_details' => [
+                'first_name' => auth()->user()->name,
+                'email'      => auth()->user()->email,
+                'phone'      => auth()->user()->phone,
+            ],
+            'item_details' => [
+                [
+                    'id'       => $idOrder,
+                    'price'    => $request->subTotal,
+                    'quantity' => 1,
+                    'name'     => 'Coffee Order',
+                ]
+            ]
+        ];
+
+        // Get Snap Token
+        $snapToken = Snap::getSnapToken($payload);
+
         // Create a new order
         Order::create([
             'order_id'       => $idOrder,
@@ -82,14 +119,12 @@ class UserOrderController extends Controller
             'orderStatus'    => 'pending',
             'voucherCode'    => $request->voucherCode,
             'voucherDiscount' => $voucherDiscount,
-            'total'          => $request->subTotal + $request->cost,
+            'total'          => $request->subTotal - $voucherDiscount + $request->cost,
+            'snap_token'     => $snapToken,
         ]);
 
-        // Clear the cart
-        // Cart::where('user_id', auth()->id())->delete();
-
-        // Return & redirect to cart page
-        return redirect()->route('cart.index')->with('success', 'Order has been placed successfully!');
+        // Return & redirect to order page
+        return redirect()->route('cart.index')->with('success', 'Order has been created successfully!');
     }
 
     /**
@@ -119,8 +154,24 @@ class UserOrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Log request data for debugging
+        Log::info('Update Order Request:', $request->all());
+
+        // Find the order
+        $order = Order::findOrFail($id);
+
+        // Update the order
+        $order->update([
+            'paymentStatus' => $request->paymentStatus,
+        ]);
+
+        // Log order data after update
+        Log::info('Order after update:', $order->toArray());
+
+        // Return & redirect to order page
+        return redirect()->route('orders.index')->with('success', 'Order has been updated successfully!');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -180,5 +231,69 @@ class UserOrderController extends Controller
 
         // Return the order status
         return view('user.orders.status', compact('order'));
+    }
+
+    /**
+     * Midtrans notification handler.
+     *
+     * @param Request $request
+     *
+     * @return void
+     */
+    public function notificationHandler(Request $request)
+    {
+        $notif = new Notification();
+
+        $transaction = $notif->transaction_status;
+        $type = $notif->payment_type;
+        $orderId = $notif->order_id;
+        $fraud = $notif->fraud_status;
+        $order = Order::where('order_id', $orderId)->first();
+
+        if ($transaction == 'capture') {
+
+            // For credit card transaction, we need to check whether transaction is challenge by FDS or not
+            if ($type == 'credit_card') {
+
+                if ($fraud == 'challenge') {
+                    // TODO set payment status in merchant's database to 'Challenge by FDS'
+                    // TODO merchant should decide whether this transaction is authorized or not in MAP
+                    // $donation->addUpdate("Transaction order_id: " . $orderId ." is challenged by FDS");
+                    $order->setPending();
+                } else {
+                    // TODO set payment status in merchant's database to 'Success'
+                    // $donation->addUpdate("Transaction order_id: " . $orderId ." successfully captured using " . $type);
+                    $order->setSuccess();
+                }
+            }
+        } elseif ($transaction == 'settlement') {
+            // TODO set payment status in merchant's database to 'Settlement'
+            // $donation->addUpdate("Transaction order_id: " . $orderId ." successfully transfered using " . $type);
+            $order->setSuccess();
+            // Update paymentStatus to 'paid'
+            $order->update([
+                'paymentStatus' => 'paid',
+            ]);
+        } elseif ($transaction == 'pending') {
+
+            // TODO set payment status in merchant's database to 'Pending'
+            // $donation->addUpdate("Waiting customer to finish transaction order_id: " . $orderId . " using " . $type);
+            $order->setPending();
+        } elseif ($transaction == 'deny') {
+
+            // TODO set payment status in merchant's database to 'Failed'
+            // $donation->addUpdate("Payment using " . $type . " for transaction order_id: " . $orderId . " is Failed.");
+            $order->setFailed();
+        } elseif ($transaction == 'expire') {
+
+            // TODO set payment status in merchant's database to 'expire'
+            // $donation->addUpdate("Payment using " . $type . " for transaction order_id: " . $orderId . " is expired.");
+            $order->setExpired();
+        } elseif ($transaction == 'cancel') {
+
+            // TODO set payment status in merchant's database to 'Failed'
+            // $donation->addUpdate("Payment using " . $type . " for transaction order_id: " . $orderId . " is canceled.");
+            $order->setFailed();
+        }
     }
 }

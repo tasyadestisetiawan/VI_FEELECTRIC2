@@ -8,6 +8,9 @@
   {{-- Fix CSS Meta Security --}}
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
+  {{-- Izinkan REquest Cookies --}}
+  <meta http-equiv="Set-Cookie" content="SameSite=None; Secure">
+
   <title>
     Feelectric | Coffee & Electric Bicycle
   </title>

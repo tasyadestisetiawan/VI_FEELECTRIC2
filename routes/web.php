@@ -16,6 +16,7 @@ use App\Http\Controllers\User\UserVoucherController;
 use App\Http\Controllers\Admin\AdminCourseController;
 use App\Http\Controllers\User\UserBootcampController;
 use App\Http\Controllers\Admin\AdminProductController;
+use App\Http\Controllers\Admin\AdminQuizzesController;
 use App\Http\Controllers\Admin\AdminVoucherController;
 use App\Http\Controllers\Admin\AdminBootcampController;
 use App\Http\Controllers\User\UserCoffeeBeanController;
@@ -27,6 +28,7 @@ use App\Http\Controllers\User\UserCoffeeMachineController;
 use App\Http\Controllers\Admin\AdminOrderMachineController;
 use App\Http\Controllers\Admin\AdminCoffeeMachineController;
 use App\Http\Controllers\Admin\AdminProductCategoryController;
+use App\Http\Controllers\Admin\AdminQuizzesQuestionsController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -75,6 +77,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     // Reservations Routes Resource
     Route::resource('reservations', AdminReservationController::class);
+
+    // Quizzes Routes Resource
+    Route::resource('quizzes', AdminQuizzesController::class);
+
+    // Quizzes Questions Routes Resource
+    Route::resource('questions', AdminQuizzesQuestionsController::class);
 });
 
 // User Routes
