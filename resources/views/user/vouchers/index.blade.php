@@ -27,8 +27,7 @@
               <div class="card bg-white border-0" style="max-width: 540px;">
                 <div class="row g-0">
                   <div class="col-md-3">
-                    <img
-                      src="https://i0.wp.com/www.cssscript.com/wp-content/uploads/2020/12/Customizable-SVG-Avatar-Generator-In-JavaScript-Avataaars.js.png?fit=438%2C408&ssl=1"
+                    <img src="{{ asset('storage/img/avatars/' . Auth::user()->avatar) }}"
                       class="img-fluid rounded-start" alt="...">
                   </div>
                   <div class="col-md-9">
@@ -124,9 +123,13 @@
                 </li>
                 <li class="nav-item">
                   <a class="nav-link rounded-pill border-2" style="background-color: #fff7e8; color: #3b2621"
-                    href="{{route('user.address')}}">
-                    Address
+                    href="{{ route('user.reservations.my') }}">
+                    Reservations
                   </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link rounded-pill border-2" style="background-color: #fff7e8; color: #3b2621"
+                    href="{{route('user.address')}}">Address</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link rounded-pill border-2" style="background-color: #3b2621; color: #fff7e8"
@@ -178,11 +181,13 @@
     input.select();
     var result = document.execCommand('copy');
     document.body.removeChild(input);
+
     if (result) {
       alert('Voucher code copied to clipboard');
     } else {
       alert('Failed to copy voucher code');
     }
+
   }
 </script>
 

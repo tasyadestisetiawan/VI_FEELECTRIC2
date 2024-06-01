@@ -4,7 +4,7 @@
 <div class="container my-5 py-5">
   <div class="header clearfix">
     <a href="{{ route('admin.bootcamps.index') }}" class="btn btn-primary-theme btn-sm float-end mb-3">
-      Back to Bootcamps
+      Back to Courses
     </a>
   </div>
   <div class="row">
@@ -120,9 +120,15 @@
                 <button type="submit" class="btn btn-success btn-sm">Confirm</button>
               </form>
             </td>
-            @else
+            @elseif ($user->payment_status == 'paid')
             <td>
               <span class="badge bg-success">Confirmed</span>
+            </td>
+            @else
+            <td>
+              <span class="badge bg-danger">
+                Wait for User Payment...
+              </span>
             </td>
             @endif
           </tr>

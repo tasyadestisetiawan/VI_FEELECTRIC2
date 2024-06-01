@@ -132,6 +132,7 @@ class AdminProductController extends Controller
         $product->description = $request->description;
         $product->category_id = $request->category_id;
         $product->variant = $request->variant;
+        $product->supply = $request->supply;
         $product->priceHot = $request->priceHot;
         $product->stockHot = $request->stockHot;
         $product->priceIce = $request->priceIce;
@@ -167,5 +168,22 @@ class AdminProductController extends Controller
 
         // Redirect
         return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully');
+    }
+
+    // Update persediaan
+    public function updateSupply(Request $request, string $id)
+    {
+        $product = Product::find($id);
+
+        // Validate the form data
+        $validateData = $request->validate([
+            'supply' => 'required',
+        ]);
+
+        Product::where('id', $id)->update([
+            'supply' => $request->supply,
+        ]);
+
+        return redirect()->route('admin.products.index')->with('success', 'Stock updated successfully');
     }
 }

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\User;
 use App\Models\Address;
+use Illuminate\Http\Request;
+use App\Models\BootcampRegistered;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
@@ -41,15 +42,29 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255',
             'phone' => 'required|string|max:15',
             'address' => 'required|string|max:255',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $user = auth()->user();
+
+        // Check if avatar is uploaded
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+            $filename = time() . '.' . $avatar->getClientOriginalExtension();
+            $avatar->storeAs('public/img/avatars', $filename);
+
+            // Update user avatar
+            User::where('id', $user->id)->update([
+                'avatar' => $filename,
+            ]);
+        }
 
         User::where('id', $user->id)->update([
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
             'address' => $request->address,
+            'avatar' => $filename,
         ]);
 
         // Redirect to profile page
@@ -98,5 +113,11 @@ class UserController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Address updated successfully.');
+    }
+
+    public function myBootcamps()
+    {
+        $bootcamps = BootcampRegistered::where('user_id', auth()->id())->get();
+        return view('user.profile.bootcamps', compact('bootcamps'));
     }
 }

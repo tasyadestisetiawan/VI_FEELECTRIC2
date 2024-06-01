@@ -11,9 +11,12 @@ use App\Models\Order;
 use App\Models\Address;
 use App\Models\Product;
 use App\Models\Voucher;
+use App\Models\CoffeeBean;
 use Midtrans\Notification;
 use Illuminate\Http\Request;
+use App\Models\CoffeeMachine;
 use App\Models\ProductCategory;
+use App\Models\Setting;
 use App\Http\Controllers\Controller;
 
 class UserOrderController extends Controller
@@ -121,10 +124,14 @@ class UserOrderController extends Controller
             'voucherDiscount' => $voucherDiscount,
             'total'          => $request->subTotal - $voucherDiscount + $request->cost,
             'snap_token'     => $snapToken,
+            'quantity'       => $request->quantity,
         ]);
 
+        // Remove all cart data
+        Cart::where('user_id', auth()->id())->delete();
+
         // Return & redirect to order page
-        return redirect()->route('cart.index')->with('success', 'Order has been created successfully!');
+        return redirect()->route('orders.index')->with('success', 'Order has been created successfully!');
     }
 
     /**
@@ -133,12 +140,21 @@ class UserOrderController extends Controller
     public function show(string $id)
     {
         // Find the order
-        $order = Order::findOrFail($id);
+        $order           = Order::findOrFail($id);
+
+        // Get data with id = 1 in setting table
+        $payment         = Setting::where('id', 1)->first()->value;
+
+        // Decode the products
         $order->products = json_decode($order->products);
-        $coffees = Product::all();
+
+        // Get all products
+        $coffees         = Product::all();
+        $beans           = CoffeeBean::all();
+        $machines        = CoffeeMachine::all();
 
         // Return the order details
-        return view('user.orders.show', compact('order', 'coffees'));
+        return view('user.orders.show', compact('order', 'coffees', 'beans', 'machines', 'payment'));
     }
 
     /**

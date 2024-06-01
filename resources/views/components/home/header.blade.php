@@ -12,18 +12,21 @@
                 <li><a href="{{ route('products.index') }}">Products</a></li>
                 <li><a href="{{ route('orders.index') }}">Orders</a></li>
                 <li><a href="{{ route('rooms.index')}}">Rooms</a></li>
+                <li>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#soonModal">Quizz</a>
+                </li>
                 @auth
                 @if (Auth::user()->role == 'user')
                 {{-- Dropdown --}}
                 <li class="dropdown"><a href="#"><span>Course</span> <i class="bi bi-chevron-down"></i></a>
                     <ul>
                         <li><a href="{{ route('bootcamps.index')}}">Find Course</a></li>
-                        <li><a href="{{ route('user.bootcamps.my')}}">My Course</a></li>
+                        <li><a href="{{ route('user.bootcamps.my')}}">My Courses</a></li>
                     </ul>
                 </li>
                 @endif
                 @else
-                <li><a href="{{ route('bootcamps.index')}}">Course</a></li>
+                <li><a href="{{ route('bootcamps.index')}}">Courses</a></li>
                 @endauth
             </ul>
         </nav>
@@ -90,5 +93,20 @@
     </div>
 </div>
 <!-- End Modal Notification -->
+
+{{-- Soon Modal --}}
+<div class="modal fade" id="soonModal" tabindex="-1" aria-labelledby="soonModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered rounded-4">
+        <div class="modal-content rounded-4" style="background-color: #f8f9fa; border: solid 5px #1d1210;">
+            <div class="modal-header border-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center pb-5">
+                <img src="https://img.freepik.com/free-vector/abstract-coming-soon-halftone-style-background-design_1017-27282.jpg"
+                    alt="Coming Soon" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- End Header -->

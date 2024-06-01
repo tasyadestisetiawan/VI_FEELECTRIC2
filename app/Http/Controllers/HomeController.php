@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Feedback;
+use App\Models\User;
 use App\Models\CoffeeBean;
 use App\Models\CoffeeMachine;
 
@@ -18,8 +20,10 @@ class HomeController extends Controller
         $coffees = Product::orderBy('created_at', 'desc')->limit(4)->get();
         $coffeeBeans = CoffeeBean::orderBy('created_at', 'desc')->limit(4)->get();
         $coffeeMachines = CoffeeMachine::orderBy('created_at', 'desc')->limit(4)->get();
+        $testimonials = Feedback::orderBy('created_at', 'desc')->limit(4)->get();
+        $users = User::all();
 
-        return view('home.index', compact('coffees', 'coffeeBeans', 'coffeeMachines'));
+        return view('home.index', compact('coffees', 'coffeeBeans', 'coffeeMachines', 'testimonials', 'users'));
     }
 
     /**

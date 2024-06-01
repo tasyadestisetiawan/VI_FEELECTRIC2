@@ -50,6 +50,14 @@
           </a>
         </li>
 
+        {{-- Category --}}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('admin.categories.index') }}">
+            <i class="bi bi-tags"></i>
+            Category
+          </a>
+        </li>
+
         {{-- Products - Dropdown --}}
         <li class="nav-item">
           <a class="nav-link" href="#navbarProducts" data-bs-toggle="collapse" role="button" aria-expanded="false"
@@ -77,30 +85,36 @@
           </div>
         </li>
 
-        {{-- Category --}}
+        {{-- Orders Dropdown --}}
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('admin.categories.index') }}">
-            <i class="bi bi-tags"></i>
-            Category
+          <a class="nav-link" href="#navbarOrders" data-bs-toggle="collapse" role="button" aria-expanded="false"
+            aria-controls="navbarOrders">
+            <i class="bi bi-cart "></i> Orders
           </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('admin.orders.index') }}">
-            <i class="bi bi-cup-straw"></i>
-            Coffee Orders
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('admin.orders-coffee-beans.index') }}">
-            <i class="bi bi-handbag"></i>
-            Bean Orders
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('admin.orders-coffee-machines.index') }}">
-            <i class="bi bi-boxes"></i>
-            Machine Orders
-          </a>
+          <div class="collapse" id="navbarOrders">
+            <ul class="nav nav-sm flex-column">
+              <li class="nav-item">
+                <a href="{{ route('admin.orders.index') }}" class="nav-link">
+                  Drinks
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('admin.orders-coffee-beans.index') }}" class="nav-link">
+                  Beans
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('admin.orders-coffee-machines.index') }}" class="nav-link">
+                  Machines
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('admin.orders-history.index') }}" class="nav-link">
+                  History
+                </a>
+              </li>
+            </ul>
+          </div>
         </li>
 
         {{-- Vouchers --}}
@@ -129,27 +143,76 @@
 
         {{-- Courses - Dropdown --}}
         <li class="nav-item">
-          <a class="nav-link" href="#navbarCourses" data-bs-toggle="collapse" role="button" aria-expanded="false"
-            aria-controls="navbarCourses">
-            <i class="bi bi-book "></i> Courses
+          <a href="{{ route('admin.bootcamps.index') }}" class="nav-link">
+            <i class="bi bi-book"></i>
+            Course
           </a>
-          <div class="collapse" id="navbarCourses">
+        </li>
+
+        {{-- Quizzes Dropdown --}}
+        <li class="nav-item">
+          <a class="nav-link" href="#navbarQuizzes" data-bs-toggle="collapse" role="button" aria-expanded="false"
+            aria-controls="navbarQuizzes">
+            <i class="bi bi-clipboard"></i> Quizzes
+          </a>
+          <div class="collapse" id="navbarQuizzes">
             <ul class="nav nav-sm flex-column">
-              {{-- <li class="nav-item">
-                <a href="{{ route('admin.courses.index') }}" class="nav-link">
-                  Videos
-                </a>
-              </li> --}}
               <li class="nav-item">
-                <a href="{{ route('admin.bootcamps.index') }}" class="nav-link">
-                  Course
+                <a href="{{ route('admin.quizzes.index') }}" class="nav-link">
+                  List
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('admin.questions.index') }}" class="nav-link">
+                  Questions
                 </a>
               </li>
             </ul>
           </div>
         </li>
 
-        <!-- <li class="nav-item">
+        {{-- Feedbacks --}}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('admin.feedbacks.index') }}">
+            <i class="bi bi-chat "></i>
+            Feedbacks
+          </a>
+        </li>
+
+        {{-- User Management Dropdown --}}
+        <li class="nav-item">
+          <a class="nav-link" href="#navbarUsers" data-bs-toggle="collapse" role="button" aria-expanded="false"
+            aria-controls="navbarUsers">
+            <i class="bi bi-people"></i> Users
+          </a>
+          <div class="collapse" id="navbarUsers">
+            <ul class="nav nav-sm flex-column">
+              <li class="nav-item">
+                <a href="{{ route('admin.users.index') }}" class="nav-link">
+                  Administrator
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('admin.customers.index') }}" class="nav-link">
+                  Customers
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+
+      {{-- Settings --}}
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('admin.settings.index') }}">
+            <i class="bi bi-gear "></i>
+            Settings
+          </a>
+        </li>
+      </ul>
+
+      <!-- <li class="nav-item">
           <a class="nav-link" href="#">
             <i class="bi bi-people"></i>
             Customers

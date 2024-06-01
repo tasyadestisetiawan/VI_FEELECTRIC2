@@ -14,8 +14,8 @@ class UserBootcampController extends Controller
      */
     public function index()
     {
-        // Get all bootcamps
-        $bootcamps = Bootcamp::all();
+        // Get all bootcamps with date not expired
+        $bootcamps = Bootcamp::where('start_date', '>=', date('Y-m-d'))->get();
 
         // Redirect
         return view('user.bootcamps.index', compact('bootcamps'));
@@ -29,11 +29,11 @@ class UserBootcampController extends Controller
         // Get bootcamp by id
         $bootcamp = Bootcamp::find($id);
 
-        // Kuota tersisa
-        $kuota = $bootcamp->kuota - BootcampRegistered::where('bootcamp_id', $id)->count();
+        // Check if bootcamp not found
+        $checkRegister = BootcampRegistered::where('bootcamp_id', $id)->where('user_id', auth()->user()->id)->first();
 
         // Redirect
-        return view('user.bootcamps.show', compact('bootcamp', 'kuota'));
+        return view('user.bootcamps.show', compact('bootcamp', 'checkRegister'));
     }
 
     /**
@@ -58,11 +58,12 @@ class UserBootcampController extends Controller
 
         // Register user to bootcamp
         BootcampRegistered::create([
-            'bootcamp_id' => $request->bootcamp_id,
-            'id_register' => 'BCR' . time() . rand(0, 999),
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'user_id' => auth()->user()->id,
+            'bootcamp_id'    => $request->bootcamp_id,
+            'id_register'    => 'BCR' . time() . rand(0, 999),
+            'name'           => $request->name,
+            'phone'          => $request->phone,
+            'payment_status' => 'unpaid',
+            'user_id'        => auth()->user()->id,
         ]);
 
         // Redirect
@@ -91,6 +92,14 @@ class UserBootcampController extends Controller
             'payment_proof'     => $payment_proof->hashName(),
             'payment_status'    => 'pending',
             'payment_method'    => 'transfer',
+        ]);
+
+        // Update bootcamp kuota
+        $bootcamp = Bootcamp::find($bootcamp->bootcamp_id);
+
+        // Kuota tersisa
+        Bootcamp::where('id', $bootcamp->id)->update([
+            'kuota' => $bootcamp->kuota - 1,
         ]);
 
         // Redirect

@@ -23,8 +23,6 @@ class ProductsTableSeeder extends Seeder
             'priceIce' => 25000,
             'stockIce' => 100,
             'imageIce' => 'iced-americano.jpg',
-
-            
         ]);
 
         Product::create([

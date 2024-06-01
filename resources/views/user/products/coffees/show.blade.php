@@ -85,13 +85,12 @@
                 <input type="hidden" name="price" id="priceBoth">
                 @endif
 
-                
 
                 {{-- Notes --}}
                 <label for="" class="form-label">
                     <strong>Notes</strong>
                 </label>
-                <textarea class="form-control mb-3" rows="3" placeholder="Example: Less sugar, etc"
+                <textarea class="form-control mb-3" rows="3" placeholder="Example: Add Sugar, Less Sugar, ttc"
                     name="notes"></textarea>
 
                 {{-- Quantity --}}
@@ -147,7 +146,7 @@
                 </div>
                 <div class="card-footer bg-white border-0">
                     <div class="d-flex justify-content-between">
-                        <a href="{{ route('products.show', $recommendedProduct->id) }}" class="btn text-light rounded"
+                        <a href="{{ route('coffees.show', $recommendedProduct->id) }}" class="btn text-light rounded"
                             style="background-color: #3b2621">Buy</a>
                     </div>
                 </div>
@@ -165,7 +164,7 @@
     Swal.fire({
         icon: 'success',
         title: 'Success',
-        text: "{{ session('success') }}",
+        text: '{{ session('success') }}',
         showConfirmButton: false,
         timer: 1500
     });

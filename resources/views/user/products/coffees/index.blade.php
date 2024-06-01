@@ -105,7 +105,7 @@
                   {{-- See --}}
                   <a href="{{ route('coffees.show', $coffee->id) }}" class="btn rounded"
                     style="background-color: #3b2621; color: white">
-                    Lihat
+                    Buy
                   </a>
                 </div>
               </div>

@@ -118,19 +118,21 @@
               Processed!
             </h5>
             <p class="card-text">
-              Your order is currently being processed.
+              Your order is currently being processed and will be shipped.
             </p>
           </div>
         </div>
 
         <div class="step">
-          <div class="circle">3</div>
+          <div class="circle">
+            <i class="bi bi-check"></i>
+          </div>
           <div class="content card p-3" style="color: #3B2621;">
             <h5 class="card-title">
-              Shipped!
+              Completed!
             </h5>
             <p class="card-text">
-              FINALLY! Your order has been shipped.
+              FINALLY! Your order has been completed.
             </p>
           </div>
         </div>
@@ -138,9 +140,18 @@
       <div class="col-md-4 d-flex align-items-center mx-auto">
         <div class="status-card">
           <div class="circle mt-2 mb-4">
+            @if ($order->orderStatus == 'completed')
+            {{-- SVG ICon Check --}}
+            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-check"
+              viewBox="0 0 16 16">
+              <path
+                d="M13.354 4.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L6 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
+            </svg>
+            @else
             <small>
               {{ $order->updated_at->diffForHumans() }}
             </small>
+            @endif
           </div>
           <h5 class="card-title">
             <br>
@@ -149,7 +160,7 @@
             @elseif ($order->orderStatus == 'processing')
             Order is being processed!
             @elseif ($order->orderStatus == 'completed')
-            Order has been shipped!
+            Order has been completed!
             @endif
           </h5>
           <hr>

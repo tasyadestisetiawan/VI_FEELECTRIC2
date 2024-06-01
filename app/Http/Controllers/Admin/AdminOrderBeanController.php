@@ -16,8 +16,11 @@ class AdminOrderBeanController extends Controller
     {
         $title = 'Coffee Bean Orders';
 
-        // Hanya tampilkan order yang memiliki type == bean
-        $orders = Order::where('type', 'bean')->where('paymentStatus', 'paid')->get();
+        // Hanya tampilkan order yang memiliki type == bean, paymentStatus == paid, dan orderStatus !== completed
+        $orders = Order::where('type', 'bean')
+            ->where('paymentStatus', 'paid')
+            ->where('orderStatus', '!=', 'completed')
+            ->get();
 
         return view('admin.orders.beans.index', compact('title', 'orders'));
     }

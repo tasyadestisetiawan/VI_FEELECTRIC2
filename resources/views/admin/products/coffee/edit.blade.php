@@ -76,9 +76,12 @@
                 <div class="row" id="hot-variant">
                     <div class="col-4">
                         <div class="mb-3">
-                            <label for="stock_hot" class="form-label">Stock Hot</label>
-                            <input type="number" class="form-control" id="stock_hot" name="stockHot" required
-                                value="{{ $product->stockHot }}">
+                            <label for="supply" class="form-label">Supply</label>
+                            <select class="form-select" id="supply" name="supply" required>
+                                <option value="">Select Stock</option>
+                                <option value="1" {{ $product->supply == 1 ? 'selected' : '' }}>Ready</option>
+                                <option value="0" {{ $product->supply == 0 ? 'selected' : '' }}>Empty</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-4">
@@ -101,9 +104,12 @@
                 <div class="row" id="ice-variant">
                     <div class="col-4">
                         <div class="mb-3">
-                            <label for="stock_ice" class="form-label">Stock Ice</label>
-                            <input type="number" class="form-control" id="stock_ice" name="stockIce" required
-                                value="{{ $product->stockIce }}">
+                            <label for="supply" class="form-label">Supply</label>
+                            <select class="form-select" id="supply" name="supply" required>
+                                <option value="">Select Stock</option>
+                                <option value="1" {{ $product->supply == 1 ? 'selected' : '' }}>Ready</option>
+                                <option value="0" {{ $product->supply == 0 ? 'selected' : '' }}>Empty</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-4">
@@ -147,18 +153,18 @@
             if (this.value == 'hot') {
                 $('#hot-variant').show();
                 $('#ice-variant').hide();
-                $('#stock_hot, #price_hot, #image_hot').prop('required', true);
-                $('#stock_ice, #price_ice, #image_ice').prop('required', false);
+                $('#supply, #price_hot, #image_hot').prop('required', true);
+                $('#supply, #price_ice, #image_ice').prop('required', false);
             } else if (this.value == 'ice') {
                 $('#hot-variant').hide();
                 $('#ice-variant').show();
-                $('#stock_hot, #price_hot, #image_hot').prop('required', false);
-                $('#stock_ice, #price_ice, #image_ice').prop('required', true);
+                $('#supply, #price_hot, #image_hot').prop('required', false);
+                $('#supply, #price_ice, #image_ice').prop('required', true);
             } else {
                 $('#hot-variant').show();
                 $('#ice-variant').show();
-                $('#stock_hot, #price_hot, #image_hot').prop('required', true);
-                $('#stock_ice, #price_ice, #image_ice').prop('required', true);
+                $('#supply, #price_hot, #image_hot').prop('required', true);
+                $('#supply, #price_ice, #image_ice').prop('required', true);
             }
         });
 
@@ -167,36 +173,5 @@
     });
 </script>
 
-<script>
-    document.getElementById('productForm').addEventListener('submit', function(event) {
-        var variant = document.querySelector('input[name="variant"]:checked').value;
-        var valid = true;
-
-        if (variant === 'hot') {
-            valid = validateHotVariant();
-        } else if (variant === 'ice') {
-            valid = validateIceVariant();
-        } else {
-            valid = validateHotVariant() && validateIceVariant();
-        }
-
-        if (!valid) {
-            event.preventDefault();
-            alert('Please fill in all required fields.');
-        }
-    });
-
-    function validateHotVariant() {
-        return document.getElementById('stock_hot').checkValidity() &&
-               document.getElementById('price_hot').checkValidity() &&
-               document.getElementById('image_hot').checkValidity();
-    }
-
-    function validateIceVariant() {
-        return document.getElementById('stock_ice').checkValidity() &&
-               document.getElementById('price_ice').checkValidity() &&
-               document.getElementById('image_ice').checkValidity();
-    }
-</script>
 
 @endsection

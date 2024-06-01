@@ -33,14 +33,14 @@
                   <td>{{ $loop->iteration }}</td>
                   <td>
                     @if($product->variant == 'hot')
-                      <img src="{{ asset('storage/img/products/coffees/' . $product->imageHot) }}" alt="{{ $product->name }}"
-                      width="50">
+                    <img src="{{ asset('storage/img/products/coffees/' . $product->imageHot) }}"
+                      alt="{{ $product->name }}" width="50">
                     @elseif($product->variant == 'ice')
-                      <img src="{{ asset('storage/img/products/coffees/' . $product->imageIce) }}" alt="{{ $product->name }}"
-                      width="50">
+                    <img src="{{ asset('storage/img/products/coffees/' . $product->imageIce) }}"
+                      alt="{{ $product->name }}" width="50">
                     @else
-                      <img src="{{ asset('storage/img/products/coffees/' . $product->imageIce) }}" alt="{{ $product->name }}"
-                      width="50">
+                    <img src="{{ asset('storage/img/products/coffees/' . $product->imageIce) }}"
+                      alt="{{ $product->name }}" width="50">
                     @endif
                   </td>
                   <td>{{ $product->name }}</td>
@@ -55,21 +55,19 @@
                   </td>
                   <td>
                     @if($product->variant == 'hot')
-                      Rp {{ number_format($product->priceHot, 0, ',', '.') }}
+                    Rp {{ number_format($product->priceHot, 0, ',', '.') }}
                     @elseif($product->variant == 'ice')
-                      Rp {{ number_format($product->priceIce, 0, ',', '.') }}
+                    Rp {{ number_format($product->priceIce, 0, ',', '.') }}
                     @else
-                      Rp {{ number_format($product->priceHot, 0, ',', '.') }} - Rp {{ number_format($product->priceIce, 0, ',', '.') }}
+                    Rp {{ number_format($product->priceHot, 0, ',', '.') }} - Rp {{ number_format($product->priceIce, 0,
+                    ',', '.') }}
                     @endif
                   </td>
                   <td>
-                    @if($product->variant == 'hot')
-                      {{ $product->stockHot }}
-                    @elseif($product->variant == 'ice')
-                      {{ $product->stockIce }}
-                    @else
-                      @php $stock = $product->stockHot + $product->stockIce @endphp
-                      {{ $stock }}
+                    @if($product->supply == 1 )
+                    <span class="badge bg-success">Ready</span>
+                    @elseif($product->supply == 0 )
+                    <span class="badge bg-danger">Empty</span>
                     @endif
                   </td>
                   <td>

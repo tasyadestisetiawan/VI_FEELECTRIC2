@@ -24,7 +24,7 @@ class BootcampsTableSeeder extends Seeder
             'price'         => 1000000,
             'kuota'         => 10,
             'location'      => 'Jakarta',
-            'image'         => 'poster1.jpg',
+            'image'         => 'poster1.png',
         ]);
 
         Bootcamp::create([
@@ -37,7 +37,7 @@ class BootcampsTableSeeder extends Seeder
             'price'         => 2000000,
             'kuota'         => 20,
             'location'      => 'Bandung',
-            'image'         => 'poster2.jpg',
+            'image'         => 'poster2.png',
         ]);
     }
 }

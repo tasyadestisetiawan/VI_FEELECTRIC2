@@ -9,22 +9,29 @@ use App\Http\Controllers\User\UserRoomController;
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\User\UserOrderController;
 use App\Http\Controllers\Admin\AdminRoomController;
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\User\UserCoffeeController;
 use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\User\UserProductController;
+use App\Http\Controllers\User\UserQuizzesController;
 use App\Http\Controllers\User\UserVoucherController;
 use App\Http\Controllers\Admin\AdminCourseController;
 use App\Http\Controllers\User\UserBootcampController;
+use App\Http\Controllers\User\UserFeedbackController;
 use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\AdminQuizzesController;
+use App\Http\Controllers\Admin\AdminSettingController;
 use App\Http\Controllers\Admin\AdminVoucherController;
 use App\Http\Controllers\Admin\AdminBootcampController;
+use App\Http\Controllers\Admin\AdminCustomerController;
+use App\Http\Controllers\Admin\AdminFeedbackController;
 use App\Http\Controllers\User\UserCoffeeBeanController;
 use App\Http\Controllers\Admin\AdminOrderBeanController;
 use App\Http\Controllers\User\UserReservationController;
 use App\Http\Controllers\Admin\AdminCoffeeBeanController;
 use App\Http\Controllers\Admin\AdminReservationController;
 use App\Http\Controllers\User\UserCoffeeMachineController;
+use App\Http\Controllers\Admin\AdminOrderHistoryController;
 use App\Http\Controllers\Admin\AdminOrderMachineController;
 use App\Http\Controllers\Admin\AdminCoffeeMachineController;
 use App\Http\Controllers\Admin\AdminProductCategoryController;
@@ -34,6 +41,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Admin Routes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+
+    // Dashboard
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
     // Product Routes Resource
@@ -56,6 +65,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     // Orders Routes Resource
     Route::resource('orders', AdminOrderController::class);
+
+    // All Orders History Routes Resource
+    Route::resource('orders-history', AdminOrderHistoryController::class);
 
     // Orders Coffee Bean Routes Resource
     Route::resource('orders-coffee-beans', AdminOrderBeanController::class);
@@ -83,6 +95,18 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     // Quizzes Questions Routes Resource
     Route::resource('questions', AdminQuizzesQuestionsController::class);
+
+    // Feedback Routes Resource
+    Route::resource('feedbacks', AdminFeedbackController::class);
+
+    // User Management Routes Resource
+    Route::resource('users', AdminUserController::class);
+
+    // Customers Management Routes Resource
+    Route::resource('customers', AdminCustomerController::class);
+
+    // Settings Routes Resource
+    Route::resource('settings', AdminSettingController::class);
 });
 
 // User Routes
@@ -158,6 +182,9 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 
     // My Reservations
     Route::get('/user/my-reservations', [UserReservationController::class, 'myReservations'])->name('user.reservations.my');
+
+    // Feddbacks Routes Resource
+    Route::resource('user/feedbacks', UserFeedbackController::class);
 });
 
 // All Products Route with Prefix
@@ -170,6 +197,12 @@ Route::prefix('products')->group(function () {
 Route::prefix('rooms')->group(function () {
     Route::get('/', [UserRoomController::class, 'index'])->name('rooms.index');
     Route::get('/{id}', [UserRoomController::class, 'show'])->name('rooms.show');
+});
+
+// All Quizzes Route with Prefix
+Route::prefix('quizzes')->group(function () {
+    Route::get('/', [UserQuizzesController::class, 'index'])->name('quizzes.index');
+    Route::get('/{id}', [UserQuizzesController::class, 'show'])->name('quizzes.show');
 });
 
 // Google Auth

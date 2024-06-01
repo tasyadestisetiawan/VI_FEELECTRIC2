@@ -4,7 +4,7 @@
 <div class="container-fluid">
   <div class="header clearfix">
     <button type="button" class="btn btn-sm btn-primary-theme float-end" data-bs-toggle="modal" data-bs-target="#createBootcampModal">
-      Add Bootcamp
+      Add Course
     </button>
   </div>
   <div class="row">
@@ -76,7 +76,7 @@
   </div>
 </div>
 
-{{-- Modal Create Bootcamp --}}
+{{-- Modal Create Course --}}
 <div class="modal fade" id="createBootcampModal" tabindex="-1" aria-labelledby="createBootcampModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
 
@@ -84,7 +84,7 @@
       <form action="{{ route('admin.bootcamps.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="modal-header" style="background-color: #3B2621 !important;">
-          <h5 class="modal-title text-light" id="createBootcampModalLabel">Add Bootcamp</h5>
+          <h5 class="modal-title text-light" id="createBootcampModalLabel">Add Course</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body p-4">
@@ -172,7 +172,7 @@
         @csrf
         @method('PUT')
         <div class="modal-header" style="background-color: #3B2621 !important;">
-          <h5 class="modal-title text-light" id="editBootcampModalLabel{{ $bootcamp->id }}">Edit Bootcamp</h5>
+          <h5 class="modal-title text-light" id="editBootcampModalLabel{{ $bootcamp->id }}">Edit Course</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body p-4">

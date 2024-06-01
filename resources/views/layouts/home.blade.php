@@ -38,6 +38,9 @@
   <!-- Template Main CSS File -->
   <link href="{{ asset('frontend/css/main.css') }}" rel="stylesheet">
 
+  {{-- DataTable --}}
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css">
+
   <style>
     body {
       background-image: url('{{ asset("frontend/img/background.png") }}') !important;
@@ -77,6 +80,21 @@
 
   {{-- CDN SweetALert2 --}}
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  {{-- jQuery --}}
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  {{-- DataTable --}}
+  <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+  <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+
+  <script>
+    // DataTable Initialization
+      $(document).ready(function() {
+        $('#dataTable').DataTable();
+      });
+
+  </script>
 
 </body>
 

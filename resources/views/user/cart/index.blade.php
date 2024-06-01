@@ -97,7 +97,7 @@ return $cartItem->type == 'drink';
                           <span class="badge bg-secondary">
                             {{ $cartItem->quantity }} x
                           </span>
-                         
+                          
                           {{-- Temperature --}}
                           @if ($cartItem->type == 'coffee')
                           @foreach($coffees as $coffee)
@@ -332,20 +332,44 @@ return $cartItem->type == 'drink';
           Pickup Detail
         </h3>
         <hr>
+
         <form action="{{ route('orders.store') }}" method="POST">
           @csrf
+
           <div class="card rounded-4 shadow px-3 pt-4 pb-3" style="border: solid 2px #3b2621;">
 
+            {{-- Product Type --}}
             @foreach ( $cartItems as $cartItem )
             @if ($cartItem->type == 'bean')
             <input type="hidden" name="type" value="bean">
+            @elseif ($cartItem->type == 'machine')
+            <input type="hidden" name="type" value="machine">
+            @elseif ($cartItem->type == 'drink')
+            <input type="hidden" name="type" value="drink">
+            @endif
+            @endforeach
+
+            @foreach ( $cartItems as $cartItem )
+            @if ($cartItem->type == 'bean' || $cartItem->type == 'machine')
 
             {{-- Destination Address --}}
             <div class="mb-3">
               <label for="destinationAddress" class="form-label">
                 Full Address
               </label>
-              <textarea class="form-control" id="destinationAddress" name="address" rows="3" required></textarea>
+              <select class="form-select" id="destinationAddress" name="destinationAddress" required>
+                <option selected>Choose Address</option>
+
+                {{-- Check $addresses is NULL or NOT --}}
+                @if ($addresses->count() == 0)
+                <option value="0">No Address</option>
+                @else
+                @foreach ( $addresses as $address )
+                <option value="{{ $address->address }}">{{ $address->address }}</option>
+                @endforeach
+                @endif
+
+              </select>
             </div>
 
             {{-- Weight --}}
@@ -356,11 +380,6 @@ return $cartItem->type == 'drink';
               <input type="number" class="form-control" id="weight" name="weight" required
                 value="{{ $cartItem->quantity }}">
             </div>
-
-            @elseif ($cartItem->type == 'drink')
-            <input type="hidden" name="type" value="drink">
-            @elseif ($cartItem->type == 'machine')
-            <input type="hidden" name="type" value="machine">
             @endif
             @endforeach
 
@@ -370,12 +389,22 @@ return $cartItem->type == 'drink';
                 Payment Method
               </label>
               <select class="form-select" id="paymentMethod" name="paymentMethod">
-                <option value="cash">Cash (COD) </option>
-                @if (isset($cartItem) && $cartItem->type == 'bean' || $cartItem->type == 'machine')
+                @if (($cartItem ?? false) && ($cartItem->type == 'bean' || $cartItem->type == 'machine'))
                 <option value="transfer">Transfer</option>
+                @elseif (($cartItem ?? false) && $cartItem->type == 'drink')
+                <option value="cash">Cash (COD)</option>
+                <option value="wallet">Gopay/DANA/QRIS</option>
                 @endif
               </select>
             </div>
+
+            {{-- Quantity --}}
+            @php
+            $totalQuantity = 0;
+            foreach($cartItems as $cartItem) {
+            $totalQuantity += $cartItem->quantity;
+            }
+            @endphp
 
             <!-- Payment Detail -->
             <div class="mb-3">
@@ -389,15 +418,14 @@ return $cartItem->type == 'drink';
                   <td>Cost</td>
                   <td>:</td>
                   <td>
-                    <span id="cost">Rp 5000</span>
-                    <!-- Input -->
+                    <span id="cost">Rp 5.000</span>
                     <input type="hidden" id="cost-input" name="cost" value="5000">
                   </td>
                 </tr>
                 @endif
                 @endforeach
-                <tr>
-                  <td>Total</td>
+                <tr id="subtotal-row">
+                  <td>Sub-total</td>
                   <td>:</td>
                   <td id="sub-total">Rp </td>
                   <input type="hidden" id="sub-total-input" name="subTotal" value="">
@@ -411,6 +439,14 @@ return $cartItem->type == 'drink';
                   </td>
                 </tr>
                 @endif
+                <tr>
+                  <td>Total</td>
+                  <td>:</td>
+                  <td>
+                    <span id="total"></span>
+                    <input type="hidden" id="total-input" name="total" value="">
+                  </td>
+                </tr>
               </table>
             </div>
 
@@ -439,10 +475,8 @@ return $cartItem->type == 'drink';
             </div>
             @endif
 
-            <!-- Hidden Notes : Value From Cart Notes -->
             <input type="hidden" name="note" value="{{ json_encode($cartItems->pluck('notes')) }}">
-
-            <!-- Products Information - Hidden (JSON) -->
+            <input type="hidden" name="quantity" value="{{ $totalQuantity }}">
             <input type="hidden" name="products" value="{{ json_encode($cartItems) }}">
 
             <!-- Personal Information -->
@@ -452,7 +486,6 @@ return $cartItem->type == 'drink';
             <!-- Checkout -->
             <div class="mb-3 mx-3">
               <div class="row">
-                {{-- Jika cartItems memiliki produk dengan type yang berbeda, maka disable button checkout --}}
                 @php
                 $types = $cartItems->pluck('type')->unique();
                 @endphp
@@ -519,7 +552,7 @@ return $cartItem->type == 'drink';
                   <input type="number" class="form-control" id="quantity" name="quantity"
                     value="{{ $cartItem->quantity }}">
                 </div>
-                
+               
               </div>
             </div>
             <div class="mb-3">
@@ -576,6 +609,28 @@ $totalPrice += $cartItem->total_price;
 
   document.getElementById('sub-total').innerHTML = formattedTotalPrice;
   document.getElementById('sub-total-input').value = totalPrice;
+
+  // If type is machine, remove cost and set total to sub-total
+  let type = document.querySelector('input[name="type"]').value;
+  if (type == 'machine') {
+
+    // Hidden sub-total row element
+    document.getElementById('subtotal-row').style.display = 'none';
+
+    // Set total to sub-total
+    document.getElementById('total').innerHTML = formattedTotalPrice;
+    document.getElementById('total-input').value = totalPrice;
+
+
+  } else {
+    // Total = Sub-total + Cost ()
+    let subTotal = parseFloat(document.getElementById('sub-total-input').value);
+    let cost = parseFloat(document.getElementById('cost-input').value);
+    let total = subTotal + cost;
+    let formattedTotal = 'Rp ' + total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    document.getElementById('total').innerHTML = formattedTotal;
+  }
+
 </script>
 
 <script>
@@ -624,8 +679,8 @@ $totalPrice += $cartItem->total_price;
 
             // Place the discount amount with % format
             document.getElementById('discount').innerHTML = discount + '%' + ' (-Rp ' + discountAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ')';
-            document.getElementById('sub-total').innerHTML = formattedTotal;
-            document.getElementById('sub-total-input').value = total;
+            document.getElementById('total').innerHTML = formattedTotal;
+            document.getElementById('total-input').value = total;
 
             this.disabled = true;
             return;
@@ -645,5 +700,7 @@ $totalPrice += $cartItem->total_price;
 
 });
 </script>
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 
 @endsection

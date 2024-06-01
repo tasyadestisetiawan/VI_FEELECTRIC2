@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('description');
 
             // Variant
-            $table->enum('variant', ['hot', 'ice','both'])->default('both');
+            $table->enum('variant', ['hot', 'ice', 'both'])->default('both');
 
             // Hot
             $table->decimal('priceHot', 15, 0)->nullable();
@@ -30,6 +30,9 @@ return new class extends Migration
             $table->decimal('priceIce', 15, 0)->nullable();
             $table->integer('stockIce')->nullable();
             $table->string('imageIce')->nullable();
+
+            // Supply
+            $table->integer('supply')->nullable();
 
             $table->timestamps();
         });

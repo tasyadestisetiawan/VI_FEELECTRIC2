@@ -21,7 +21,7 @@
 
             {{-- Form Create Product --}}
             <form id="productForm" action="{{ route('admin.products.store') }}" method="POST"
-                enctype="multipart/form-data" novalidate>
+                enctype="multipart/form-data">
                 @csrf
 
                 <div class="row">
@@ -73,8 +73,12 @@
                 <div class="row" id="hot-variant">
                     <div class="col-4">
                         <div class="mb-3">
-                            <label for="stock_hot" class="form-label">Stock Hot</label>
-                            <input type="number" class="form-control" id="stock_hot" name="stockHot" required>
+                            <label for="supply" class="form-label">Stock</label>
+                            <select class="form-select" id="supply" name="supply" required>
+                                <option selected disabled>Select Stock</option>
+                                <option value="1">Ready</option>
+                                <option value="0">Empty</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-4">
@@ -95,8 +99,12 @@
                 <div class="row" id="ice-variant">
                     <div class="col-4">
                         <div class="mb-3">
-                            <label for="stock_ice" class="form-label">Stock Ice</label>
-                            <input type="number" class="form-control" id="stock_ice" name="stockIce" required>
+                            <label for="supply" class="form-label">Stock</label>
+                            <select class="form-select" id="supply" name="supply" required>
+                                <option selected disabled>Select Stock</option>
+                                <option value="1">Ready</option>
+                                <option value="0">Empty</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-4">
@@ -137,18 +145,18 @@
             if (this.value == 'hot') {
                 $('#hot-variant').show();
                 $('#ice-variant').hide();
-                $('#stock_hot, #price_hot, #image_hot').prop('required', true);
-                $('#stock_ice, #price_ice, #image_ice').prop('required', false);
+                $('#supply, #price_hot, #image_hot').prop('required', true);
+                $('#supply, #price_ice, #image_ice').prop('required', false);
             } else if (this.value == 'ice') {
                 $('#hot-variant').hide();
                 $('#ice-variant').show();
-                $('#stock_hot, #price_hot, #image_hot').prop('required', false);
-                $('#stock_ice, #price_ice, #image_ice').prop('required', true);
+                $('#supply, #price_hot, #image_hot').prop('required', false);
+                $('#supply, #price_ice, #image_ice').prop('required', true);
             } else {
                 $('#hot-variant').show();
                 $('#ice-variant').show();
-                $('#stock_hot, #price_hot, #image_hot').prop('required', true);
-                $('#stock_ice, #price_ice, #image_ice').prop('required', true);
+                $('#supply, #price_hot, #image_hot').prop('required', true);
+                $('#supply, #price_ice, #image_ice').prop('required', true);
             }
         });
 
@@ -177,13 +185,13 @@
     });
 
     function validateHotVariant() {
-        return document.getElementById('stock_hot').checkValidity() &&
+        return document.getElementById('supply').checkValidity() &&
                document.getElementById('price_hot').checkValidity() &&
                document.getElementById('image_hot').checkValidity();
     }
 
     function validateIceVariant() {
-        return document.getElementById('stock_ice').checkValidity() &&
+        return document.getElementById('supply').checkValidity() &&
                document.getElementById('price_ice').checkValidity() &&
                document.getElementById('image_ice').checkValidity();
     }

@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\Voucher;
 use App\Models\CoffeeBean;
+use App\Models\Address;
 use Illuminate\Http\Request;
 use App\Models\CoffeeMachine;
 use App\Http\Controllers\Controller;
@@ -26,8 +27,9 @@ class UserCartController extends Controller
         $machines   = CoffeeMachine::all();
         $vouchers   = Voucher::all();
         $orders     = Order::where('user_id', auth()->id())->latest()->get();
+        $addresses  = Address::where('user_id', $user->id)->get();
 
-        return view('user.cart.index', compact('cartItems', 'coffees', 'beans', 'machines', 'vouchers', 'orders'));
+        return view('user.cart.index', compact('cartItems', 'coffees', 'beans', 'machines', 'vouchers', 'orders', 'addresses'));
     }
 
     // Add to Cart

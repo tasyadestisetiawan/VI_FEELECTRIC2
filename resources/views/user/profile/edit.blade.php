@@ -29,11 +29,13 @@
                 <div class="row">
                   <!-- Image -->
                   <div class="col-3">
-                    <img src="https://i0.wp.com/www.cssscript.com/wp-content/uploads/2020/12/Customizable-SVG-Avatar-Generator-In-JavaScript-Avataaars.js.png?fit=438%2C408&ssl=1" class="img-fluid rounded-4" alt="..." style="width: 200px; border: solid 2px #3b2621;">
+                    <img src="{{ asset('storage/img/avatars/' . Auth::user()->avatar) }}" class="img-fluid rounded-4"
+                      alt="..." style="width: 200px; border: solid 2px #3b2621;">
 
                     <!-- Input Image -->
                     <div class="form-group mt-1" style="width: 200px;">
-                      <input type="file" class="form-control" id="image" name="image" style="border: solid 2px #3b2621; width: 200px;">
+                      <input type="file" class="form-control" id="image" name="avatar"
+                        style="border: solid 2px #3b2621; width: 200px;">
                       <small class="mt-4">
                         <i class="fas fa-info-circle"></i> File type: jpg, jpeg, png. Max size: 2MB
                       </small>
@@ -48,13 +50,15 @@
                     <!-- Name -->
                     <div class="form-group mb-2">
                       <label for="name">Name</label>
-                      <input type="text" class="form-control mt-1" id="name" name="name" value="{{ Auth::user()->name }}">
+                      <input type="text" class="form-control mt-1" id="name" name="name"
+                        value="{{ Auth::user()->name }}">
                     </div>
 
                     <!-- Address -->
                     <div class="form-group mb-2">
                       <label for="address">Address</label>
-                      <textarea class="form-control mt-1" id="address" name="address" rows="3">{{ Auth::user()->address }}</textarea>
+                      <textarea class="form-control mt-1" id="address" name="address"
+                        rows="3">{{ Auth::user()->address }}</textarea>
                     </div>
 
                     <h5 class="card-title">
@@ -64,22 +68,26 @@
                     <!-- Phone -->
                     <div class="form-group mb-2">
                       <label for="phone">Phone</label>
-                      <input type="text" class="form-control mt-1" id="phone" name="phone" value="{{ Auth::user()->phone }}">
+                      <input type="text" class="form-control mt-1" id="phone" name="phone"
+                        value="{{ Auth::user()->phone }}">
                     </div>
 
                     <!-- Email -->
                     <div class="form-group mb-2">
                       <label for="email">Email</label>
-                      <input type="email" class="form-control mt-1" id="email" name="email" value="{{ Auth::user()->email }}">
+                      <input type="email" class="form-control mt-1" id="email" name="email"
+                        value="{{ Auth::user()->email }}">
                     </div>
 
                     <div class="mt-3">
                       <div class="row g-2">
                         <div class="col-6">
-                          <button type="submit" class="btn btn-primary w-100" style="background-color: #3b2621; border-color: #3b2621;">Update</button>
+                          <button type="submit" class="btn btn-primary w-100"
+                            style="background-color: #3b2621; border-color: #3b2621;">Update</button>
                         </div>
                         <div class="col-6">
-                          <a href="{{ route('user.profile') }}" class="btn btn-outline-secondary w-100" style="color: #3b2621;">Cancel</a>
+                          <a href="{{ route('user.profile') }}" class="btn btn-outline-secondary w-100"
+                            style="color: #3b2621;">Cancel</a>
                         </div>
                       </div>
                     </div>

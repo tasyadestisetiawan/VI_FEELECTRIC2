@@ -33,13 +33,18 @@ return new class extends Migration
       $table->enum('orderStatus', ['pending', 'processing', 'completed', 'cancelled'])->default('pending');
       $table->text('note')->nullable();
       $table->text('cost')->nullable();
-      $table->decimal('subTotal', 10, 2);
+      $table->decimal('subTotal', 10, 0);
       $table->string('type')->nullable();
+      $table->integer('quantity')->default(1);
 
       // Voucher Information
       $table->string('voucherCode')->nullable();
       $table->decimal('voucherDiscount', 10, 0)->default(0);
       $table->decimal('total', 10, 0);
+
+      // Midtrans
+      $table->string('snap_token')->nullable();
+      $table->string('transaction_status')->nullable();
 
       $table->timestamps();
     });

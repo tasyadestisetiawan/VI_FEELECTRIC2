@@ -26,14 +26,14 @@
 @section('content')
 <div class="container my-5 py-5">
   <div class="header">
-    <h1 class="text-start">Course</h1>
+    <h1 class="text-start">Courses</h1>
     <p class="description">
-      Barista Course is a course that will teach you everything you need to know to become a professional barista.
+      Barista Courses is a course that will teach you everything you need to know to become a professional barista.
     </p>
   </div>
-  <div class="content">
+  <div class="content mb-5 pb-5">
     <div class="row">
-      @foreach($bootcamps as $bootcamp)
+      @forelse($bootcamps as $bootcamp)
       <div class="col-md-4">
         <div class="card rounded-3 shadow" style="border: solid 2px #3b2621;">
           <div class="m-3">
@@ -79,7 +79,13 @@
           </div>
         </div>
       </div>
-      @endforeach
+      @empty
+      <div class="col">
+        <div class="alert" role="alert" style="border: solid 3px #3b2621 !important;">
+          There are no courses available.
+        </div>
+      </div>
+      @endforelse
     </div>
   </div>
 </div>

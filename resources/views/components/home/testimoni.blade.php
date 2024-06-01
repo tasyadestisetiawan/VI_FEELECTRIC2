@@ -16,174 +16,39 @@
     <!-- Carousel -->
     <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
-            <!-- First set of testimonials -->
             <div class="carousel-item active">
                 <div class="ulasan-box-container">
-                    <!-- First four boxes -->
-                    <!-- Repeat this structure for each box in the first set -->
+                    @foreach ($testimonials as $testimonial)
                     <div class="ulasan-box">
                         <div class="profile">
                             <div class="profile-img p-2">
-                                <img src="{{ asset('frontend/img/testimonials/Ulasan1.png') }}" alt="User Name">
+                                @foreach ($users as $user)
+                                @if ($user->id == $testimonial->user_id)
+                                @if ($user->avatar == null)
+                                <img src="https://sm.ign.com/ign_nordic/cover/a/avatar-gen/avatar-generations_prsz.jpg"
+                                    alt="profile-img">
+                                @else
+                                <img src="{{ asset('storage/img/avatars/' . $user->avatar) }}">
+                                @endif
+                                @endif
+                                @endforeach
                             </div>
                             <div>
-                                <strong>Sarah Putri</strong>
+                                <strong>
+                                    {{ $testimonial->name }}
+                                </strong>
                                 <div class="reviews">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i> <!-- Half-filled star -->
+                                    @for ($i = 0; $i < $testimonial->rating; $i++)
+                                        <i class="bi bi-star-fill"></i>
+                                        @endfor
                                 </div>
                             </div>
                         </div>
-                        <p class="lh-1">Kopi di Feelectric selalu mencerahkan hariku dengan rasa yang kaya, lezat, dan
-                            aroma yang memikat.</p>
+                        <p class="lh-1">
+                            {{ $testimonial->message }}
+                        </p>
                     </div>
-                    <div class="ulasan-box">
-                        <div class="profile">
-                            <div class="profile-img p-2">
-                                <img src="{{ asset('frontend/img/testimonials/Ulasan2.png') }}" alt="User Name">
-                            </div>
-                            <div>
-                                <strong>Adi Wijaya</strong>
-                                <div class="reviews">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <!-- Half-filled star -->
-                                </div>
-                            </div>
-                        </div>
-                        <p class="lh-1">Kualitas kopi di Feelectric tidak pernah mengecewakan, selalu memberikan
-                            kesegaran dan kepuasan pada setiap cangkirnya.</p>
-                    </div>
-                    <div class="ulasan-box">
-                        <div class="profile">
-                            <div class="profile-img p-2">
-                                <img src="{{ asset('frontend/img/testimonials/Ulasan3.png') }}" alt="User Name">
-                            </div>
-                            <div>
-                                <strong>Maya Sari</strong>
-                                <div class="reviews">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i> <!-- Half-filled star -->
-                                </div>
-                            </div>
-                        </div>
-                        <p class="lh-1">Feelectric adalah tempat favorit saya untuk minum kopi karena beragam pilihan
-                            kopi mereka dan suasana yang nyaman.</p>
-                    </div>
-                    <div class="ulasan-box">
-                        <div class="profile">
-                            <div class="profile-img p-2">
-                                <img src="{{ asset('frontend/img/testimonials/Ulasan4.png') }}" alt="User Name">
-                            </div>
-                            <div>
-                                <strong>Ahmad Ridwan</strong>
-                                <div class="reviews">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i> <!-- Half-filled star -->
-                                </div>
-                            </div>
-                        </div>
-                        <p class="lh-1">Saya selalu kembali ke Feelectric untuk kopi mereka yang selalu membuat
-                            pengalaman membeli kopi menjadi menyenangkan.</p>
-                    </div>
-                    <!-- Additional boxes for the first set here -->
-                </div>
-            </div>
-            <!-- Second set of testimonials -->
-            <div class="carousel-item">
-                <div class="ulasan-box-container">
-                    <!-- Boxes for the second set -->
-                    <!-- Repeat this structure for each box in the second set -->
-                    <div class="ulasan-box">
-                        <div class="profile">
-                            <div class="profile-img p-2">
-                                <img src="{{ asset('frontend/img/testimonials/Ulasan1.png') }}" alt="User Name">
-                            </div>
-                            <div>
-                                <strong>Sarah Putri</strong>
-                                <div class="reviews">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i> <!-- Half-filled star -->
-                                </div>
-                            </div>
-                        </div>
-                        <p class="lh-1">Kopi di Feelectric selalu mencerahkan hariku dengan rasa yang kaya, lezat, dan
-                            aroma yang memikat.</p>
-                    </div>
-                    <div class="ulasan-box">
-                        <div class="profile">
-                            <div class="profile-img p-2">
-                                <img src="{{ asset('frontend/img/testimonials/Ulasan2.png') }}" alt="User Name">
-                            </div>
-                            <div>
-                                <strong>Adi Wijaya</strong>
-                                <div class="reviews">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <!-- Half-filled star -->
-                                </div>
-                            </div>
-                        </div>
-                        <p class="lh-1">Kualitas kopi di Feelectric tidak pernah mengecewakan, selalu memberikan
-                            kesegaran dan kepuasan pada setiap cangkirnya.</p>
-                    </div>
-                    <div class="ulasan-box">
-                        <div class="profile">
-                            <div class="profile-img p-2">
-                                <img src="{{ asset('frontend/img/testimonials/Ulasan3.png') }}" alt="User Name">
-                            </div>
-                            <div>
-                                <strong>Maya Sari</strong>
-                                <div class="reviews">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i> <!-- Half-filled star -->
-                                </div>
-                            </div>
-                        </div>
-                        <p class="lh-1">Feelectric adalah tempat favorit saya untuk minum kopi karena beragam pilihan
-                            kopi mereka dan suasana yang nyaman.</p>
-                    </div>
-                    <div class="ulasan-box">
-                        <div class="profile">
-                            <div class="profile-img p-2">
-                                <img src="{{ asset('frontend/img/testimonials/Ulasan4.png') }}" alt="User Name">
-                            </div>
-                            <div>
-                                <strong>Ahmad Ridwan</strong>
-                                <div class="reviews">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i> <!-- Half-filled star -->
-                                </div>
-                            </div>
-                        </div>
-                        <p class="lh-1">Saya selalu kembali ke Feelectric untuk kopi mereka yang selalu membuat
-                            pengalaman membeli kopi menjadi menyenangkan.</p>
-                    </div>
-                    <!-- Additional boxes for the second set here -->
+                    @endforeach
                 </div>
             </div>
         </div>

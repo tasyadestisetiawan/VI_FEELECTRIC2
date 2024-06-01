@@ -77,10 +77,10 @@
               <a href=" #">
                 @if($coffee->variant == 'hot')
                 <img src="{{ asset('storage/img/products/coffees/' . $coffee->imageHot) }}"
-                  class="card-img-top object-fit cover" alt="..." height="200px" width="300px" />
+                  class="card-img-top object-fit cover" alt="..." height="250px" width="300px" />
                 @elseif ($coffee->variant == 'ice' || $coffee->variant == 'both')
                 <img src="{{ asset('storage/img/products/coffees/' . $coffee->imageIce) }}"
-                  class="card-img-top object-fit cover" alt="..." height="200px" width="300px" />
+                  class="card-img-top object-fit cover" alt="..." height="250px" width="300px" />
                 @endif
               </a>
             </div>
@@ -105,10 +105,16 @@
                   @endif
                 </span>
                 {{-- See --}}
+                @if ($coffee->supply == 1 )
                 <a href="{{ route('coffees.show', $coffee->id) }}" class="btn rounded"
                   style="background-color: #3b2621; color: white">
-                  Buy
+                  See More
                 </a>
+                @else
+                <button class="btn rounded" style="background-color: #3b2621; color: white" disabled>
+                  Out of Stock
+                </button>
+                @endif
               </div>
             </div>
           </div>

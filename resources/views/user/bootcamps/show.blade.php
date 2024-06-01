@@ -46,7 +46,7 @@
                   Quota
                 </td>
                 <td>
-                  Tersisa {{ $kuota }} dari {{ $bootcamp->kuota }} peserta
+                  Remaining Quota for {{ $bootcamp->kuota }} participants
                 </td>
               </tr>
               <tr>
@@ -78,9 +78,16 @@
               </tr>
             </tbody>
           </table>
+          @if ($checkRegister)
+          <div class="row mx-2">
+            <button type="button" class="btn" disabled style="background-color: #3b2621; color: white;">
+              You have registered this course
+            </button>
+          </div>
+          @else
           <div class="row mx-2">
             {{-- Button Register --}}
-            @if($kuota > 0)
+            @if($bootcamp->kuota > 0)
             {{-- Modal Button --}}
             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#registerModal"
               style="background-color: #3b2621; color: white;">
@@ -92,6 +99,7 @@
             </button>
             @endif
           </div>
+          @endif
         </div>
       </div>
     </div>
@@ -158,7 +166,7 @@
         </div>
         <div class="row mx-2">
           <small>
-            After you click the register button, please send the payment proof in my bootcamp page.
+            After you click the register button, please send the payment proof in my course page.
           </small>
         </div>
         {{-- Course ID --}}
@@ -185,7 +193,7 @@
   Swal.fire({
         icon: 'success',
         title: 'Success',
-        text: "{{ session('success') }}",
+        text: '{{ session('success') }}',
         showConfirmButton: false,
         timer: 1500
     });

@@ -18,8 +18,7 @@
               <div class="card bg-white border-0" style="max-width: 540px;">
                 <div class="row g-0">
                   <div class="col-md-3">
-                    <img
-                      src="https://i0.wp.com/www.cssscript.com/wp-content/uploads/2020/12/Customizable-SVG-Avatar-Generator-In-JavaScript-Avataaars.js.png?fit=438%2C408&ssl=1"
+                    <img src="{{ asset('storage/img/avatars/' . Auth::user()->avatar) }}"
                       class="img-fluid rounded-start" alt="...">
                   </div>
                   <div class="col-md-9">
@@ -132,12 +131,14 @@
             <div class="card-body mx-2">
 
               <!-- Table -->
-              <table class="table table-hover">
+              <table class="table table-hover" id="dataTable">
                 <thead>
                   <tr>
                     <th scope="col">No</th>
                     <th scope="col">Invoice</th>
                     <th scope="col">Product</th>
+                    <th scope="col">Qty</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Total</th>
                     <th scope="col">Action</th>
                   </tr>
@@ -146,7 +147,10 @@
                   @forelse ($orders as $order)
                   <tr>
                     <th scope="row">{{ $loop->iteration }}</th>
-                    <td>{{ $order->order_id }}</td>
+                    <td>
+                      {{-- 5 Charachter with xxx--}}
+                      {{ substr($order->order_id, 0, 5) . 'xxxx' }}
+                    </td>
                     <td>
                       @if ($order->type == 'bean')
                       Bean
@@ -154,6 +158,16 @@
                       Machine
                       @else
                       Drink
+                      @endif
+                    </td>
+                    <td>{{ $order->quantity }}</td>
+                    <td>
+                      @if ($order->orderStatus == 'pending')
+                      <span class="badge bg-warning text-dark">{{ $order->orderStatus }}</span>
+                      @elseif ($order->orderStatus == 'success')
+                      <span class="badge bg-success">{{ $order->orderStatus }}</span>
+                      @else
+                      <span class="badge bg-danger">{{ $order->orderStatus }}</span>
                       @endif
                     </td>
                     <td>Rp. {{ number_format($order->total) }}</td>

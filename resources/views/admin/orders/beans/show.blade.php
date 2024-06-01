@@ -80,7 +80,7 @@
               </td>
             </tr>
             <tr>
-              <td>Total Bayar</td>
+              <td>Amount</td>
               <td>:</td>
               <td>
                 Rp {{ number_format($order->total, 0, ',', '.') }}
@@ -168,7 +168,7 @@
               </td>
             </tr>
             <tr>
-              <td>Bukti Pembayaran</td>
+              <td>Payment Proof</td>
               <td>:</td>
               <td>
                 @if ( $order->paymentMethod == 'transfer' )
@@ -187,7 +187,6 @@
         </div>
         <div class="col-6">
           <h5 class="my-3">Shipping Status</h5>
-          {{-- Ubah orderStatus --}}
           <form action="{{ route('admin.orders.update', $order->id) }}" method="POST">
             @csrf
             @method('PUT')

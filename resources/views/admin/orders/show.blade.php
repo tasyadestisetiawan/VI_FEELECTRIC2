@@ -61,7 +61,7 @@
               </td>
             </tr>
             <tr>
-              <td>Status</td>
+              <td>Order Status</td>
               <td>:</td>
               <td>
                 @if($order->orderStatus == 'pending')
@@ -78,7 +78,27 @@
               </td>
             </tr>
             <tr>
-              <td>Total Bayar</td>
+              <td>
+                Payment Method
+              </td>
+              <td>:</td>
+              <td>
+                {{-- paymentMethod --}}
+                @if($order->paymentMethod == 'cash')
+                <span class="badge bg-primary">
+                  Cash
+                </span>
+                @elseif($order->paymentMethod == 'wallet')
+                <span class="badge bg-success">
+                  Wallet
+                </span>
+                @else
+                <span class="badge bg-danger">{{ $order->paymentMethod }}</span>
+                @endif
+              </td>
+            </tr>
+            <tr>
+              <td>Amount</td>
               <td>:</td>
               <td>
                 Rp {{ number_format($order->total, 0, ',', '.') }}

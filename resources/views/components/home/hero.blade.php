@@ -12,10 +12,12 @@
                 <h2 data-aos="fade-up">Limited Time</h2>
                 <hr>
                 <p data-aos="fade-up" data-aos-delay="100">
-                    More Than Just Coffe, Enjoy Feelectric's signature coffe and discover your coffee flavor adventure here.
+                    More Than Just Coffe, Enjoy Feelectric's signature coffe and discover your coffee flavor adventure
+                    here.
                 </p>
                 <div class="d-flex" data-aos="fade-left" data-aos-delay="100">
-                    <a href="#products" class="btn-book-a-table fw-bold" style="background-color: yellow !important; color:#3b2621 !important;">
+                    <a href="{{ route('products.index')}}" class="btn-book-a-table fw-bold"
+                        style="background-color: yellow !important; color:#3b2621 !important;">
                         Order Now
                     </a>
                 </div>

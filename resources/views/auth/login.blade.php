@@ -154,7 +154,7 @@
 
             <div class="text-center mt-2 mb-3 divider">――――――― or login with ―――――――</div>
             <div class="mb-3">
-                <a href="" class="btn google-btn d-flex align-items-center justify-content-center"
+                <a href="/auth/google" class="btn google-btn d-flex align-items-center justify-content-center"
                     style="border:2px solid #3C2A21;">
                     <img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google">
                     <span>&nbsp; Google Account</span>
