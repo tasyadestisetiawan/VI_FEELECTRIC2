@@ -21,8 +21,8 @@ class QuestionsSeeder extends Seeder
             'option2' => 'Water',
             'option3' => 'Coffee',
             'option4' => 'Beer',
-            'answer' => 3,
-            'score' => 10,
+            'answer' => 2,
+            
         ]);
 
         Questions::create([
@@ -33,7 +33,6 @@ class QuestionsSeeder extends Seeder
             'option3' => 'Colombia',
             'option4' => 'Ethiopia',
             'answer' => 1,
-            'score' => 10,
         ]);
 
         Questions::create([
@@ -44,7 +43,6 @@ class QuestionsSeeder extends Seeder
             'option3' => 'Hacienda La Esmeralda',
             'option4' => 'St. Helena Coffee',
             'answer' => 1,
-            'score' => 10,
         ]);
 
         Questions::create([
@@ -53,9 +51,8 @@ class QuestionsSeeder extends Seeder
             'option1' => 'Central Perk',
             'option2' => 'Central Park',
             'option3' => 'Central Perch',
-            'option4' => 'Central Park',
-            'answer' => 1,
-            'score' => 10,
+            'option4' => 'Central Park Cafe',
+            'answer' => 4,
         ]);
     }
 }

@@ -42,6 +42,9 @@ return new class extends Migration
       $table->decimal('voucherDiscount', 10, 0)->default(0);
       $table->decimal('total', 10, 0);
 
+      // Coins
+      $table->integer('coins')->default(0);
+
       // Midtrans
       $table->string('snap_token')->nullable();
       $table->string('transaction_status')->nullable();

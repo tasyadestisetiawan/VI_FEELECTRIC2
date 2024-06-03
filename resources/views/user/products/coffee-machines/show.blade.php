@@ -31,7 +31,7 @@
                 <label for="" class="form-label">
                     <strong>Notes</strong>
                 </label>
-                <textarea class="form-control mb-3" rows="3" placeholder="Contoh: hati-hati"
+                <textarea class="form-control mb-3" rows="3" placeholder="Contoh: packing yang rapih"
                     name="notes"></textarea>
 
                 {{-- Quantity --}}
@@ -92,7 +92,7 @@
     Swal.fire({
         icon: 'success',
         title: 'Success',
-        text: "{{ session('success') }}",
+        text: '{{ session('success') }}',
         showConfirmButton: false,
         timer: 1500
     });

@@ -108,7 +108,7 @@
                 @if ($coffee->supply == 1 )
                 <a href="{{ route('coffees.show', $coffee->id) }}" class="btn rounded"
                   style="background-color: #3b2621; color: white">
-                  See More
+                  Buy
                 </a>
                 @else
                 <button class="btn rounded" style="background-color: #3b2621; color: white" disabled>

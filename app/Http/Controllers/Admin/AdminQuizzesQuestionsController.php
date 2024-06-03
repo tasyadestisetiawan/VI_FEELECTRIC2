@@ -56,7 +56,7 @@ class AdminQuizzesQuestionsController extends Controller
         ]);
 
         // Redirect to the index page
-        return redirect()->route('admin.quizzes.questions.index')->with('success', 'Question created successfully');
+        return redirect()->route('admin.questions.index')->with('success', 'Question created successfully');
     }
 
     /**
@@ -104,23 +104,30 @@ class AdminQuizzesQuestionsController extends Controller
             'option4' => $request->option4,
             'answer' => $request->answer,
         ]);
-
+        
         // Redirect to the index page
-        return redirect()->route('admin.quizzes.questions.index')->with('success', 'Question updated successfully');
+        return redirect()->route('admin.questions.index')->with('success', 'Question updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
-    {
-        // Find the question
-        $question = Questions::find($id);
+{
+    // Find the question
+    $question = Questions::find($id);
 
+    // Check if the question exists
+    if ($question) {
         // Delete the question
         $question->delete();
 
         // Redirect to the index page
-        return redirect()->route('admin.quizzes.questions.index')->with('success', 'Question deleted successfully');
+        return redirect()->route('admin.questions.index')->with('success', 'Question deleted successfully');
+    } else {
+        // Redirect with error message if question is not found
+        return redirect()->route('admin.questions.index')->with('error', 'Question not found');
     }
+}
+
 }

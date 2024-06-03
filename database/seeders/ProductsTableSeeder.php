@@ -13,41 +13,27 @@ class ProductsTableSeeder extends Seeder
      */
     public function run(): void
     {
-         // Create products
-         Product::create([
+        // Create 2 products
+        Product::create([
             'category_id' => 1,
             'name' => 'Iced Americano',
             'slug' => 'iced-americano',
             'description' => 'Perpaduan coklat, latte dari house blend Fore, dan gurihnya caramel',
             'variant' => 'ice',
             'priceIce' => 25000,
-            'stockIce' => 100,
             'imageIce' => 'iced-americano.jpg',
         ]);
 
+        // Create 1 product with both variants
         Product::create([
             'category_id' => 2,
-            'name' => 'Hot Americano',
-            'slug' => 'hot-americano',
-            'description' => 'Perpaduan coklat, latte dari house blend Fore, dan gurihnya caramel',
-            'variant' => 'hot',
-            'priceHot' => 30000,
-            'stockHot' => 100,
-            'imageHot' => 'hot-americano.jpg',
-        ]);
-
-        // Create product with both variants
-        Product::create([
-            'category_id' => 3,
             'name' => 'Cappucino',
             'slug' => 'cappucino',
             'description' => 'Espresso dari biji kopi khas nusantara dipadukan susu oat gluten-free dan sensasi nutty dari hazelnut.',
             'variant' => 'both',
             'priceHot' => 30000,
-            'stockHot' => 100,
             'imageHot' => 'hot-cappuccino.jpg',
             'priceIce' => 25000,
-            'stockIce' => 100,
             'imageIce' => 'iced-cappuccino.jpg',
         ]);
     }

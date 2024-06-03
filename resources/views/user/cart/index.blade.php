@@ -450,6 +450,27 @@ return $cartItem->type == 'drink';
               </table>
             </div>
 
+            {{-- Coins --}}
+            <div class="mb-3">
+              <span>
+                You have <span class="fw-bold">{{ auth()->user()->coin }}</span> coins
+              </span>
+              <label for="coins" class="form-label">
+                Coins
+              </label>
+              <div class="row">
+                <div class="col-8">
+                  <input type="number" class="form-control" id="coins" name="coins" required>
+                </div>
+                <div class="col-4">
+                  <button type="button" id="apply-coins-btn" class="btn col-6 btn-sm w-100"
+                    style="background-color: #265526; color: white;">
+                    Apply
+                  </button>
+                </div>
+              </div>
+            </div>
+
             <!-- Voucher -->
             @php
             $hasDrink = false;
@@ -474,6 +495,12 @@ return $cartItem->type == 'drink';
               </div>
             </div>
             @endif
+
+            <small class="text-muted mb-3">
+              <i>
+                *Can't use coins and voucher at the same time.
+              </i>
+            </small>
 
             <input type="hidden" name="note" value="{{ json_encode($cartItems->pluck('notes')) }}">
             <input type="hidden" name="quantity" value="{{ $totalQuantity }}">
@@ -552,7 +579,7 @@ return $cartItem->type == 'drink';
                   <input type="number" class="form-control" id="quantity" name="quantity"
                     value="{{ $cartItem->quantity }}">
                 </div>
-               
+                
               </div>
             </div>
             <div class="mb-3">
@@ -620,13 +647,13 @@ $totalPrice += $cartItem->total_price;
     // Set total to sub-total
     document.getElementById('total').innerHTML = formattedTotalPrice;
     document.getElementById('total-input').value = totalPrice;
-
-
   } else {
     // Total = Sub-total + Cost ()
-    let subTotal = parseFloat(document.getElementById('sub-total-input').value);
-    let cost = parseFloat(document.getElementById('cost-input').value);
-    let total = subTotal + cost;
+    let subTotal  = parseFloat(document.getElementById('sub-total-input').value);
+    let cost      = parseFloat(document.getElementById('cost-input').value);
+    let total     = subTotal + cost;
+
+    // Format total price
     let formattedTotal = 'Rp ' + total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     document.getElementById('total').innerHTML = formattedTotal;
   }
@@ -672,13 +699,22 @@ $totalPrice += $cartItem->total_price;
                 return;
             }
 
+            // Cek apakah ada coins yang dimasukkan
+            if (document.getElementById('coins').value != '') {
+                alert('You can\'t use coins and voucher at the same time!');
+                return;
+            } else {
+                document.getElementById('apply-coins-btn').disabled = true;
+            }
+
             let discount = parseFloat(vouchers[i].discount);
             let discountAmount = subTotal * (discount / 100);
             let total = subTotal - discountAmount;
             let formattedTotal = 'Rp ' + total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 
             // Place the discount amount with % format
-            document.getElementById('discount').innerHTML = discount + '%' + ' (-Rp ' + discountAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ')';
+            document.getElementById('discount').innerHTML = discount + '%' + ' (-Rp ' +
+            discountAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ')';
             document.getElementById('total').innerHTML = formattedTotal;
             document.getElementById('total-input').value = total;
 
@@ -690,13 +726,47 @@ $totalPrice += $cartItem->total_price;
             alert('Voucher not found!');
         }
     }
-
     // Jika tidak ada voucher yang cocok, reset ke total awal
     document.getElementById('sub-total').innerHTML = formattedTotalPrice;
     document.getElementById('sub-total-input').value = totalPrice;
-
-    // disable apply button if voucher has been applied
     document.getElementById('apply-voucher-btn').disabled = true;
+
+});
+</script>
+
+<script>
+  document.getElementById('apply-coins-btn').addEventListener('click', function() {
+    let coins     = parseFloat(document.getElementById('coins').value);
+    let subTotal  = parseFloat(document.getElementById('sub-total-input').value);
+    let total     = parseFloat(document.getElementById('total-input').value);
+
+    // Cek apakah koin yang dimasukkan lebih kecil atau sama dengan total koin user
+    if (coins > {{ auth()->user()->coin }}) {
+        alert('You don\'t have enough coins!');
+        return;
+    }
+
+    // Jika tidak ada voucher yang dimasukan, maka masukan hasil dari penguangan koin ke total
+    if (document.getElementById('discount').innerHTML == '') {
+        let newTotal = subTotal - coins;
+        document.getElementById('total').innerHTML = 'Rp ' + newTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        document.getElementById('total-input').value = newTotal;
+
+        // Reset value input voucher
+        document.getElementById('voucher').value = '';
+
+    }
+
+    // Jika ada voucher yang dimasukan
+    if (document.getElementById('discount').innerHTML != '') {
+        // Alert jika koin dan voucher tidak bisa digunakan bersamaan
+        alert('You can\'t use coins and voucher at the same time!');
+        // Reset value input voucher
+        document.getElementById('discount').value = '';
+        return;
+    }
+
+    this.disabled = true;
 
 });
 </script>

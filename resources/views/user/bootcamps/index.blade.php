@@ -26,9 +26,9 @@
 @section('content')
 <div class="container my-5 py-5">
   <div class="header">
-    <h1 class="text-start">Courses</h1>
+    <h1 class="text-start">Bootcamps</h1>
     <p class="description">
-      Barista Courses is a course that will teach you everything you need to know to become a professional barista.
+      Barista Bootcamp is a course that will teach you everything you need to know to become a professional barista.
     </p>
   </div>
   <div class="content mb-5 pb-5">
@@ -82,7 +82,7 @@
       @empty
       <div class="col">
         <div class="alert" role="alert" style="border: solid 3px #3b2621 !important;">
-          There are no courses available.
+          There are no bootcamps available.
         </div>
       </div>
       @endforelse

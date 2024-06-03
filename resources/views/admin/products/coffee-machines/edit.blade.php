@@ -20,7 +20,8 @@
       @endif
 
       {{-- Form Edit Product Machine --}}
-      <form action="{{ route('admin.coffee-machines.update', $product->id) }}" method="POST" enctype="multipart/form-data">
+      <form action="{{ route('admin.coffee-machines.update', $product->id) }}" method="POST"
+        enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="row">
@@ -43,11 +44,19 @@
             </div>
           </div>
         </div>
-
+        <div class="row">
+          <div class="col-12">
+            <div class="mb-3">
+              <label for="stock" class="form-label">Stock</label>
+              <input type="number" class="form-control" id="stock" name="stock" value="{{ $product->stock }}" required>
+            </div>
+          </div>
+        </div>
         <div class="row">
           <div class="mb-3">
             <label for="description" class="form-label">Description</label>
-            <textarea class="form-control" id="description" name="description" rows="3" required>{{ $product->description }}</textarea>
+            <textarea class="form-control" id="description" name="description" rows="3"
+              required>{{ $product->description }}</textarea>
           </div>
         </div>
 

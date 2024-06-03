@@ -4,7 +4,7 @@
 <div class="container my-5 py-5">
   <div class="header clearfix">
     <a href="{{ route('admin.bootcamps.index') }}" class="btn btn-primary-theme btn-sm float-end mb-3">
-      Back to Courses
+      Back to Bootcamps
     </a>
   </div>
   <div class="row">

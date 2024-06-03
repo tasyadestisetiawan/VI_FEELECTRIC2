@@ -43,7 +43,14 @@
             </div>
           </div>
         </div>
-
+        <div class="row">
+          <div class="col-12">
+            <div class="mb-3">
+              <label for="stock" class="form-label">Stock</label>
+              <input type="number" class="form-control" id="stock" name="stock" required>
+            </div>
+          </div>
+        </div>
         <div class="row">
           <div class="mb-3">
             <label for="description" class="form-label">Description</label>

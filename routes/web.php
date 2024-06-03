@@ -185,6 +185,18 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 
     // Feddbacks Routes Resource
     Route::resource('user/feedbacks', UserFeedbackController::class);
+
+    // List of Quizzes
+    Route::get('/user/quizzes', [UserQuizzesController::class, 'quizzes'])->name('user.quizzes.quizzes');
+
+    // Play a Quiz
+    Route::get('/user/quizzes/{id}/play', [UserQuizzesController::class, 'play'])->name('user.quizzes.play');
+
+    // Submit Quiz
+    Route::post('/submit-quiz', [UserQuizzesController::class, 'submitQuiz'])->name('submit.quiz');
+
+    // Finish Quiz
+    Route::get('/user/quizzes/{id}/finish', [UserQuizzesController::class, 'finish'])->name('user.quizzes.finish');
 });
 
 // All Products Route with Prefix

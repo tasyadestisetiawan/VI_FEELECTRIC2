@@ -13,12 +13,12 @@
                 <li><a href="{{ route('orders.index') }}">Orders</a></li>
                 <li><a href="{{ route('rooms.index')}}">Rooms</a></li>
                 <li>
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#soonModal">Quizz</a>
+                    <a href="{{ route('quizzes.index') }}">Quizz</a>
                 </li>
                 @auth
                 @if (Auth::user()->role == 'user')
                 {{-- Dropdown --}}
-                <li class="dropdown"><a href="#"><span>Course</span> <i class="bi bi-chevron-down"></i></a>
+                <li class="dropdown"><a href="#"><span>Courses</span> <i class="bi bi-chevron-down"></i></a>
                     <ul>
                         <li><a href="{{ route('bootcamps.index')}}">Find Course</a></li>
                         <li><a href="{{ route('user.bootcamps.my')}}">My Courses</a></li>

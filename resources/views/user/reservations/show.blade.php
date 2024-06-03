@@ -138,7 +138,7 @@
                   </td>
                   <td>
                     {{ \Carbon\Carbon::parse($reservation->check_in)->format('d F Y') }} at {{
-                    \Carbon\Carbon::parse($reservation->checkin_time)->format('H:i') }}
+                    \Carbon\Carbon::parse($reservation->check_in_time)->format('h:i A') }}
                   </td>
                 </tr>
                 <tr>
@@ -146,8 +146,8 @@
                     Check-out
                   </td>
                   <td>
-                    {{ \Carbon\Carbon::parse($reservation->check_out)->format('d F Y') }} at {{
-                    \Carbon\Carbon::parse($reservation->checkout_time)->format('H:i') }}
+                    {{ \Carbon\Carbon::parse($reservation->check_in)->format('d F Y') }} at {{
+                    \Carbon\Carbon::parse($reservation->check_out_time)->format('h:i A') }}
                   </td>
                 </tr>
                 <tr>

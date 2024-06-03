@@ -75,8 +75,8 @@
                 </div>
                 <div class="card-footer bg-white border-0">
                     <div class="d-flex justify-content-between">
-                        <a href="{{ route('products.show', $recommendedProduct->id) }}" class="btn text-light rounded"
-                            style="background-color: #3b2621">Buy</a>
+                        <a href="{{ route('coffee-beans.show', $recommendedProduct->id) }}"
+                            class="btn text-light rounded" style="background-color: #3b2621">Buy</a>
                     </div>
                 </div>
             </div>
@@ -93,7 +93,7 @@
     Swal.fire({
         icon: 'success',
         title: 'Success',
-        text: "{{ session('success') }}",
+        text: '{{ session('success') }}',
         showConfirmButton: false,
         timer: 1500
     });

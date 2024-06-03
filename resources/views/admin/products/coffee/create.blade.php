@@ -73,7 +73,7 @@
                 <div class="row" id="hot-variant">
                     <div class="col-4">
                         <div class="mb-3">
-                            <label for="supply" class="form-label">Stock</label>
+                            <label for="supply" class="form-label">Supply</label>
                             <select class="form-select" id="supply" name="supply" required>
                                 <option selected disabled>Select Stock</option>
                                 <option value="1">Ready</option>
@@ -99,7 +99,7 @@
                 <div class="row" id="ice-variant">
                     <div class="col-4">
                         <div class="mb-3">
-                            <label for="supply" class="form-label">Stock</label>
+                            <label for="supply" class="form-label">Supply</label>
                             <select class="form-select" id="supply" name="supply" required>
                                 <option selected disabled>Select Stock</option>
                                 <option value="1">Ready</option>

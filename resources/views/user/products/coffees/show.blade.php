@@ -85,12 +85,11 @@
                 <input type="hidden" name="price" id="priceBoth">
                 @endif
 
-
                 {{-- Notes --}}
                 <label for="" class="form-label">
                     <strong>Notes</strong>
                 </label>
-                <textarea class="form-control mb-3" rows="3" placeholder="Example: Add Sugar, Less Sugar, ttc"
+                <textarea class="form-control mb-3" rows="3" placeholder="Example: Add sugar, Less sugar, etc"
                     name="notes"></textarea>
 
                 {{-- Quantity --}}

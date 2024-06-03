@@ -1,6 +1,8 @@
 @extends('layouts.home')
 
 @section('content')
+    <?php date_default_timezone_set('Asia/Jakarta'); // Pastikan ini sesuai dengan zona waktu Anda ?>
+
     <div class="container my-5 py-5">
         <div class="card mt-5 pt-3 px-3 pb-3 rounded-4 shadow-sm w-100" style="border: solid 2px #3b2621;">
             <div class="card-body">

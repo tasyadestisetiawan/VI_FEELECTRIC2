@@ -107,6 +107,17 @@ class UserOrderController extends Controller
         // Get Snap Token
         $snapToken = Snap::getSnapToken($payload);
 
+        // Cek apakah ada coins yang digunakan
+        if ($request->coins == null) {
+            $request->coins = 0;
+        } else {
+            // Update coins
+            $user = User::where('id', auth()->id())->first();
+            $user->update([
+                'coin' => $user->coin - $request->coins,
+            ]);
+        }
+
         // Create a new order
         Order::create([
             'order_id'       => $idOrder,
@@ -119,10 +130,11 @@ class UserOrderController extends Controller
             'type'           => $request->type,
             'subTotal'       => $request->subTotal,
             'cost'           => $request->cost,
+            'coins'          => $request->coins,
             'orderStatus'    => 'pending',
             'voucherCode'    => $request->voucherCode,
             'voucherDiscount' => $voucherDiscount,
-            'total'          => $request->subTotal - $voucherDiscount + $request->cost,
+            'total'          => $request->subTotal - ($voucherDiscount / 100) + $request->cost - $request->coins,
             'snap_token'     => $snapToken,
             'quantity'       => $request->quantity,
         ]);

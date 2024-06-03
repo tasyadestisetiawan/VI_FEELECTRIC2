@@ -61,15 +61,7 @@
               </td>
               <td>
                 <span class="badge bg-success">
-                  @if($data->answer == 1)
-                  {{ $data->option1 }}
-                  @elseif($data->answer == 2)
-                  {{ $data->option2 }}
-                  @elseif($data->answer == 3)
-                  {{ $data->option3 }}
-                  @elseif($data->answer == 4)
-                  {{ $data->option4 }}
-                  @endif
+                  {{ $data->answer }}
                 </span>
               </td>
               <td>
@@ -137,14 +129,8 @@
             <input type="text" class="form-control" id="option4" name="option4" value="{{ $data->option4 }}" required>
           </div>
           <div class="mb-3">
-            <label for="answer" class="form-label">Answer</label>
-            <select class="form-select" id="answer" name="answer" required>
-              <option selected disabled>Select Answer</option>
-              <option value="1" @if($data->answer == 1) selected @endif>Option A</option>
-              <option value="2" @if($data->answer == 2) selected @endif>Option B</option>
-              <option value="3" @if($data->answer == 3) selected @endif>Option C</option>
-              <option value="4" @if($data->answer == 4) selected @endif>Option D</option>
-            </select>
+            <label for="answer" class="form-label">Correct Answer</label>
+            <input type="text" class="form-control" id="answer" name="answer" value="{{ $data->answer }}" required>
           </div>
         </div>
       </form>
@@ -197,14 +183,8 @@
             <input type="text" class="form-control" id="option4" name="option4" required>
           </div>
           <div class="mb-3">
-            <label for="answer" class="form-label">Answer</label>
-            <select class="form-select" id="answer" name="answer" required>
-              <option selected disabled>Select Answer</option>
-              <option value="1">Option A</option>
-              <option value="2">Option B</option>
-              <option value="3">Option C</option>
-              <option value="4">Option D</option>
-            </select>
+            <label for="answer" class="form-label">Correct Answer</label>
+            <input type="text" class="form-control" id="answer" name="answer" required>
           </div>
         </div>
         <div class="modal-footer">

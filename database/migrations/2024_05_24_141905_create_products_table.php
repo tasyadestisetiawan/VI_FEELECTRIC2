@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,23 +16,12 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->text('description');
-
-            // Variant
             $table->enum('variant', ['hot', 'ice', 'both'])->default('both');
-
-            // Hot
             $table->decimal('priceHot', 15, 0)->nullable();
-            $table->integer('stockHot')->nullable();
             $table->string('imageHot')->nullable();
-
-            // Ice
             $table->decimal('priceIce', 15, 0)->nullable();
-            $table->integer('stockIce')->nullable();
             $table->string('imageIce')->nullable();
-
-            // Supply
             $table->integer('supply')->nullable();
-
             $table->timestamps();
         });
     }
