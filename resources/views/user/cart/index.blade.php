@@ -460,7 +460,7 @@ return $cartItem->type == 'drink';
               </label>
               <div class="row">
                 <div class="col-8">
-                  <input type="number" class="form-control" id="coins" name="coins" required>
+                  <input type="number" class="form-control" id="coins" name="coins">
                 </div>
                 <div class="col-4">
                   <button type="button" id="apply-coins-btn" class="btn col-6 btn-sm w-100"
@@ -531,7 +531,6 @@ return $cartItem->type == 'drink';
           </div>
         </form>
       </div>
-
     </div>
   </div>
 
