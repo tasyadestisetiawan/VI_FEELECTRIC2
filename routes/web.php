@@ -36,6 +36,7 @@ use App\Http\Controllers\Admin\AdminOrderMachineController;
 use App\Http\Controllers\Admin\AdminCoffeeMachineController;
 use App\Http\Controllers\Admin\AdminProductCategoryController;
 use App\Http\Controllers\Admin\AdminQuizzesQuestionsController;
+use App\Http\Controllers\NotificationController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -107,6 +108,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     // Settings Routes Resource
     Route::resource('settings', AdminSettingController::class);
+
+    // Twilio WA
+    Route::post('/send-whatsapp-notification', [NotificationController::class, 'sendWhatsAppNotification']);
 });
 
 // User Routes

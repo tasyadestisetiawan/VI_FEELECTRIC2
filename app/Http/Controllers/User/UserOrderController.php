@@ -143,7 +143,7 @@ class UserOrderController extends Controller
         Cart::where('user_id', auth()->id())->delete();
 
         // Return & redirect to order page
-        return redirect()->route('orders.index')->with('success', 'Order has been created successfully!');
+        return redirect()->route('cart.index')->with('success', 'Order has been created successfully!');
     }
 
     /**

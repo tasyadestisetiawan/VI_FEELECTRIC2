@@ -74,7 +74,7 @@
                     <div class="col-4">
                         <div class="mb-3">
                             <label for="supply" class="form-label">Supply</label>
-                            <select class="form-select" id="supply" name="supply" required>
+                            <select class="form-select" id="supply" name="supply_hot" required>
                                 <option selected disabled>Select Stock</option>
                                 <option value="1">Ready</option>
                                 <option value="0">Empty</option>
@@ -100,7 +100,7 @@
                     <div class="col-4">
                         <div class="mb-3">
                             <label for="supply" class="form-label">Supply</label>
-                            <select class="form-select" id="supply" name="supply" required>
+                            <select class="form-select" id="supply" name="supply_ice" required>
                                 <option selected disabled>Select Stock</option>
                                 <option value="1">Ready</option>
                                 <option value="0">Empty</option>

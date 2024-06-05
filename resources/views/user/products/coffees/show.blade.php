@@ -145,10 +145,46 @@
                 </div>
                 <div class="card-footer bg-white border-0">
                     <div class="d-flex justify-content-between">
-                        <a href="{{ route('coffees.show', $recommendedProduct->id) }}" class="btn text-light rounded"
-                            style="background-color: #3b2621">Buy</a>
+                        {{-- See --}}
+                        @if($recommendedProduct->variant == 'hot')
+                        @if($recommendedProduct->supply_hot == 1)
+                        <a href="{{ route('coffees.show', $recommendedProduct->id) }}" class="btn rounded"
+                            style="background-color: #3b2621; color: white">
+                            Buy
+                        </a>
+                        @else
+                        <button class="btn rounded" style="background-color: #3b2621; color: white" disabled>
+                            Out of Stock
+                        </button>
+                        @endif
+                        @elseif($recommendedProduct->variant == 'ice')
+                        @if($recommendedProduct->supply_ice == 1)
+                        <a href="{{ route('coffees.show', $recommendedProduct->id) }}" class="btn rounded"
+                            style="background-color: #3b2621; color: white">
+                            Buy
+                        </a>
+                        @else
+                        <button class="btn rounded" style="background-color: #3b2621; color: white" disabled>
+                            Out of Stock
+                        </button>
+                        @endif
+                        @elseif($recommendedProduct->variant == 'both')
+                        @if($recommendedProduct->supply_hot == 1 && $recommendedProduct->supply_ice == 1)
+                        <a href="{{ route('coffees.show', $recommendedProduct->id) }}" class="btn rounded"
+                            style="background-color: #3b2621; color: white">
+                            Buy
+                        </a>
+                        @else
+                        <button class="btn rounded" style="background-color: #3b2621; color: white" disabled>
+                            Out of Stock
+                        </button>
+                        @endif
+                        @endif
                     </div>
                 </div>
+
+
+
             </div>
         </div>
         @endforeach
@@ -163,7 +199,7 @@
     Swal.fire({
         icon: 'success',
         title: 'Success',
-        text: '{{ session('success') }}',
+        text: "{{ session('success') }}",
         showConfirmButton: false,
         timer: 1500
     });

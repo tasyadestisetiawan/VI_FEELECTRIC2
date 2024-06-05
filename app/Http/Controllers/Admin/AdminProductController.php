@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -40,34 +41,30 @@ class AdminProductController extends Controller
             'priceIce'      => 'nullable|numeric',
             'imageHot'      => 'nullable|image',
             'imageIce'      => 'nullable|image',
-            'supply'        => 'required|integer',
         ];
 
         $request->validate($rules);
 
-        $product = new Product();
-        $product->name = $request->name;
-        $product->slug = Str::slug($request->name);
-        $product->description = $request->description;
-        $product->category_id = $request->category_id;
-        $product->variant = $request->variant;
-        $product->priceHot = $request->priceHot;
-        $product->priceIce = $request->priceIce;
-        $product->supply = $request->supply;
+        $data = $request->only([
+            'name', 'description', 'category_id', 'variant',
+            'priceHot', 'priceIce', 'supply'
+        ]);
+
+        $data['slug'] = Str::slug($request->name);
 
         if ($request->hasFile('imageHot')) {
             $imageHot = $request->file('imageHot');
             $imageHot->storeAs('public/img/products/coffees', $imageHot->hashName());
-            $product->imageHot = $imageHot->hashName();
+            $data['imageHot'] = $imageHot->hashName();
         }
 
         if ($request->hasFile('imageIce')) {
             $imageIce = $request->file('imageIce');
             $imageIce->storeAs('public/img/products/coffees', $imageIce->hashName());
-            $product->imageIce = $imageIce->hashName();
+            $data['imageIce'] = $imageIce->hashName();
         }
 
-        $product->save();
+        Product::create($data);
 
         return redirect()->route('admin.products.index')->with('success', 'Product added successfully');
     }
@@ -96,40 +93,45 @@ class AdminProductController extends Controller
     public function update(Request $request, string $id)
     {
         $validateData = $request->validate([
-            'name'          => 'required',
-            'description'   => 'required',
-            'category_id'   => 'required',
-            'variant'       => 'required',
-            'priceHot'      => 'nullable|numeric',
-            'priceIce'      => 'nullable|numeric',
-            'imageHot'      => 'nullable|image',
-            'imageIce'      => 'nullable|image',
-            'supply'        => 'required|integer',
+            'name' => 'required',
+            'description' => 'required',
+            'category_id' => 'required',
+            'variant' => 'required',
+            'priceHot' => 'nullable|numeric',
+            'priceIce' => 'nullable|numeric',
+            'imageHot' => 'nullable|image',
+            'imageIce' => 'nullable|image',
+            'supply_hot' => 'required_if:variant,hot,both|integer',
+            'supply_ice' => 'required_if:variant,ice,both|integer',
         ]);
 
-        $product = Product::find($id);
-        $product->name = $request->name;
-        $product->slug = Str::slug($request->name);
-        $product->description = $request->description;
-        $product->category_id = $request->category_id;
-        $product->variant = $request->variant;
-        $product->priceHot = $request->priceHot;
-        $product->priceIce = $request->priceIce;
-        $product->supply = $request->supply;
+        $data = $request->only([
+            'name', 'description', 'category_id', 'variant',
+            'priceHot', 'priceIce'
+        ]);
+
+        if ($request->has('supply_hot')) {
+            $data['supply_hot'] = $request->input('supply_hot');
+        }
+
+        if ($request->has('supply_ice')) {
+            $data['supply_ice'] = $request->input('supply_ice');
+        }
 
         if ($request->hasFile('imageHot')) {
             $imageHot = $request->file('imageHot');
             $imageHot->storeAs('public/img/products/coffees', $imageHot->hashName());
-            $product->imageHot = $imageHot->hashName();
+            $data['imageHot'] = $imageHot->hashName();
         }
 
         if ($request->hasFile('imageIce')) {
             $imageIce = $request->file('imageIce');
             $imageIce->storeAs('public/img/products/coffees', $imageIce->hashName());
-            $product->imageIce = $imageIce->hashName();
+            $data['imageIce'] = $imageIce->hashName();
         }
 
-        $product->save();
+        $product = Product::find($id);
+        $product->update($data);
 
         return redirect()->route('admin.products.index')->with('success', 'Product updated successfully');
     }

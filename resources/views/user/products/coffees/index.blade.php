@@ -103,10 +103,40 @@
                     @endif
                   </span>
                   {{-- See --}}
+                  @if($coffee->variant == 'hot')
+                  @if($coffee->supply_hot == 1)
                   <a href="{{ route('coffees.show', $coffee->id) }}" class="btn rounded"
                     style="background-color: #3b2621; color: white">
                     Buy
                   </a>
+                  @else
+                  <button class="btn rounded" style="background-color: #3b2621; color: white" disabled>
+                    Out of Stock
+                  </button>
+                  @endif
+                  @elseif($coffee->variant == 'ice')
+                  @if($coffee->supply_ice == 1)
+                  <a href="{{ route('coffees.show', $coffee->id) }}" class="btn rounded"
+                    style="background-color: #3b2621; color: white">
+                    Buy
+                  </a>
+                  @else
+                  <button class="btn rounded" style="background-color: #3b2621; color: white" disabled>
+                    Out of Stock
+                  </button>
+                  @endif
+                  @elseif($coffee->variant == 'both')
+                  @if($coffee->supply_hot == 1 && $coffee->supply_ice == 1)
+                  <a href="{{ route('coffees.show', $coffee->id) }}" class="btn rounded"
+                    style="background-color: #3b2621; color: white">
+                    Buy
+                  </a>
+                  @else
+                  <button class="btn rounded" style="background-color: #3b2621; color: white" disabled>
+                    Out of Stock
+                  </button>
+                  @endif
+                  @endif
                 </div>
               </div>
             </div>

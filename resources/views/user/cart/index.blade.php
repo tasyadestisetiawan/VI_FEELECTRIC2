@@ -30,11 +30,6 @@ return $cartItem->type == 'drink';
 <div class="container my-5 py-5">
   <div class="row mt-4">
     <div class="row">
-
-      {{-- Alert Notifications --}}
-      <x-alert type="success" :message="session('success')" />
-      <x-alert type="danger" :errors="$errors->all()" />
-
       <!-- Cart Items -->
       <div class="col-md-8 mb-4">
         <h3>
@@ -42,6 +37,22 @@ return $cartItem->type == 'drink';
           Cart Orders
         </h3>
         <hr>
+
+        @if (session('success'))
+        <div class="alert alert-success alert-dismissible rounded-4 fade show text-light" role="alert"
+          style="background-color: #3b2621;">
+          <i class="bi bi-check-circle"></i>
+          You have successfully placed an order, please return to the product page to order another item or to the
+          order list page.
+          <br><br>
+          <a href="{{ route('products.index') }}" class="btn btn-sm rounded-3 p-2 mt-2 text-light"
+            style="margin-right: 5px; background-color: #3b2621; border: solid 1px #fff7e8;">Products</a>
+          <a href="{{ route('orders.index') }}" class="btn btn-sm rounded-3 p-2 mt-2 text-light"
+            style="background-color: #3b2621; border: solid 1px #fff7e8;">Orders</a>
+          {{-- Button Close --}}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
 
         <div class="card p-2 rounded-4 shadow-sm w-100" style="border: solid 2px #3b2621;">
 
@@ -97,7 +108,7 @@ return $cartItem->type == 'drink';
                           <span class="badge bg-secondary">
                             {{ $cartItem->quantity }} x
                           </span>
-                          
+
                           {{-- Temperature --}}
                           @if ($cartItem->type == 'coffee')
                           @foreach($coffees as $coffee)
@@ -531,6 +542,7 @@ return $cartItem->type == 'drink';
           </div>
         </form>
       </div>
+
     </div>
   </div>
 
@@ -578,7 +590,7 @@ return $cartItem->type == 'drink';
                   <input type="number" class="form-control" id="quantity" name="quantity"
                     value="{{ $cartItem->quantity }}">
                 </div>
-                
+
               </div>
             </div>
             <div class="mb-3">
@@ -758,9 +770,9 @@ $totalPrice += $cartItem->total_price;
 
     // Jika ada voucher yang dimasukan
     if (document.getElementById('discount').innerHTML != '') {
-        // Alert jika koin dan voucher tidak bisa digunakan bersamaan
+        Alert jika koin dan voucher tidak bisa digunakan bersamaan
         alert('You can\'t use coins and voucher at the same time!');
-        // Reset value input voucher
+        Reset value input voucher
         document.getElementById('discount').value = '';
         return;
     }
