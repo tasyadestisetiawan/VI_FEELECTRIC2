@@ -17,7 +17,7 @@
         </div>
 
         <div class="col-7">
-          <div class="card rounded-4 shadow-sm w-100" style="border: solid 1px #3b2621;">
+          <div class="card rounded-4 shadow-sm w-100" style="border: solid 3px #3b2621;">
             <div class="card-header bg-white border-0 mt-2">
               <ul class="nav nav-pills gap-3">
                 <li class="nav-item">
@@ -54,19 +54,16 @@
               <table class="table table-hover" id="dataTable">
                 <thead>
                   <tr>
-                    <th scope="col">No</th>
                     <th scope="col">Invoice</th>
                     <th scope="col">Product</th>
                     <th scope="col">Qty</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Total</th>
+                    <th scope="col">Order Status</th>
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   @forelse ($orders as $order)
                   <tr>
-                    <th scope="row">{{ $loop->iteration }}</th>
                     <td>
                       {{-- 5 Charachter with xxx--}}
                       {{ substr($order->order_id, 0, 5) . 'xxxx' }}
@@ -83,24 +80,46 @@
                     <td>{{ $order->quantity }}</td>
                     <td>
                       @if ($order->orderStatus == 'pending')
-                      <span class="badge bg-warning text-dark">{{ $order->orderStatus }}</span>
-                      @elseif ($order->orderStatus == 'success')
-                      <span class="badge bg-success">{{ $order->orderStatus }}</span>
+                      <span class="badge bg-warning text-dark">
+                        PENDING
+                      </span>
+                      @elseif ($order->orderStatus == 'processing')
+                      <span class="badge bg-success">
+                        PROCESSING
+                      </span>
+                      @elseif ($order->orderStatus == 'completed')
+                      <span class="badge bg-primary">
+                        COMPLETED
+                      </span>
                       @else
-                      <span class="badge bg-danger">{{ $order->orderStatus }}</span>
+                      <span class="badge bg-danger">
+                        CANCELLED
+                      </span>
                       @endif
                     </td>
-                    <td>Rp. {{ number_format($order->total) }}</td>
                     <td>
                       {{-- Status --}}
                       @if ($order->type == 'bean' || $order->type == 'machine')
-                      <a class="btn btn-sm" style="background-color: #5b2ba8; color: #ffffff;"
-                        href="{{ route('user.orders.status', $order->id) }}">Status</a>
-                      @endif
-
+                      <a class="btn btn-sm" style="background-color: #e7c52f; color: #544242;"
+                        href="{{ route('user.orders.status', $order->id) }}" tooltip="tooltip" title="Tracking Order"
+                        data-bs-toggle="tooltip" data-bs-placement="top">
+                        <i class="bi bi-truck"></i>
+                      </a>
+                      <a class="btn btn-sm" style="background-color: #3b2621; color: #fff;"
+                        href="{{ route('orders.show', $order->id) }}" tooltip="tooltip" title="Detail"
+                        data-bs-toggle="tooltip" data-bs-placement="top">
+                        <i class="bi bi-info-circle"></i>
+                      </a>
+                      @else
                       {{-- Detail --}}
                       <a class="btn btn-sm" style="background-color: #3b2621; color: #fff;"
-                        href="{{ route('orders.show', $order->id) }}">Detail</a>
+                        href="{{ route('orders.show', $order->id) }}" tooltip="tooltip" title="Detail"
+                        data-bs-toggle="tooltip" data-bs-placement="top">
+                        <i class="bi bi-info-circle"></i> Detail
+                      </a>
+                      @endif
+
+
                     </td>
                   </tr>
                   @empty

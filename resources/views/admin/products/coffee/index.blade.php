@@ -64,10 +64,24 @@
                     @endif
                   </td>
                   <td>
-                    @if($product->supply == 1 )
+                    @if($product->variant == 'hot')
+                    @if($product->supply_hot == 1)
                     <span class="badge bg-success">Ready</span>
-                    @elseif($product->supply == 0 )
+                    @else
                     <span class="badge bg-danger">Empty</span>
+                    @endif
+                    @elseif($product->variant == 'ice')
+                    @if($product->supply_ice == 1)
+                    <span class="badge bg-success">Ready</span>
+                    @else
+                    <span class="badge bg-danger">Empty</span>
+                    @endif
+                    @elseif($product->variant == 'both')
+                    @if($product->supply_hot == 1 && $product->supply_ice == 1)
+                    <span class="badge bg-success">Ready</span>
+                    @else
+                    <span class="badge bg-danger">Empty</span>
+                    @endif
                     @endif
                   </td>
                   <td>

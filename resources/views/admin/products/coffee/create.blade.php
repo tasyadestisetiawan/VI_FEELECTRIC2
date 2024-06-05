@@ -20,8 +20,7 @@
             @endif
 
             {{-- Form Create Product --}}
-            <form id="productForm" action="{{ route('admin.products.store') }}" method="POST"
-                enctype="multipart/form-data">
+            <form id="productForm" action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="row">
@@ -51,18 +50,15 @@
                             <label for="variant" class="form-label">Variant</label>
                             <br>
                             <div class="form-check form-check-inline">
-                                <input class="form-check form-check-input" type="radio" name="variant" id="hot"
-                                    value="hot" required>
+                                <input class="form-check form-check-input" type="radio" name="variant" id="hot" value="hot" required>
                                 <label class="form-check form-check-label" for="hot">Hot</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check form-check-input" type="radio" name="variant" id="ice"
-                                    value="ice" required>
+                                <input class="form-check form-check-input" type="radio" name="variant" id="ice" value="ice" required>
                                 <label class="form-check form-check-label" for="ice">Ice</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check form-check-input" type="radio" name="variant" id="hot-ice"
-                                    value="both" required>
+                                <input class="form-check form-check-input" type="radio" name="variant" id="hot-ice" value="both" required>
                                 <label class="form-check form-check-label" for="hot-ice">Hot & Ice</label>
                             </div>
                         </div>
@@ -73,9 +69,9 @@
                 <div class="row" id="hot-variant">
                     <div class="col-4">
                         <div class="mb-3">
-                            <label for="supply" class="form-label">Supply</label>
-                            <select class="form-select" id="supply" name="supply_hot" required>
-                                <option selected disabled>Select Stock</option>
+                            <label for="supply_hot" class="form-label">Supply Hot</label>
+                            <select class="form-select" id="supply_hot" name="supply_hot">
+                                <option selected disabled>Select Supply</option>
                                 <option value="1">Ready</option>
                                 <option value="0">Empty</option>
                             </select>
@@ -83,25 +79,24 @@
                     </div>
                     <div class="col-4">
                         <div class="mb-3">
-                            <label for="price_hot" class="form-label">Price Hot</label>
-                            <input type="number" class="form-control" id="price_hot" name="priceHot" required>
+                            <label for="price_hot" class="form-label">Harga Hot</label>
+                            <input type="number" class="form-control" id="price_hot" name="priceHot">
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="mb-3">
                             <label for="image_hot" class="form-label">Image Hot</label>
-                            <input type="file" class="form-control" id="image_hot" name="imageHot" required>
+                            <input type="file" class="form-control" id="image_hot" name="imageHot">
                         </div>
                     </div>
                 </div>
 
-                {{-- Ice Variant (Stock, Price, Image) --}}
                 <div class="row" id="ice-variant">
                     <div class="col-4">
                         <div class="mb-3">
-                            <label for="supply" class="form-label">Supply</label>
-                            <select class="form-select" id="supply" name="supply_ice" required>
-                                <option selected disabled>Select Stock</option>
+                            <label for="supply_ice" class="form-label">Supply Ice</label>
+                            <select class="form-select" id="supply_ice" name="supply_ice">
+                                <option selected disabled>Select Supply</option>
                                 <option value="1">Ready</option>
                                 <option value="0">Empty</option>
                             </select>
@@ -110,17 +105,16 @@
                     <div class="col-4">
                         <div class="mb-3">
                             <label for="price_ice" class="form-label">Price Ice</label>
-                            <input type="number" class="form-control" id="price_ice" name="priceIce" required>
+                            <input type="number" class="form-control" id="price_ice" name="priceIce">
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="mb-3">
                             <label for="image_ice" class="form-label">Image Ice</label>
-                            <input type="file" class="form-control" id="image_ice" name="imageIce" required>
+                            <input type="file" class="form-control" id="image_ice" name="imageIce">
                         </div>
                     </div>
                 </div>
-
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
                     <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
@@ -145,18 +139,17 @@
             if (this.value == 'hot') {
                 $('#hot-variant').show();
                 $('#ice-variant').hide();
-                $('#supply, #price_hot, #image_hot').prop('required', true);
-                $('#supply, #price_ice, #image_ice').prop('required', false);
+                $('#supply_hot, #price_hot, #image_hot').prop('required', true);
+                $('#supply_ice, #price_ice, #image_ice').prop('required', false);
             } else if (this.value == 'ice') {
                 $('#hot-variant').hide();
                 $('#ice-variant').show();
-                $('#supply, #price_hot, #image_hot').prop('required', false);
-                $('#supply, #price_ice, #image_ice').prop('required', true);
-            } else {
+                $('#supply_hot, #price_hot, #image_hot').prop('required', false);
+                $('#supply_ice, #price_ice, #image_ice').prop('required', true);
+            } else if (this.value == 'both') {
                 $('#hot-variant').show();
                 $('#ice-variant').show();
-                $('#supply, #price_hot, #image_hot').prop('required', true);
-                $('#supply, #price_ice, #image_ice').prop('required', true);
+                $('#supply_hot, #price_hot, #image_hot, #supply_ice, #price_ice, #image_ice').prop('required', true);
             }
         });
 
@@ -186,14 +179,14 @@
 
     function validateHotVariant() {
         return document.getElementById('supply').checkValidity() &&
-               document.getElementById('price_hot').checkValidity() &&
-               document.getElementById('image_hot').checkValidity();
+            document.getElementById('price_hot').checkValidity() &&
+            document.getElementById('image_hot').checkValidity();
     }
 
     function validateIceVariant() {
         return document.getElementById('supply').checkValidity() &&
-               document.getElementById('price_ice').checkValidity() &&
-               document.getElementById('image_ice').checkValidity();
+            document.getElementById('price_ice').checkValidity() &&
+            document.getElementById('image_ice').checkValidity();
     }
 </script>
 

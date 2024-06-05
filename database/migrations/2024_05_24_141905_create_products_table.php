@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,7 +22,8 @@ return new class extends Migration
             $table->string('imageHot')->nullable();
             $table->decimal('priceIce', 15, 0)->nullable();
             $table->string('imageIce')->nullable();
-            $table->integer('supply')->nullable();
+            $table->integer('supply_hot')->default(0);
+            $table->integer('supply_ice')->default(0);
             $table->timestamps();
         });
     }

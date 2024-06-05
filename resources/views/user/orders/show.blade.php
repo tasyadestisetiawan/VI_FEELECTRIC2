@@ -16,7 +16,7 @@
         </div>
 
         <div class="col-7">
-          <div class="card rounded-4 shadow w-100" style="border: solid 1px #3b2621;">
+          <div class="card rounded-4 shadow w-100" style="border: solid 3px #3b2621;">
             <div class="card-header border-0 mt-4 ms-2">
               <h5 class="fw-bold">Detail Order</h5>
             </div>
@@ -87,6 +87,12 @@
                   <td>Payment Status</td>
                   <td>:</td>
                   <td>
+                    @if ($order->paymentMethod == 'cash')
+                    <span class="badge bg-success">
+                      Because you choose cash,
+                      please pay to the waitres!
+                    </span>
+                    @else
                     @if ($order->paymentStatus == 'pending')
                     <span class="badge bg-warning text-dark">
                       UNPAID
@@ -99,6 +105,7 @@
                     <span class="badge bg-danger">
                       REJECTED
                     </span>
+                    @endif
                     @endif
                   </td>
                 </tr>
@@ -120,6 +127,7 @@
                   </td>
                 </tr>
                 @else
+                @if ($order->voucherDiscount != 0)
                 <tr>
                   <td>Voucher</td>
                   <td>:</td>
@@ -127,6 +135,30 @@
                     {{ $order->voucherDiscount }} % ({{ $order->voucherCode }})
                   </td>
                 </tr>
+                @elseif ($order->coins != 0)
+                <tr>
+                  <td>Coins</td>
+                  <td>:</td>
+                  <td>
+                    {{ $order->coins }} coins
+                  </td>
+                </tr>
+                @elseif ($order->voucherDiscount != 0 && $order->coins != 0)
+                <tr>
+                  <td>Voucher</td>
+                  <td>:</td>
+                  <td>
+                    {{ $order->voucherDiscount }} % ({{ $order->voucherCode }})
+                  </td>
+                </tr>
+                <tr>
+                  <td>Coins</td>
+                  <td>:</td>
+                  <td>
+                    {{ $order->coins }} coins
+                  </td>
+                </tr>
+                @endif
                 @endif
               </table>
 
@@ -246,9 +278,18 @@
                       <td>Rp. {{ number_format($item->price) }}</td>
                       <td>{{ $item->quantity }}</td>
                       <td>
-                        {{-- Price * Quantity - VoucherDiscount --}}
-                        Rp. {{ number_format($item->price * $item->quantity )}} - Rp. {{ number_format($item->price *
-                        $item->quantity * $order->voucherDiscount / 100) }} ({{ $order->voucherDiscount }}%)
+
+                        {{-- Cek apakah ada coin/voucher yang dipakai? --}}
+                        @if ($order->coins != 0 && $order->voucherDiscount != 0)
+                        Rp. {{ number_format($item->price * $item->quantity - $item->price * $item->quantity *
+                        $order->voucherDiscount / 100 - $order->coins) }}
+                        @elseif ($order->coins != 0)
+                        Rp. {{ number_format($item->price * $item->quantity - $order->coins) }}
+                        @elseif ($order->voucherDiscount != 0)
+                        Rp. {{ number_format($item->price * $item->quantity - $item->price * $item->quantity *
+                        $order->voucherDiscount / 100) }}
+                        @endif
+
                       </td>
                     </tr>
                     @endforeach
@@ -263,7 +304,17 @@
                     <tr class="fw-bold bg-secondary">
                       <td>Total</td>
                       <td colspan="3"></td>
-                      <td>Rp. {{ number_format($order->total) }}</td>
+                      <td>
+                        @if ($order->coins != 0 && $order->voucherDiscount != 0)
+                        Rp. {{ number_format($item->price * $item->quantity - $item->price * $item->quantity *
+                        $order->voucherDiscount / 100 - $order->coins) }}
+                        @elseif ($order->coins != 0)
+                        Rp. {{ number_format($item->price * $item->quantity - $order->coins) }}
+                        @elseif ($order->voucherDiscount != 0)
+                        Rp. {{ number_format($item->price * $item->quantity - $item->price * $item->quantity *
+                        $order->voucherDiscount / 100) }}
+                        @endif
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -287,17 +338,17 @@
       onSuccess: function(result) {
         console.log('success');
         console.log(result);
-        location.href = "{{ route('orders.index') }}";
+        location.href = '{{ route('orders.index') }}';
       },
       onPending: function(result) {
         console.log('pending');
         console.log(result);
-        location.href = "{{ route('orders.index') }}";
+        location.href = '{{ route('orders.index') }}';
       },
       onError: function(result) {
         console.log('error');
         console.log(result);
-        location.href = "{{ route('orders.index') }}";
+        location.href = '{{ route('orders.index') }}';
       }
     });
     return false;

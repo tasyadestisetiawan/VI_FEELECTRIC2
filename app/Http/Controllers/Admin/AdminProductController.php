@@ -41,16 +41,26 @@ class AdminProductController extends Controller
             'priceIce'      => 'nullable|numeric',
             'imageHot'      => 'nullable|image',
             'imageIce'      => 'nullable|image',
+            'supply_hot'    => 'required_if:variant,hot,both|integer',
+            'supply_ice'    => 'required_if:variant,ice,both|integer',
         ];
 
         $request->validate($rules);
 
         $data = $request->only([
             'name', 'description', 'category_id', 'variant',
-            'priceHot', 'priceIce', 'supply'
+            'priceHot', 'priceIce'
         ]);
 
         $data['slug'] = Str::slug($request->name);
+
+        if ($request->has('supply_hot')) {
+            $data['supply_hot'] = $request->input('supply_hot');
+        }
+
+        if ($request->has('supply_ice')) {
+            $data['supply_ice'] = $request->input('supply_ice');
+        }
 
         if ($request->hasFile('imageHot')) {
             $imageHot = $request->file('imageHot');
@@ -68,6 +78,7 @@ class AdminProductController extends Controller
 
         return redirect()->route('admin.products.index')->with('success', 'Product added successfully');
     }
+
 
     // Display the specified resource.
     public function show(string $id)
@@ -96,7 +107,7 @@ class AdminProductController extends Controller
             'name' => 'required',
             'description' => 'required',
             'category_id' => 'required',
-            'variant' => 'required',
+            'variant' => 'required|in:hot,ice,both',
             'priceHot' => 'nullable|numeric',
             'priceIce' => 'nullable|numeric',
             'imageHot' => 'nullable|image',

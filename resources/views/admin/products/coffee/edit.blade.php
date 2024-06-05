@@ -56,17 +56,17 @@
                             <div class="form-check form-check-inline">
                                 <input class="form-check form-check-input" type="radio" name="variant" id="hot"
                                     value="hot" {{ $product->variant == 'hot' ? 'checked' : '' }}>
-                                <label class="form-check label" for="hot">Hot</label>
+                                <label class="form-check-label" for="hot">Hot</label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check form-check-input" type="radio" name="variant" id="ice"
                                     value="ice" {{ $product->variant == 'ice' ? 'checked' : '' }}>
-                                <label class="form-check label" for="ice">Ice</label>
+                                <label class="form-check-label" for="ice">Ice</label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check form-check-input" type="radio" name="variant" id="both"
                                     value="both" {{ $product->variant == 'both' ? 'checked' : '' }}>
-                                <label class="form-check label" for="both">Both</label>
+                                <label class="form-check-label" for="both">Both</label>
                             </div>
                         </div>
                     </div>
@@ -76,11 +76,11 @@
                 <div class="row" id="hot-variant">
                     <div class="col-4">
                         <div class="mb-3">
-                            <label for="supply" class="form-label">Supply</label>
-                            <select class="form-select" id="supply" name="supply" required>
+                            <label for="supply_hot" class="form-label">Supply Hot</label>
+                            <select class="form-select" id="supply_hot" name="supply_hot" required>
                                 <option value="">Select Stock</option>
-                                <option value="1" {{ $product->supply == 1 ? 'selected' : '' }}>Ready</option>
-                                <option value="0" {{ $product->supply == 0 ? 'selected' : '' }}>Empty</option>
+                                <option value="1" {{ $product->supply_hot == 1 ? 'selected' : '' }}>Ready</option>
+                                <option value="0" {{ $product->supply_hot == 0 ? 'selected' : '' }}>Empty</option>
                             </select>
                         </div>
                     </div>
@@ -94,8 +94,7 @@
                     <div class="col-4">
                         <div class="mb-3">
                             <label for="image_hot" class="form-label">Image Hot</label>
-                            <input type="file" class="form-control" id="image_hot" name="imageHot" required
-                                value="{{ $product->imageHot }}">
+                            <input type="file" class="form-control" id="image_hot" name="imageHot" required>
                         </div>
                     </div>
                 </div>
@@ -104,11 +103,11 @@
                 <div class="row" id="ice-variant">
                     <div class="col-4">
                         <div class="mb-3">
-                            <label for="supply" class="form-label">Supply</label>
-                            <select class="form-select" id="supply" name="supply" required>
+                            <label for="supply_ice" class="form-label">Supply Ice</label>
+                            <select class="form-select" id="supply_ice" name="supply_ice" required>
                                 <option value="">Select Stock</option>
-                                <option value="1" {{ $product->supply == 1 ? 'selected' : '' }}>Ready</option>
-                                <option value="0" {{ $product->supply == 0 ? 'selected' : '' }}>Empty</option>
+                                <option value="1" {{ $product->supply_ice == 1 ? 'selected' : '' }}>Ready</option>
+                                <option value="0" {{ $product->supply_ice == 0 ? 'selected' : '' }}>Empty</option>
                             </select>
                         </div>
                     </div>
@@ -122,16 +121,15 @@
                     <div class="col-4">
                         <div class="mb-3">
                             <label for="image_ice" class="form-label">Image Ice</label>
-                            <input type="file" class="form-control" id="image_ice" name="imageIce" required
-                                value="{{ $product->imageIce }}">
+                            <input type="file" class="form-control" id="image_ice" name="imageIce" required>
                         </div>
                     </div>
                 </div>
 
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
-                    <textarea class="form-control" id="description" name="description" rows="3" required>{{ $product->description }}
-                    </textarea>
+                    <textarea class="form-control" id="description" name="description" rows="3"
+                        required>{{ $product->description }}</textarea>
                 </div>
 
                 <button type="submit" class="btn btn-sm btn-primary">Save Product</button>
@@ -153,18 +151,17 @@
             if (this.value == 'hot') {
                 $('#hot-variant').show();
                 $('#ice-variant').hide();
-                $('#supply, #price_hot, #image_hot').prop('required', true);
-                $('#supply, #price_ice, #image_ice').prop('required', false);
+                $('#supply_hot, #price_hot, #image_hot').prop('required', true);
+                $('#supply_ice, #price_ice, #image_ice').prop('required', false);
             } else if (this.value == 'ice') {
                 $('#hot-variant').hide();
                 $('#ice-variant').show();
-                $('#supply, #price_hot, #image_hot').prop('required', false);
-                $('#supply, #price_ice, #image_ice').prop('required', true);
-            } else {
+                $('#supply_hot, #price_hot, #image_hot').prop('required', false);
+                $('#supply_ice, #price_ice, #image_ice').prop('required', true);
+            } else if (this.value == 'both') {
                 $('#hot-variant').show();
                 $('#ice-variant').show();
-                $('#supply, #price_hot, #image_hot').prop('required', true);
-                $('#supply, #price_ice, #image_ice').prop('required', true);
+                $('#supply_hot, #price_hot, #image_hot, #supply_ice, #price_ice, #image_ice').prop('required', true);
             }
         });
 
@@ -172,6 +169,5 @@
         $('input[type=radio][name=variant]:checked').trigger('change');
     });
 </script>
-
 
 @endsection
