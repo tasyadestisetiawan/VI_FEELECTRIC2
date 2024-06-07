@@ -59,9 +59,7 @@
               required>{{ $product->description }}</textarea>
           </div>
         </div>
-
         <button type="submit" class="btn btn-sm btn-primary">Update Product</button>
-
       </form>
     </div>
   </div>

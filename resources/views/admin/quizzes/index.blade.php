@@ -37,7 +37,8 @@
                 <i class="bi bi-coin"></i> {{ number_format($data->coins, 0, ',', '.') }} Coins
               </td>
               <td>
-                <a href="{{ route('admin.quizzes.edit', $data->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                  data-bs-target="#editQuizModal{{ $data->id }}">Edit</button>
                 <form action="{{ route('admin.quizzes.destroy', $data->id) }}" method="POST" class="d-inline">
                   @csrf
                   @method('DELETE')
@@ -85,5 +86,42 @@
     </div>
   </div>
 </div>
+
+{{-- Modal Edit Quizzes --}}
+@foreach ($quizzes as $data)
+<div class="modal fade" id="editQuizModal{{ $data->id }}" tabindex="-1"
+  aria-labelledby="editQuizModalLabel{{ $data->id }}" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editQuizModalLabel{{ $data->id }}">Edit Quiz</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="{{ route('admin.quizzes.update', $data->id) }}" method="POST">
+        @csrf
+        @method('PUT')
+        <div class="modal-body mb-3">
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" name="title" value="{{ $data->title }}" required>
+          </div>
+          <div class="mb-3">
+            <label for="coins" class="form-label">Reward</label>
+            <input type="number" class="form-control" id="coins" name="coins" value="{{ $data->coins }}" required>
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" name="description"
+              rows="3">{{ $data->description }}</textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+@endforeach
 
 @endsection

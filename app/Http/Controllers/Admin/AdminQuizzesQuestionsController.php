@@ -82,13 +82,13 @@ class AdminQuizzesQuestionsController extends Controller
     {
         // Validate the request
         $request->validate([
-            'question' => 'required',
-            'quiz_id' => 'required',
-            'option1' => 'required',
-            'option2' => 'required',
-            'option3' => 'required',
-            'option4' => 'required',
-            'answer' => 'required',
+            'question'  => 'required',
+            'quiz_id'   => 'required',
+            'option1'   => 'required',
+            'option2'   => 'required',
+            'option3'   => 'required',
+            'option4'   => 'required',
+            'answer'    => 'required',
         ]);
 
         // Find the question
@@ -104,7 +104,7 @@ class AdminQuizzesQuestionsController extends Controller
             'option4' => $request->option4,
             'answer' => $request->answer,
         ]);
-        
+
         // Redirect to the index page
         return redirect()->route('admin.questions.index')->with('success', 'Question updated successfully');
     }
@@ -113,21 +113,20 @@ class AdminQuizzesQuestionsController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
-{
-    // Find the question
-    $question = Questions::find($id);
+    {
+        // Find the question
+        $question = Questions::find($id);
 
-    // Check if the question exists
-    if ($question) {
-        // Delete the question
-        $question->delete();
+        // Check if the question exists
+        if ($question) {
+            // Delete the question
+            $question->delete();
 
-        // Redirect to the index page
-        return redirect()->route('admin.questions.index')->with('success', 'Question deleted successfully');
-    } else {
-        // Redirect with error message if question is not found
-        return redirect()->route('admin.questions.index')->with('error', 'Question not found');
+            // Redirect to the index page
+            return redirect()->route('admin.questions.index')->with('success', 'Question deleted successfully');
+        } else {
+            // Redirect with error message if question is not found
+            return redirect()->route('admin.questions.index')->with('error', 'Question not found');
+        }
     }
-}
-
 }

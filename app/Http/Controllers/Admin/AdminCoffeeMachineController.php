@@ -35,10 +35,10 @@ class AdminCoffeeMachineController extends Controller
     {
         // Validate Form
         $request->validate([
-            'name' => 'required',
-            'price' => 'required',
-            'description' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'name'          => 'required',
+            'price'         => 'required',
+            'description'   => 'required',
+            'image'         => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         // Upload Image
@@ -47,10 +47,11 @@ class AdminCoffeeMachineController extends Controller
 
         // Save to Database
         CoffeeMachine::create([
-            'name' => $request->name,
-            'price' => $request->price,
-            'description' => $request->description,
-            'image' => $image->hashName(),
+            'name'          => $request->name,
+            'price'         => $request->price,
+            'description'   => $request->description,
+            'image'         => $image->hashName(),
+            'stock'         => $request->stock,
         ]);
 
         return redirect()->route('admin.coffee-machines.index')->with('success', 'Product added successfully');
@@ -85,10 +86,11 @@ class AdminCoffeeMachineController extends Controller
     {
         // Validate Form
         $request->validate([
-            'name' => 'required',
-            'price' => 'required',
-            'description' => 'required',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'name'          => 'required',
+            'price'         => 'required',
+            'description'   => 'required',
+            'image'         => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'stock'         => 'required|numeric',
         ]);
 
         // Find Product
@@ -96,20 +98,21 @@ class AdminCoffeeMachineController extends Controller
 
         // Check if image is updated
         if ($request->hasFile('image')) {
-            // Delete old image
             $image = $request->file('image');
             $image->storeAs('public/img/products/machines', $image->hashName());
             $product->update([
-                'name' => $request->name,
-                'price' => $request->price,
+                'name'        => $request->name,
+                'price'       => $request->price,
                 'description' => $request->description,
-                'image' => $image->hashName(),
+                'image'       => $image->hashName(),
+                'stock' => $request->stock,
             ]);
         } else {
             $product->update([
-                'name' => $request->name,
-                'price' => $request->price,
-                'description' => $request->description,
+                'name'          => $request->name,
+                'price'         => $request->price,
+                'description'   => $request->description,
+                'stock' => $request->stock,
             ]);
         }
 
@@ -128,7 +131,7 @@ class AdminCoffeeMachineController extends Controller
         if ($product->image) {
             unlink(storage_path('app/public/img/products/machines/' . $product->image));
         } else {
-            return redirect()->route('admin.coffee-machines.index')->with('error', 'Product not found');
+            return redirect()->route('admin.coffee-machines.index')->with('error', 'Image not found');
         }
 
         // Delete Product

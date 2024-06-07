@@ -17,12 +17,20 @@
           <x-alert type="success" :message="session('success')" />
           <x-alert type="danger" :errors="$errors->all()" />
 
+          {{-- Alert --}}
+          <div class="alert alert-danger" role="alert">
+            <i class="fas fa-info-circle"></i>
+            <h4 class="alert-heading">Info</h4>
+            <p>Settings are used to store the configuration of the system. You can edit the default settings
+              here.</p>
+          </div>
+
           <div class="table-responsive">
-            <table class="table table-striped table-hover" id="dataTable">
+            <table class="table table-striped table-hover">
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Name</th>
+                  <th>Setting</th>
                   <th>Value</th>
                   <th>Actions</th>
                 </tr>
@@ -34,18 +42,8 @@
                   <td>{{ $setting->name }}</td>
                   <td>{{ $setting->value }}</td>
                   <td>
-
-                    {{-- Edit --}}
                     <button type="button" class="btn btn-edit-theme btn-sm" data-bs-toggle="modal"
                       data-bs-target="#editSettingModal{{ $setting->id }}">Edit</button>
-
-                    {{-- Delete --}}
-                    <form action="{{ route('admin.settings.destroy', $setting->id) }}" method="POST" class="d-inline">
-                      @csrf
-                      @method('DELETE')
-                      <button type="submit" class="btn btn-delete-theme btn-sm"
-                        onclick="return confirm('Are you sure you want to delete this setting?')">Delete</button>
-                    </form>
                   </td>
                 </tr>
                 @endforeach

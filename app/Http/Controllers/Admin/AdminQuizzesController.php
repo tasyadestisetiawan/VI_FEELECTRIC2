@@ -70,7 +70,25 @@ class AdminQuizzesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Validate the form data
+        $request->validate([
+            'title'          => 'required',
+            'description'   => 'required',
+            'coins'         => 'required|numeric',
+        ]);
+
+        // Find the quiz
+        $quiz = Quizzes::findOrFail($id);
+
+        // Update the quiz
+        $quiz->update([
+            'title'          => $request->title,
+            'description'   => $request->description,
+            'coins'         => $request->coins,
+        ]);
+
+        // Redirect to the quizzes list
+        return redirect()->route('admin.quizzes.index')->with('success', 'Quiz updated successfully');
     }
 
     /**

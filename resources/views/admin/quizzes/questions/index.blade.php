@@ -120,31 +120,38 @@
             <textarea class="form-control" id="question" name="question" rows="3"
               required>{{ $data->question }}</textarea>
           </div>
-          <div class="mb-3">
-            <label for="option1" class="form-label">Option A</label>
-            <input type="text" class="form-control" id="option1" name="option1" value="{{ $data->option1 }}" required>
+          <div class="row">
+            <div class="mb-3 col">
+              <label for="option1" class="form-label">Option A</label>
+              <input type="text" class="form-control" id="option1" name="option1" value="{{ $data->option1 }}" required>
+            </div>
+            <div class="mb-3 col">
+              <label for="option2" class="form-label">Option B</label>
+              <input type="text" class="form-control" id="option2" name="option2" value="{{ $data->option2 }}" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="mb-3 col">
+              <label for="option3" class="form-label">Option C</label>
+              <input type="text" class="form-control" id="option3" name="option3" value="{{ $data->option3 }}" required>
+            </div>
+            <div class="mb-3 col">
+              <label for="option4" class="form-label">Option D</label>
+              <input type="text" class="form-control" id="option4" name="option4" value="{{ $data->option4 }}" required>
+            </div>
           </div>
           <div class="mb-3">
-            <label for="option2" class="form-label">Option B</label>
-            <input type="text" class="form-control" id="option2" name="option2" value="{{ $data->option2 }}" required>
-          </div>
-          <div class="mb-3">
-            <label for="option3" class="form-label">Option C</label>
-            <input type="text" class="form-control" id="option3" name="option3" value="{{ $data->option3 }}" required>
-          </div>
-          <div class="mb-3">
-            <label for="option4" class="form-label">Option D</label>
-            <input type="text" class="form-control" id="option4" name="option4" value="{{ $data->option4 }}" required>
-          </div>
-          <div class="mb-3">
+            <small>
+              The option number is the correct answer. Example: A = 1, B = 2, C = 3, D = 4
+            </small>
             <label for="answer" class="form-label">Correct Answer</label>
             <input type="text" class="form-control" id="answer" name="answer" value="{{ $data->answer }}" required>
           </div>
         </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
       </form>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Save</button>
-      </div>
     </div>
   </div>
 </div>

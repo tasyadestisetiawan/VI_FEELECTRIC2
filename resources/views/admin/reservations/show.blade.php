@@ -91,11 +91,14 @@
                   </td>
                 </tr>
                 <tr>
-                  <td>Phone</td>
+                  <td>Contact</td>
                   <td>
                     @foreach ($users as $user )
                     @if ($reservation->user_id == $user->id)
-                    {{ $user->phone }}
+                    {{-- WhatsApp Button --}}
+                    <a href="https://wa.me/{{ $user->phone }}" class="btn btn-success btn-sm">
+                      <i class="bi bi-whatsapp"></i> WhatsApp
+                    </a>
                     @endif
                     @endforeach
                   </td>
