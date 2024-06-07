@@ -3,7 +3,8 @@
 @section('content')
 <div class="container-fluid">
     <div class="header clearfix">
-        <a href="{{ route('admin.coffee-beans.create') }}" class="btn btn-primary-theme btn-sm float-end mb-3">Add Product</a>
+        <a href="{{ route('admin.coffee-beans.create') }}" class="btn btn-primary-theme btn-sm float-end mb-3">Add
+            Product</a>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -29,16 +30,22 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>
-                                        <img src="{{ asset('storage/img/products/beans/' . $product->image) }}" alt="" class="img-fluid" width="100">
+                                        <img src="{{ asset('storage/img/products/beans/' . $product->image) }}" alt=""
+                                            class="img-fluid rounded" width="100">
                                     </td>
                                     <td>{{ $product->name }}</td>
-                                    <td>{{ $product->price }}</td>
+                                    <td>
+                                        Rp {{ number_format($product->price, 0, ',', '.') }}
+                                    </td>
                                     <td>{{ $product->stock }}</td>
                                     <td>{{ $product->weight }}</td>
                                     <td>
-                                        <a href="{{ route('admin.coffee-beans.show', $product->id) }}" class="btn btn-sm btn-detail-theme">Detail</a>
-                                        <a href="{{ route('admin.coffee-beans.edit', $product->id) }}" class="btn btn-sm btn-edit-theme">Edit</a>
-                                        <form action="{{ route('admin.coffee-beans.destroy', $product->id) }}" method="POST" class="d-inline">
+                                        <a href="{{ route('admin.coffee-beans.show', $product->id) }}"
+                                            class="btn btn-sm btn-detail-theme">Detail</a>
+                                        <a href="{{ route('admin.coffee-beans.edit', $product->id) }}"
+                                            class="btn btn-sm btn-edit-theme">Edit</a>
+                                        <form action="{{ route('admin.coffee-beans.destroy', $product->id) }}"
+                                            method="POST" class="d-inline">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-delete-theme">Delete</button>

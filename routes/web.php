@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\User\UserCartController;
 use App\Http\Controllers\User\UserRoomController;
 use App\Http\Controllers\Auth\SocialiteController;
@@ -36,7 +37,6 @@ use App\Http\Controllers\Admin\AdminOrderMachineController;
 use App\Http\Controllers\Admin\AdminCoffeeMachineController;
 use App\Http\Controllers\Admin\AdminProductCategoryController;
 use App\Http\Controllers\Admin\AdminQuizzesQuestionsController;
-use App\Http\Controllers\NotificationController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -108,9 +108,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     // Settings Routes Resource
     Route::resource('settings', AdminSettingController::class);
-
-    // Twilio WA
-    Route::post('/send-whatsapp-notification', [NotificationController::class, 'sendWhatsAppNotification']);
 });
 
 // User Routes
@@ -224,5 +221,7 @@ Route::prefix('quizzes')->group(function () {
 // Google Auth
 Route::get('/auth/{provider}', [SocialiteController::class, 'redirectToProvider']);
 Route::get('/auth/{provider}/callback', [SocialiteController::class, 'handleProvideCallback']);
+
+Route::post('admin/courses/{courseId}/confirm/{userId}', [AdminCourseController::class, 'confirmRegistration'])->name('admin.courses.confirmRegistration');
 
 require __DIR__ . '/auth.php';

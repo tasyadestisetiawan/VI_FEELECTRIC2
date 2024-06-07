@@ -44,7 +44,7 @@
                 @endif
                 @endforeach
               </td>
-              <td>
+              <td class="text-truncate">
                 {{ $data->question }}
               </td>
               <td>
@@ -61,7 +61,15 @@
               </td>
               <td>
                 <span class="badge bg-success">
-                  {{ $data->answer }}
+                  @if ( $data->answer == 1 )
+                  <span class="badge bg-success">A</span>
+                  @elseif ( $data->answer == 2 )
+                  <span class="badge bg-success">B</span>
+                  @elseif ( $data->answer == 3 )
+                  <span class="badge bg-success">C</span>
+                  @elseif ( $data->answer == 4 )
+                  <span class="badge bg-success">D</span>
+                  @endif
                 </span>
               </td>
               <td>

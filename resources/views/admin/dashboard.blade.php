@@ -49,19 +49,11 @@
 
     {{-- Graph --}}
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">Grafik Penjualan</div>
                 <div class="card-body">
                     <canvas id="myChart" width="400" height="200"></canvas>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">Grafik Produk</div>
-                <div class="card-body">
-                    <canvas id="myChart2" width="400" height="200"></canvas>
                 </div>
             </div>
         </div>
@@ -74,13 +66,18 @@
 {{-- Chart Penjualan --}}
 <script>
     var ctx = document.getElementById('myChart').getContext('2d');
+
+    // Debugging
+    console.log('Product Names:', {!! json_encode($productNames) !!});
+    console.log('Product Quantities:', {!! json_encode($productQuantities) !!});
+
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni'],
+            labels: {!! json_encode($productNames) !!},
             datasets: [{
                 label: 'Penjualan',
-                data: [100, 200, 300, 400, 500, 600],
+                data: {!! json_encode($productQuantities) !!},
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
                 borderColor: 'rgba(255, 99, 132, 1)',
                 borderWidth: 1
@@ -89,21 +86,4 @@
     });
 </script>
 
-{{-- Chart Pengunjung --}}
-<script>
-    var ctx = document.getElementById('myChart2').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni'],
-            datasets: [{
-                label: 'Produk',
-                data: [200, 300, 400, 500, 600, 700],
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-            }]
-        }
-    });
-</script>
 @endsection

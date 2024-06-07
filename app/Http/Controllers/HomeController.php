@@ -17,11 +17,11 @@ class HomeController extends Controller
     public function index()
     {
         // Get all products with limit 4 order by created_at
-        $coffees = Product::orderBy('created_at', 'desc')->limit(4)->get();
-        $coffeeBeans = CoffeeBean::orderBy('created_at', 'desc')->limit(4)->get();
-        $coffeeMachines = CoffeeMachine::orderBy('created_at', 'desc')->limit(4)->get();
-        $testimonials = Feedback::orderBy('created_at', 'desc')->limit(4)->get();
-        $users = User::all();
+        $coffees        = Product::inRandomOrder()->limit(4)->get();
+        $coffeeBeans    = CoffeeBean::inRandomOrder()->limit(4)->get();
+        $coffeeMachines = CoffeeMachine::inRandomOrder()->limit(4)->get();
+        $testimonials   = Feedback::inRandomOrder()->limit(4)->get();
+        $users          = User::all();
 
         return view('home.index', compact('coffees', 'coffeeBeans', 'coffeeMachines', 'testimonials', 'users'));
     }

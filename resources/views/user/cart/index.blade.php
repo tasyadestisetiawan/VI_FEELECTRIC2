@@ -42,8 +42,7 @@ return $cartItem->type == 'drink';
         <div class="alert alert-success alert-dismissible rounded-4 fade show text-light" role="alert"
           style="background-color: #3b2621;">
           <i class="bi bi-check-circle"></i>
-          You have successfully placed an order, please return to the product page to order another item or to the
-          order list page.
+          Your order has been placed successfully. Please go back to the product page to order another item or visit the order list page.
           <br><br>
           <a href="{{ route('products.index') }}" class="btn btn-sm rounded-3 p-2 mt-2 text-light"
             style="margin-right: 5px; background-color: #3b2621; border: solid 1px #fff7e8;">Products</a>

@@ -21,7 +21,9 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Amatic+SC:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Amatic+SC:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="{{ asset('frontend/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -33,10 +35,15 @@
 
   {{-- DataTable --}}
   <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.bootstrap5.css">
 
   {{-- Custom CSS --}}
   <style>
-    /* Button Style */
+    * {
+      font-family: 'Inter', sans-serif !important;
+      font-size: 16px !important;
+    }
+
     .btn-primary-theme {
       background-color: #3B2621 !important;
       border: 2px solid #3B2621 !important;
@@ -110,7 +117,6 @@
       border-radius: 10px;
       border: 2px solid #3B2621 !important;
     }
-
   </style>
 
 </head>
@@ -154,12 +160,21 @@
 
   {{-- DataTable --}}
   <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+  <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.js"></script>
   <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+  <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.bootstrap5.js"></script>
 
   <script>
     // DataTable Initialization
     $(document).ready(function() {
-      $('#dataTable').DataTable();
+      $('#dataTable').DataTable({
+        responsive: false,
+        autoWidth: false,
+        language: {
+          search: "_INPUT_",
+          searchPlaceholder: "Search...",
+        },
+      });
     });
 
   </script>

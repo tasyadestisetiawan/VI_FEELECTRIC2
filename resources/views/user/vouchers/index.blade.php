@@ -27,8 +27,7 @@
               <div class="card bg-white border-0" style="max-width: 540px;">
                 <div class="row g-0">
                   <div class="col-md-3">
-                    <img src="{{ asset('storage/img/avatars/' . Auth::user()->avatar) }}"
-                      class="img-fluid rounded-start" alt="...">
+                    <img src="{{ asset('storage/img/avatars/' . Auth::user()->avatar) }}" class="img-fluid rounded-start" alt="...">
                   </div>
                   <div class="col-md-9">
                     <div class="card-body">
@@ -64,9 +63,10 @@
                 <div class="card rounded-4 border-0 shadow-sm" style="background-color: #f0f9ff;">
                   <div class="card-body">
                     <div class="gopay d-flex align-items-center py-2">
-                      <img src="{{ asset('frontend/img/icons/gopay.png') }}" alt="Gopay" class="img-fluid pe-3"
-                        style="width: 50px;"></i> <span class="ms-2">Gopay</span>
-                      <p class="btn text-success ms-auto mb-0">Aktifkan</p>
+                      <img src="{{ asset('frontend/img/icons/coins.png') }}" alt="Gopay" class="img-fluid pe-3" style="width: 50px;"></i> <span class="ms-2">Coins</span>
+                      <p class="btn fw-bold ms-auto mb-0">
+                        {{ Auth::user()->coin }} <i class="bi bi-coin"></i>
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -77,9 +77,10 @@
                 <div class="card rounded-4 border-0 shadow-sm" style="background-color: #f0f9ff;">
                   <div class="card-body">
                     <div class="member-card d-flex align-items-center py-2">
-                      <img src="{{ asset('frontend/img/icons/payment.png') }}" alt="Gopay" class="img-fluid pe-3"
-                        style="width: 50px;"></i> <span class="ms-2">Member Card</span>
-                      <p class="btn text-success ms-auto mb-0">Aktifkan</p>
+                      <img src="{{ asset('frontend/img/icons/member.png') }}" alt="Gopay" class="img-fluid pe-3" style="width: 50px;"></i> <span class="ms-2">Member Card</span>
+                      <p class="btn text-success ms-auto mb-0">
+                        Activation
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -90,11 +91,11 @@
                 <div class="card rounded-4 border-0 shadow-sm" style="background-color: #f0f9ff;">
                   <div class="card-body">
                     <div class="saldo d-flex align-items-center py-2">
-                      <img src="{{ asset('frontend/img/icons/saldo.png') }}" alt="Gopay" class="img-fluid pe-3"
-                        style="width: 50px;"></i> <span class="ms-2">Saldo</span>
+                      <img src="{{ asset('frontend/img/icons/wallet.png') }}" alt="Gopay" class="img-fluid pe-3" style="width: 50px;"></i> <span class="ms-2">Saldo</span>
 
                       <!-- Sum Saldo -->
                       <span class="ms-auto fw-bold">Rp. 50.000</span>
+
 
                     </div>
                   </div>
@@ -110,30 +111,25 @@
             <div class="card-header bg-white border-0 mt-2">
               <ul class="nav nav-pills gap-3">
                 <li class="nav-item">
-                  <a class="nav-link active rounded-pill" style="background-color: #fff7e8;  color: #3b2621;"
-                    href="{{route('user.profile')}}">
+                  <a class="nav-link active rounded-pill" style="background-color: #fff7e8;  color: #3b2621;" href="{{route('user.profile')}}">
                     Profile
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link rounded-pill border-2" style="background-color: #fff7e8; color: #3b2621"
-                    href="{{route('orders.index')}}">
+                  <a class="nav-link rounded-pill border-2" style="background-color: #fff7e8; color: #3b2621" href="{{route('orders.index')}}">
                     Orders
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link rounded-pill border-2" style="background-color: #fff7e8; color: #3b2621"
-                    href="{{ route('user.reservations.my') }}">
+                  <a class="nav-link rounded-pill border-2" style="background-color: #fff7e8; color: #3b2621" href="{{ route('user.reservations.my') }}">
                     Reservations
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link rounded-pill border-2" style="background-color: #fff7e8; color: #3b2621"
-                    href="{{route('user.address')}}">Address</a>
+                  <a class="nav-link rounded-pill border-2" style="background-color: #fff7e8; color: #3b2621" href="{{route('user.address')}}">Address</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link rounded-pill border-2" style="background-color: #3b2621; color: #fff7e8"
-                    href="{{route('vouchers.index')}}">Vouchers</a>
+                  <a class="nav-link rounded-pill border-2" style="background-color: #3b2621; color: #fff7e8" href="{{route('vouchers.index')}}">Vouchers</a>
                 </li>
               </ul>
             </div>
@@ -141,8 +137,7 @@
               <div class="row">
                 @foreach ( $vouchers as $voucher )
                 <div class="col-12">
-                  <div class="card rounded-4 mb-3 shadow-sm"
-                    style="background-color: #f0f9ff; border: solid 2px #3b2621; border-style: dashed;">
+                  <div class="card rounded-4 mb-3 shadow-sm" style="background-color: #f0f9ff; border: solid 2px #3b2621; border-style: dashed;">
                     <div class="card-body">
                       <span class="fw-bold">
                         {{ $voucher->name }}
@@ -151,10 +146,7 @@
                         <span class="ms-2 voucher-code">{{ $voucher->code }}</span>
                         {{-- Copy Button --}}
                         <div class="ms-auto">
-                          <button class="btn btn-sm btn-outline-dark" onclick="copyToClipboard('{{ $voucher->code }}')"
-                            title="Copy to Clipboard" data-bs-toggle="tooltip" data-bs-placement="top"
-                            data-bs-trigger="hover" data-bs-delay="1000" data-bs-animation="true"
-                            style="background-color: #3b2621; color: #fff; border: solid 2px #3b2621; border-radius: 10px; padding: 10px;">
+                          <button class="btn btn-sm btn-outline-dark" onclick="copyToClipboard('{{ $voucher->code }}')" title="Copy to Clipboard" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" data-bs-delay="1000" data-bs-animation="true" style="background-color: #3b2621; color: #fff; border: solid 2px #3b2621; border-radius: 10px; padding: 10px;">
                             <i class="bi bi-clipboard"></i>
                           </button>
                         </div>

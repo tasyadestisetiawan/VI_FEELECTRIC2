@@ -34,7 +34,7 @@ class UserQuizzesController extends Controller
     public function play(string $id)
     {
         $quiz = Quizzes::find($id);
-        $questions = Questions::where('quiz_id', $id)->get();
+        $questions = Questions::where('quiz_id', $id)->inRandomOrder()->limit(4)->get();
 
         // Cek apakah user sudah pernah mengikuti kuis tersebut
         $user = auth()->user();
@@ -62,13 +62,12 @@ class UserQuizzesController extends Controller
     public function submitQuiz(Request $request)
     {
         try {
-            $user = auth()->user();
-            $score = $request->input('score');
+            $user           = auth()->user();
+            $score          = $request->input('score');
             $totalQuestions = $request->input('totalQuestions');
-            $userAnswers = $request->input('userAnswers');
-            $quizId = $request->input('quiz_id');
-
-            $correctAnswersCount = 0; // Tambahkan variabel untuk menghitung jawaban benar
+            $userAnswers    = $request->input('userAnswers');
+            $quizId         = $request->input('quiz_id');
+            $correctAnswersCount = 0;
 
             // Simpan data hasil kuis ke tabel UserQuizAnswer
             foreach ($userAnswers as $answer) {
@@ -90,7 +89,7 @@ class UserQuizzesController extends Controller
             $quizCoins = Quizzes::find($quizId)->coins;
 
             // Tambahkan koin berdasarkan jawaban benar
-            $user->coin += $correctAnswersCount * $quizCoins; // Asumsikan setiap jawaban benar mendapatkan koin dari quiz
+            $user->coin += $correctAnswersCount * $quizCoins;
             $user->save();
 
             return response()->json(['message' => 'Quiz submitted successfully'], 200);

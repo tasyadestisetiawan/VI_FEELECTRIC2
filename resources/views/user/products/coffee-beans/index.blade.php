@@ -60,14 +60,22 @@
             </div>
             <div class="card-footer bg-white border-top-0 pb-3">
               <div class="d-flex justify-content-between">
+
                 <span class="fw-bold pt-2">
                   Rp {{ number_format($coffee->price, 0, ',', '.') }}
                 </span>
-                {{-- See --}}
+
+                @if ($coffee->stock == 0)
+                <button class="btn text-light rounded" style="background-color: #3b262175; color: white" disabled>
+                  Out of Stock
+                </button>
+                @else
                 <a href="{{ route('coffee-beans.show', $coffee->id) }}" class="btn text-light rounded"
                   style="background-color: #3b2621; color: white">
                   Buy
                 </a>
+                @endif
+
               </div>
             </div>
           </div>

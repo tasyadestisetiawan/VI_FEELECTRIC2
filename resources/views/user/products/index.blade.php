@@ -134,7 +134,7 @@
                   Buy
                 </a>
                 @else
-                <button class="btn rounded" style="background-color: #3b2621; color: white" disabled>
+                <button class="btn rounded" style="background-color: #3b262175; color: white" disabled>
                   Out of Stock
                 </button>
                 @endif
@@ -182,10 +182,16 @@
                 <span class="fw-bold pt-2">
                   Rp {{ number_format($coffeeBean->price, 0, ',', '.') }}
                 </span>
-                <a href="{{ route('coffee-beans.show', $coffeeBean->id) }}" class="btn rounded"
+                @if ($coffeeBean->stock == 0)
+                <button class="btn text-light rounded" style="background-color: #3b262175; color: white" disabled>
+                  Out of Stock
+                </button>
+                @else
+                <a href="{{ route('coffee-beans.show', $coffeeBean->id) }}" class="btn text-light rounded"
                   style="background-color: #3b2621; color: white">
                   Buy
                 </a>
+                @endif
               </div>
             </div>
           </div>
@@ -229,10 +235,16 @@
                 <span class="fw-bold pt-2">
                   Rp {{ number_format($coffeeMachine->price, 0, ',', '.') }}
                 </span>
-                <a href="{{ route('coffee-machines.show', $coffeeMachine->id) }}" class="btn rounded"
+                @if ($coffeeMachine->stock == 0)
+                <button type="disable" class="btn text-light rounded" style="background-color: #3b262185; color: white">
+                  Out of Stock
+                </button>
+                @else
+                <a href="{{ route('coffee-machines.show', $coffee->id) }}" class="btn text-light rounded"
                   style="background-color: #3b2621; color: white">
                   Buy
                 </a>
+                @endif
               </div>
             </div>
           </div>

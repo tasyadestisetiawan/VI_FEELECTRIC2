@@ -46,7 +46,7 @@
       <div class="completion-card">
         <div class="header">
           Quiz Completion
-          {{ $score }} / {{ $total }}
+          {{ $score }} / 4
         </div>
         <div class="content">
           <img src="https://img.icons8.com/color/96/000000/checked.png" alt="Success">
@@ -54,7 +54,7 @@
             Congratulations! You have completed the quiz.
           </h5>
           <p>
-            You have answered {{ $score }} out of {{ $total }} questions correctly.
+            You have answered {{ $score }} out of 4 questions correctly.
           </p>
           <a href="{{ route('user.quizzes.quizzes') }}" class="btn mt-3"
             style="background-color: #3b2621; color: white;">

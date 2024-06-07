@@ -51,10 +51,11 @@
                                                 @endif
                                             </span>
                                             {{-- See --}}
-                                            <a href="{{ route('coffees.show', $coffee->id) }}" class="btn rounded"
-                                                style="background-color: #3b2621; color: white">
-                                                Buy
-                                            </a>
+                                            <button type="button" class="btn rounded"
+                                                style="background-color: #3b2621; color: white" data-bs-toggle="modal"
+                                                data-bs-target="#modalShowCoffee{{ $coffee->id }}">
+                                                See More
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -96,10 +97,12 @@
                                             <span class="fw-bold pt-2">
                                                 Rp {{ number_format($coffeeBean->price, 0, ',', '.') }}
                                             </span>
-                                            <a href="{{ route('coffee-beans.show', $coffeeBean->id) }}"
-                                                class="btn rounded" style="background-color: #3b2621; color: white">
-                                                Buy
-                                            </a>
+                                            {{-- See --}}
+                                            <button type="button" class="btn rounded"
+                                                style="background-color: #3b2621; color: white" data-bs-toggle="modal"
+                                                data-bs-target="#modalShowCoffeeBean{{ $coffeeBean->id }}">
+                                                See More
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -112,4 +115,222 @@
         </div>
     </div>
 </section>
+
+{{-- Modal Show untuk Coffee --}}
+@foreach ($coffees as $coffee)
+<div class="modal fade" id="modalShowCoffee{{ $coffee->id }}" tabindex="-1"
+    aria-labelledby="modalShowCoffee{{ $coffee->id }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content" style="background-color: #f8f9fa; border: 2px solid #3b2621;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalShowCoffee{{ $coffee->id }}">
+                    {{ $coffee->name }}
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @if ($coffee->variant == 'ice')
+                <div class="row">
+                    <div class="col-5">
+                        <img src="{{ asset('storage/img/products/coffees/' . $coffee->imageIce) }}"
+                            class="card-img-top object-fit cover" alt="..." width="250px" />
+                    </div>
+                    <div class="col-7">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Product Name</th>
+                                    <td>{{ $coffee->name }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Description</th>
+                                    <td>{{ $coffee->description }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Variant</th>
+                                    <td>{{ $coffee->variant }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Supply</th>
+                                    <td>
+                                        @if ($coffee->supply_ice == 0)
+                                        Out of Stock
+                                        @else
+                                        Available
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Price</th>
+                                    <td>Rp {{ number_format($coffee->priceIce, 0, ',', '.') }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @elseif ($coffee->variant == 'hot')
+                <div class="row">
+                    <div class="col-5">
+                        <img src="{{ asset('storage/img/products/coffees/' . $coffee->imageHot) }}"
+                            class="card-img-top object-fit cover" alt="..." width="250px" />
+                    </div>
+                    <div class="col-7">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Product Name</th>
+                                    <td>{{ $coffee->name }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Description</th>
+                                    <td>{{ $coffee->description }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Variant</th>
+                                    <td>{{ $coffee->variant }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Supply</th>
+                                    <td>
+                                        @if ($coffee->supply_hot == 0)
+                                        Out of Stock
+                                        @else
+                                        Available
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Price</th>
+                                    <td>Rp {{ number_format($coffee->priceHot, 0, ',', '.') }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @elseif ($coffee->variant == 'both')
+                <div class="row">
+                    <div class="col-5">
+                        <img src="{{ asset('storage/img/products/coffees/' . $coffee->imageHot) }}"
+                            class="card-img-top object-fit cover" alt="..." width="250px" />
+                    </div>
+                    <div class="col-7">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Product Name</th>
+                                    <td>{{ $coffee->name }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Description</th>
+                                    <td>{{ $coffee->description }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Variant</th>
+                                    <td>Hot & Ice</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Supply</th>
+                                    <td>
+                                        @if ($coffee->supply_hot == 0 && $coffee->supply_ice == 0)
+                                        Out of Stock
+                                        @else
+                                        Available
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Price</th>
+                                    <td>Rp {{ number_format($coffee->priceHot, 0, ',', '.') }} -
+                                        {{ number_format($coffee->priceIce, 0, ',', '.') }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @endif
+            </div>
+            <div class="modal-footer">
+                @if ($coffee->supply_hot == 0 && $coffee->supply_ice == 0)
+                <button type="button" class="btn" style="background-color: #3b2621; color: white" disabled>
+                    Out of Stock
+                </button>
+                @else
+                <a href="{{ route('coffees.show', $coffee->id) }}" class="btn"
+                    style="background-color: #3b2621; color: white">
+                    Buy Now
+                </a>
+                @endif
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
+{{-- End of Modal Show untuk Coffee --}}
+
+{{-- Modal Show untuk Coffee Bean --}}
+@foreach ($coffeeBeans as $coffeeBean)
+<div class="modal fade" id="modalShowCoffeeBean{{ $coffeeBean->id }}" tabindex="-1"
+    aria-labelledby="modalShowCoffeeBean{{ $coffeeBean->id }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content" style="background-color: #f8f9fa; border: 2px solid #3b2621;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalShowCoffeeBean{{ $coffeeBean->id }}">
+                    {{ $coffeeBean->name }}
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-5">
+                        <img src="{{ asset('storage/img/products/beans/' . $coffeeBean->image) }}"
+                            class="card-img-top object-fit cover" alt="..." width="250px" />
+                    </div>
+                    <div class="col-7">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Product Name</th>
+                                    <td>{{ $coffeeBean->name }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Description</th>
+                                    <td>{{ $coffeeBean->description }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Supply</th>
+                                    <td>
+                                        @if ($coffeeBean->stock == 0)
+                                        Out of Stock
+                                        @else
+                                        Available
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Price</th>
+                                    <td>Rp {{ number_format($coffeeBean->price, 0, ',', '.') }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                @if ($coffeeBean->stock == 0)
+                <button type="button" class="btn" style="background-color: #3b2621; color: white" disabled>
+                    Out of Stock
+                </button>
+                @else
+                <a href="{{ route('coffee-beans.show', $coffeeBean->id) }}" class="btn"
+                    style="background-color: #3b2621; color: white">
+                    Buy Now
+                </a>
+                @endif
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
+{{-- End of Modal Show untuk Coffee Bean --}}
+
 <!-- End About Section -->

@@ -9,9 +9,7 @@
   </div>
   <div class="row">
     <div class="col-4">
-      <img src="{{ asset('storage/img/bootcamps/poster/' . $bootcamp->image) }}" class="img-fluid"
-        alt="{{ $bootcamp->name }}"
-        style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px; border: 2px solid #3B2621; padding: 5px; margin-bottom: 20px;">
+      <img src="{{ asset('storage/img/bootcamps/poster/' . $bootcamp->image) }}" class="img-fluid" alt="{{ $bootcamp->name }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px; border: 2px solid #3B2621; padding: 5px; margin-bottom: 20px;">
     </div>
     <div class="col-8">
       <table class="table">
@@ -103,8 +101,7 @@
             </td>
             <td>
               @if ($user->payment_proof)
-              <a href="{{ asset('storage/img/bootcamps/payment/' . $user->payment_proof) }}" target="_blank"
-                class="badge bg-primary">View</a>
+              <a href="{{ asset('storage/img/bootcamps/payment/' . $user->payment_proof) }}" target="_blank" class="badge bg-primary">View</a>
               @else
               <span class="badge bg-warning text-dark">No Proof</span>
               @endif

@@ -288,6 +288,8 @@
                         @elseif ($order->voucherDiscount != 0)
                         Rp. {{ number_format($item->price * $item->quantity - $item->price * $item->quantity *
                         $order->voucherDiscount / 100) }}
+                        @else
+                        Rp. {{ number_format($item->price * $item->quantity) }}
                         @endif
 
                       </td>
@@ -313,6 +315,8 @@
                         @elseif ($order->voucherDiscount != 0)
                         Rp. {{ number_format($item->price * $item->quantity - $item->price * $item->quantity *
                         $order->voucherDiscount / 100) }}
+                        @else
+                        Rp. {{ number_format($order->total) }}
                         @endif
                       </td>
                     </tr>

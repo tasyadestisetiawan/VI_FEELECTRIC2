@@ -53,7 +53,7 @@ class AdminCoffeeMachineController extends Controller
             'image' => $image->hashName(),
         ]);
 
-        return redirect()->route('coffee-machines.index')->with('success', 'Product added successfully');
+        return redirect()->route('admin.coffee-machines.index')->with('success', 'Product added successfully');
     }
 
     /**

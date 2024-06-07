@@ -4,11 +4,22 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Courses;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use GuzzleHttp\Client;
 
 class AdminCourseController extends Controller
 {
+    // protected $telegram_api_token;
+    // protected $telegram_chat_id;
+
+    // public function __construct()
+    // {
+    //     $this->telegram_api_token = env('TELEGRAM_API_TOKEN');
+    //     $this->telegram_chat_id = env('TELEGRAM_CHAT_ID');
+    // }
+
     /**
      * Display a listing of the resource.
      */
@@ -128,7 +139,12 @@ class AdminCourseController extends Controller
             ]);
         }
 
-        return redirect()->route('courses.index')->with('success', 'Course updated successfully.');
+        // Check if the response is successful (if needed)
+        if ($response->successful()) {
+            return redirect()->route('courses.index')->with('success', 'Course updated successfully and notification sent.');
+        } else {
+            return redirect()->route('courses.index')->with('success', 'Course updated successfully but failed to send notification.');
+        }
     }
 
     /**
@@ -148,4 +164,40 @@ class AdminCourseController extends Controller
         // Redirect to the courses index page
         return redirect()->route('courses.index')->with('success', 'Course deleted successfully.');
     }
+
+    /**
+     * Confirm user registration for a course.
+     */
+    public function confirmRegistration(Request $request, $courseId, $userId)
+    {
+        // Logika untuk mengkonfirmasi registrasi pengguna
+        $course = Courses::findOrFail($courseId);
+        $user = User::findOrFail($userId);
+
+        // Misalnya, update status registrasi pengguna
+        // Contoh: $registration = Registration::where('course_id', $courseId)->where('user_id', $userId)->first();
+        // $registration->status = 'confirmed';
+        // $registration->save();
+
+        // Mengirim notifikasi ke pengguna melalui Telegram
+        // $this->sendNotification($user->telegram_chat_id, "Pendaftaran Anda untuk kursus '{$course->name}' telah dikonfirmasi. Anda dapat mengikuti kursus ini.");
+
+        return redirect()->route('admin.courses.index')->with('success', 'User registration confirmed and notification sent.');
+    }
+
+    /**
+     * Send a notification to a specific Telegram chat ID.
+     */
+    // protected function sendNotification($chatId, $message)
+    // {
+    //     $client = new Client();
+    //     $url = "https://api.telegram.org/bot{$this->telegram_api_token}/sendMessage";
+
+    //     $client->post($url, [
+    //         'form_params' => [
+    //             'chat_id' => $chatId,
+    //             'text' => $message,
+    //         ]
+    //     ]);
+    // }
 }

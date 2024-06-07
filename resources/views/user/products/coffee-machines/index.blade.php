@@ -63,11 +63,16 @@
                 <span class="fw-bold pt-2">
                   Rp {{ number_format($coffee->price, 0, ',', '.') }}
                 </span>
-                {{-- See --}}
+                @if ($coffee->stock == 0)
+                <button type="disable" class="btn text-light rounded" style="background-color: #3b262185; color: white">
+                  Out of Stock
+                </button>
+                @else
                 <a href="{{ route('coffee-machines.show', $coffee->id) }}" class="btn text-light rounded"
                   style="background-color: #3b2621; color: white">
                   Buy
                 </a>
+                @endif
               </div>
             </div>
           </div>
