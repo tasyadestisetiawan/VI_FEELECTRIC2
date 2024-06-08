@@ -6,10 +6,61 @@ use App\Http\Controllers\Controller;
 use App\Models\Bootcamp;
 use App\Models\BootcampRegistered;
 use Illuminate\Http\Request;
+// use App\Services\TwilioService;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class AdminBootcampController extends Controller
 {
+    // protected $twilioService;
+
+    // public function __construct(TwilioService $twilioService)
+    // {
+    //     $this->twilioService = $twilioService;
+    // }
+
+    public function confirmPayment(string $id, Request $request)
+    {
+        Log::info('confirmPayment method called with ID: ' . $id);
+
+        $bootcampRegistered = BootcampRegistered::find($id);
+
+        if (!$bootcampRegistered) {
+            Log::error('Bootcamp registration not found for ID: ' . $id);
+            return redirect()->back()->withErrors('Bootcamp registration not found.');
+        }
+
+        Log::info('BootcampRegistered found: ' . json_encode($bootcampRegistered));
+
+        $request->validate([
+            'payment_status' => 'required',
+        ]);
+
+        $bootcampRegistered->update([
+            'payment_status' => $request->payment_status,
+        ]);
+
+        $user = $bootcampRegistered->user;
+
+        if (!$user) {
+            Log::error('User not found for BootcampRegistered with user_id: ' . $bootcampRegistered->user_id);
+            return redirect()->back()->withErrors('User not found.');
+        }
+
+        Log::info('User found: ' . json_encode($user));
+
+        if (empty($user->phone)) {
+            Log::error('User phone number is not set for user_id: ' . $bootcampRegistered->user_id);
+            return redirect()->back()->withErrors('User phone number is not set.');
+        }
+
+        // Log::info('Sending WhatsApp message to ' . $user->phone);
+        // $this->twilioService->sendWhatsAppMessage($user->phone, "Pembayaran Anda untuk bootcamp '{$bootcampRegistered->bootcamp->name}' telah dikonfirmasi. Anda dapat mengikuti bootcamp ini.");
+
+        return redirect()->back()->with('success', 'Payment confirmed and notification sent.');
+    }
+
+
     /**
      * Display a listing of the resource.
      */
@@ -46,6 +97,8 @@ class AdminBootcampController extends Controller
             'description' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
+            'start_time' => 'required',
+            'end_time' => 'required',
             'location' => 'required',
             'price' => 'required',
             'kuota' => 'required',
@@ -79,9 +132,9 @@ class AdminBootcampController extends Controller
     public function show(string $id)
     {
         // Get bootcamp by id
-        $bootcamp   = Bootcamp::find($id);
-        $title      = "Bootcamp Detail";
-        $status     = BootcampRegistered::where('bootcamp_id', $id)->count();
+        $bootcamp = Bootcamp::find($id);
+        $title = "Bootcamp Detail";
+        $status = BootcampRegistered::where('bootcamp_id', $id)->count();
         $participants = BootcampRegistered::where('bootcamp_id', $id)->get();
 
         // If bootcamp is full
@@ -117,6 +170,8 @@ class AdminBootcampController extends Controller
             'description' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
+            'start_time' => 'required',
+            'end_time' => 'required',
             'location' => 'required',
             'price' => 'required',
             'kuota' => 'required',
@@ -165,35 +220,12 @@ class AdminBootcampController extends Controller
         // Delete Image
         if (file_exists(storage_path('app/public/img/bootcamps/poster/' . $bootcamp->image))) {
             unlink(storage_path('app/public/img/bootcamps/poster/' . $bootcamp->image));
-        } else {
-            $bootcamp->delete();
         }
 
         // Delete Bootcamp
         $bootcamp->delete();
 
         return redirect()->route('admin.bootcamps.index')->with('success', 'Bootcamp deleted successfully');
-    }
-
-    public function confirmPayment(string $id, Request $request)
-    {
-        // Get bootcamp registered by id
-        $bootcamp = BootcampRegistered::find($id);
-
-        // Validate the request
-        $request->validate([
-            'payment_status' => 'required',
-        ]);
-
-        // User ID
-        $user_id = $bootcamp->user_id;
-
-        // Update Bootcamp Registered
-        BootcampRegistered::where('id', $id)->update([
-            'payment_status' => $request->payment_status,
-        ]);
-
-        return redirect()->back()->with('success', 'Payment confirmed successfully');
     }
 
     public function deleteParticipant(string $id, string $user_id)

@@ -8,5 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Bootcamp extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
+
+    /**
+     * Get the registrations for the bootcamp.
+     */
+    public function registrations()
+    {
+        return $this->hasMany(BootcampRegistered::class);
+    }
 }

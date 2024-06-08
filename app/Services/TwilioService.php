@@ -10,22 +10,23 @@ class TwilioService
 
     public function __construct()
     {
-        $this->client = new Client(env('TWILIO_SID'), env('TWILIO_AUTH_TOKEN'));
+        $this->client = new Client(env('TWILIO_ACCOUNT_SID'), env('TWILIO_AUTH_TOKEN'));
     }
 
     public function sendWhatsAppMessage($to, $message)
     {
+        Log::info('Mengirim pesan WhatsApp ke ' . $to);
         try {
-            $this->client->messages->create(
+            $response = $this->client->messages->create(
                 'whatsapp:' . $to,
                 [
                     'from' => 'whatsapp:' . env('TWILIO_WHATSAPP_FROM'),
                     'body' => $message
                 ]
             );
-            Log::info('WhatsApp message sent to ' . $to);
+            Log::info('Pesan WhatsApp berhasil dikirim ke ' . $to . ': ' . json_encode($response));
         } catch (\Exception $e) {
-            Log::error('Failed to send WhatsApp message: ' . $e->getMessage());
+            Log::error('Gagal mengirim pesan WhatsApp: ' . $e->getMessage());
         }
     }
 }

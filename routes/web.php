@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\User\UserCartController;
 use App\Http\Controllers\User\UserRoomController;
 use App\Http\Controllers\Auth\SocialiteController;
@@ -81,7 +80,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     // Bootcamps Confirm Payment
     Route::put('/bootcamps/{id}/confirm-payment', [AdminBootcampController::class, 'confirmPayment'])->name('bootcamps.confirm-payment');
-
+    
     // Delete participants
     Route::delete('/bootcamps/{id}/delete-participant/{user_id}', [AdminBootcampController::class, 'deleteParticipant'])->name('bootcamps.delete-participant');
 
@@ -221,7 +220,5 @@ Route::prefix('quizzes')->group(function () {
 // Google Auth
 Route::get('/auth/{provider}', [SocialiteController::class, 'redirectToProvider']);
 Route::get('/auth/{provider}/callback', [SocialiteController::class, 'handleProvideCallback']);
-
-Route::post('admin/courses/{courseId}/confirm/{userId}', [AdminCourseController::class, 'confirmRegistration'])->name('admin.courses.confirmRegistration');
 
 require __DIR__ . '/auth.php';

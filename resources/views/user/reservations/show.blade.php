@@ -34,9 +34,7 @@
               <div class="card border-0" style="max-width: 540px;">
                 <div class="row g-0">
                   <div class="col-md-3">
-                    <img
-                      src="https://i0.wp.com/www.cssscript.com/wp-content/uploads/2020/12/Customizable-SVG-Avatar-Generator-In-JavaScript-Avataaars.js.png?fit=438%2C408&ssl=1"
-                      class="img-fluid rounded-start" alt="...">
+                    <img src="https://i0.wp.com/www.cssscript.com/wp-content/uploads/2020/12/Customizable-SVG-Avatar-Generator-In-JavaScript-Avataaars.js.png?fit=438%2C408&ssl=1" class="img-fluid rounded-start" alt="...">
                   </div>
                   <div class="col-md-9">
                     <div class="card-body">
@@ -72,10 +70,10 @@
                 <div class="card rounded-4 border-0 shadow-sm" style="background-color: #f0f9ff;">
                   <div class="card-body">
                     <div class="gopay d-flex align-items-center py-2">
-                      <img
-                        src="https://static.vecteezy.com/system/resources/previews/028/766/371/original/gopay-payment-icon-symbol-free-png.png"
-                        alt="Gopay" class="img-fluid pe-3" style="width: 80px;"></i> <span class="ms-2">Gopay</span>
-                      <p class="btn btn-success ms-auto mb-0">Aktifkan</p>
+                      <img src="{{ asset('frontend/img/icons/coins.png') }}" alt="Gopay" class="img-fluid pe-3" style="width: 50px;"></i> <span class="ms-2">Coins</span>
+                      <p class="btn fw-bold ms-auto mb-0">
+                        {{ Auth::user()->coin }} <i class="bi bi-coin"></i>
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -86,9 +84,10 @@
                 <div class="card rounded-4 border-0 shadow-sm" style="background-color: #f0f9ff;">
                   <div class="card-body">
                     <div class="member-card d-flex align-items-center py-2">
-                      <i class="bi bi-credit-card-2-front-fill" style="font-size: 40px;"></i> <span class="ms-2">Member
-                        Card</span>
-                      <p class="btn btn-success ms-auto mb-0">Aktifkan</p>
+                      <img src="{{ asset('frontend/img/icons/member.png') }}" alt="Gopay" class="img-fluid pe-3" style="width: 50px;"></i> <span class="ms-2">Member Card</span>
+                      <p class="btn text-success ms-auto mb-0">
+                        Activation
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -99,7 +98,7 @@
                 <div class="card rounded-4 border-0 shadow-sm" style="background-color: #f0f9ff;">
                   <div class="card-body">
                     <div class="saldo d-flex align-items-center py-2">
-                      <i class="bi bi-currency-dollar" style="font-size: 40px;"></i> <span class="ms-2">Saldo</span>
+                      <img src="{{ asset('frontend/img/icons/wallet.png') }}" alt="Gopay" class="img-fluid pe-3" style="width: 50px;"></i> <span class="ms-2">Saldo</span>
 
                       <!-- Sum Saldo -->
                       <span class="ms-auto fw-bold">Rp. 50.000</span>
@@ -171,8 +170,7 @@
               {{-- Payment Upload --}}
               @if ($reservation->status == 'pending' && $reservation->payment_method == 'transfer')
               {{-- Upload Form --}}
-              <form action="{{ route('reservations.update', $reservation->id) }}" method="POST"
-                enctype="multipart/form-data">
+              <form action="{{ route('reservations.update', $reservation->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
                   <label for="payment_proof" class="form-label fw-bold">Upload Payment Proof</label>

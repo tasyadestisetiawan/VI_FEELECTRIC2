@@ -1,6 +1,16 @@
 @extends('layouts.dashboard')
 
 @section('content')
+<style>
+    .chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20%; /* Adjust the height as needed */
+  width: 65%;  /* Adjust the width as needed */
+  margin: auto; /* Center the chart-container */
+    }
+</style>
 <div class="container-fluid">
 
     {{-- Detail Card Count --}}
@@ -53,7 +63,9 @@
             <div class="card">
                 <div class="card-header">Grafik Penjualan</div>
                 <div class="card-body">
-                    <canvas id="myChart" width="400" height="200"></canvas>
+                    <div class="chart-container" style="position: relative; margin: auto;">
+                        <canvas id="myChart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
@@ -72,7 +84,7 @@
     console.log('Product Quantities:', {!! json_encode($productQuantities) !!});
 
     var myChart = new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
             labels: {!! json_encode($productNames) !!},
             datasets: [{
