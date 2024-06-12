@@ -13,8 +13,8 @@ class UserController extends Controller
 {
     public function dashboard()
     {
-        // Get Cart Count for the user
-        $cartCount = Cart::where('user_id', auth()->user()->id)->count();
+        $user_id    = auth()->user()->id;
+        $cartCount  = Cart::where('user_id', $user_id)->count();
         return view('user.dashboard', compact('cartCount'));
     }
 

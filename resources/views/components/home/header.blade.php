@@ -41,7 +41,12 @@
                 <i class="bi bi-bell"></i>
             </a> --}}
             <a href="{{ route('cart.index') }}" class="btn-book-a-table bi bi-cart3">&nbsp;&nbsp;
-                <span class="badge bg-light text-dark">{{ App\Models\Cart::count() }}</span>
+                <span class="badge bg-light text-dark">
+                    @php
+                    $user_id = Auth::user()->id;
+                    @endphp
+                    {{ App\Models\Cart::where('user_id', $user_id)->count(); }}
+                </span>
             </a>
             <a href="{{ url('/user/profile') }}" class="btn-book-a-table">My Profile</a>
             @endif

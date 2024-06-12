@@ -57,7 +57,7 @@ class AdminBootcampController extends Controller
         // Log::info('Sending WhatsApp message to ' . $user->phone);
         // $this->twilioService->sendWhatsAppMessage($user->phone, "Pembayaran Anda untuk bootcamp '{$bootcampRegistered->bootcamp->name}' telah dikonfirmasi. Anda dapat mengikuti bootcamp ini.");
 
-        return redirect()->back()->with('success', 'Payment confirmed and notification sent.');
+        return redirect()->back()->with('success', 'Payment confirmed successfully');
     }
 
 

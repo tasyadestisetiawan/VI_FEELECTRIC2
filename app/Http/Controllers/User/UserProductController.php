@@ -21,4 +21,15 @@ class UserProductController extends Controller
 
         return view('user.products.index', compact('title', 'coffees', 'coffeeBeans', 'coffeeMachines'));
     }
+
+    public function search(Request $request)
+    {
+        $title = 'Search Results';
+
+        $search = $request->search;
+
+        $coffees = Product::where('name', 'like', '%' . $search . '%')->get();
+
+        return view('user.products.results', compact('title', 'coffees'));
+    }
 }

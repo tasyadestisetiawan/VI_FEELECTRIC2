@@ -48,7 +48,7 @@
                       @csrf
                       @method('DELETE')
                       <button type="submit" class="btn btn-delete-theme btn-sm"
-                        onclick="return confirm('Are you sure you want to delete this room?')">Delete</button>
+                        onclick="return confirm('Are you sure you want to delete this administrator?')">Delete</button>
                     </form>
                   </td>
                 </tr>

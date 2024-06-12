@@ -36,11 +36,11 @@
                   </td>
                   <td>
                     {{ \Carbon\Carbon::parse($reservation->check_in)->format('d M Y') }} at {{
-                    \Carbon\Carbon::parse($reservation->check_in)->format('h:i A') }}
+                    \Carbon\Carbon::parse($reservation->check_in_time)->format('h:i A') }}
                   </td>
                   <td>
                     {{ \Carbon\Carbon::parse($reservation->check_out)->format('d M Y') }} at {{
-                    \Carbon\Carbon::parse($reservation->check_out)->format('h:i A') }}
+                    \Carbon\Carbon::parse($reservation->check_out_time)->format('h:i A') }}
                   </td>
                   <td>
                     @if ($reservation->status == 'pending')

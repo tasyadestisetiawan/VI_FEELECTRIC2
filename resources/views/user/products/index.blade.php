@@ -26,14 +26,18 @@
 @section('content')
 <div class="container my-5 py-5">
   <div class="d-flex justify-content-between">
-    <div class="input-group w-auto rounded-pill">
-      <span class="input-group-text" style="background-color: white">
-        <a href="#">
-          <i class="bi bi-search" style="color: #3b2621"></i>
-        </a>
-      </span>
-      <input type="text" class="form-control" placeholder="Mau minum apa hari ini..." aria-label="Search" />
-    </div>
+    <form action="{{ route('products.search') }}" method="POST">
+      @csrf
+      <div class="input-group w-auto rounded-pill">
+        <span class="input-group-text" style="background-color: white">
+          <a href="#">
+            <i class="bi bi-search" style="color: #3b2621"></i>
+          </a>
+        </span>
+        <input type="text" name="search" class="form-control" placeholder="Mau minum apa hari ini..."
+          aria-label="Search" />
+      </div>
+    </form>
     <ul class="nav nav-pills gap-3">
       <li class="nav-item">
         <a class="nav-link rounded-pill border-2" href="#all">Semua</a>
@@ -42,10 +46,14 @@
         <a class="nav-link rounded-pill border-2" href="#drinks">Coffee Drink's</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link rounded-pill border-2" href="#beans">Coffee Beans</a>
+        <a class="nav-link rounded-pill border-2" href="#beans">
+          Coffee Beans
+        </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link rounded-pill border-2" href="#machines">Coffee Machines</a>
+        <a class="nav-link rounded-pill border-2" href="#machines">
+          Coffee Machines
+        </a>
       </li>
     </ul>
   </div>

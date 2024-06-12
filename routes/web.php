@@ -36,6 +36,7 @@ use App\Http\Controllers\Admin\AdminOrderMachineController;
 use App\Http\Controllers\Admin\AdminCoffeeMachineController;
 use App\Http\Controllers\Admin\AdminProductCategoryController;
 use App\Http\Controllers\Admin\AdminQuizzesQuestionsController;
+use App\Http\Controllers\OrderController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -69,6 +70,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // All Orders History Routes Resource
     Route::resource('orders-history', AdminOrderHistoryController::class);
 
+    // Print History
+    Route::get('admin/orders/print', [OrderController::class, 'print'])->name('orders.print');
+
     // Orders Coffee Bean Routes Resource
     Route::resource('orders-coffee-beans', AdminOrderBeanController::class);
 
@@ -80,7 +84,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     // Bootcamps Confirm Payment
     Route::put('/bootcamps/{id}/confirm-payment', [AdminBootcampController::class, 'confirmPayment'])->name('bootcamps.confirm-payment');
-    
+
     // Delete participants
     Route::delete('/bootcamps/{id}/delete-participant/{user_id}', [AdminBootcampController::class, 'deleteParticipant'])->name('bootcamps.delete-participant');
 
@@ -203,6 +207,9 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 Route::prefix('products')->group(function () {
     Route::get('/', [UserProductController::class, 'index'])->name('products.index');
     Route::get('/{id}', [UserProductController::class, 'show'])->name('products.show');
+
+    // Search Products
+    Route::post('/search', [UserProductController::class, 'search'])->name('products.search');
 });
 
 // All Rooms Route with Prefix

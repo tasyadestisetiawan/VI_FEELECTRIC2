@@ -41,7 +41,7 @@
                 <div class="social-links d-flex">
                     <a href="" class="twitter"><i class="bi bi-twitter"></i></a>
                     <a href="" class="facebook"><i class="bi bi-facebook"></i></a>
-                    <a href="" class="instagram"><i class="bi bi-instagram"></i></a>
+                    <a href="https://www.instagram.com/feelectric.id?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="instagram"><i class="bi bi-instagram"></i></a>
                     <a href="" class="tiktok"><i class="bi bi-tiktok"></i></a>
                 </div>
             </div>

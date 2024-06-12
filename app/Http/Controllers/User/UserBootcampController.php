@@ -56,15 +56,28 @@ class UserBootcampController extends Controller
             return redirect()->back()->with('error', 'You already registered to this bootcamp.');
         }
 
-        // Register user to bootcamp
-        BootcampRegistered::create([
-            'bootcamp_id'    => $request->bootcamp_id,
-            'id_register'    => 'BCR' . time() . rand(0, 999),
-            'name'           => $request->name,
-            'phone'          => $request->phone,
-            'payment_status' => 'unpaid',
-            'user_id'        => auth()->user()->id,
-        ]);
+        // Check if bootcamp is free or not
+        if (Bootcamp::find($request->bootcamp_id)->price == 0) {
+            // Register user to bootcamp
+            BootcampRegistered::create([
+                'bootcamp_id'    => $request->bootcamp_id,
+                'id_register'    => 'BCR' . time() . rand(0, 999),
+                'name'           => $request->name,
+                'phone'          => $request->phone,
+                'payment_status' => 'paid',
+                'user_id'        => auth()->user()->id,
+            ]);
+        } else {
+            // Register user to bootcamp
+            BootcampRegistered::create([
+                'bootcamp_id'    => $request->bootcamp_id,
+                'id_register'    => 'BCR' . time() . rand(0, 999),
+                'name'           => $request->name,
+                'phone'          => $request->phone,
+                'payment_status' => 'unpaid',
+                'user_id'        => auth()->user()->id,
+            ]);
+        }
 
         // Redirect
         return redirect()->route('bootcamps.show', $request->bootcamp_id)->with('success', 'You have successfully registered to this bootcamp.');
@@ -112,7 +125,7 @@ class UserBootcampController extends Controller
     public function myBootcamps()
     {
         // Get all bootcamps registered by user
-        $bootcamps = Bootcamp::all();
+        $bootcamps   = Bootcamp::all();
         $mybootcamps = BootcampRegistered::where('user_id', auth()->user()->id)->get();
 
         // Redirect

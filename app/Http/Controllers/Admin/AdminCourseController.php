@@ -58,7 +58,7 @@ class AdminCourseController extends Controller
             'image'         => $image->hashName(),
         ]);
 
-        return redirect()->route('courses.index')->with('success', 'Course created successfully.');
+        return redirect()->route('admin.courses.index')->with('success', 'Course created successfully.');
     }
 
     /**
@@ -128,7 +128,7 @@ class AdminCourseController extends Controller
             ]);
         }
 
-        return redirect()->route('courses.index')->with('success', 'Course updated successfully.');
+        return redirect()->route('admin.courses.index')->with('success', 'Course updated successfully.');
     }
 
     /**
@@ -146,6 +146,6 @@ class AdminCourseController extends Controller
         $course->delete();
 
         // Redirect to the courses index page
-        return redirect()->route('courses.index')->with('success', 'Course deleted successfully.');
+        return redirect()->route('admin.courses.index')->with('success', 'Course deleted successfully.');
     }
 }

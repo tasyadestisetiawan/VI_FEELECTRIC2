@@ -20,7 +20,7 @@ class UserCartController extends Controller
     // List of Cart Items
     public function index()
     {
-        $user       =  Auth::user();
+        $user       = Auth::user();
         $cartItems  = Cart::where('user_id', $user->id)->get();
         $coffees    = Product::all();
         $beans      = CoffeeBean::all();
