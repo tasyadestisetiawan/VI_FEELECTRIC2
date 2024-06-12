@@ -2,25 +2,30 @@
 
 @section('content')
 <div class="container-fluid">
-  <div class="header clearfix">
-    <form action="{{ route('admin.orders.print') }}" method="GET" class="form-inline float-end">
-      <div class="form-group mx-sm-3 mb-2">
+<div class="header clearfix">
+  <form action="{{ route('admin.orders.print') }}" method="GET" class="form-inline float-end">
+    <div class="row gx-3 align-items-center">
+      <div class="col-auto">
         <label for="date" class="sr-only">Date</label>
         <input type="date" class="form-control" id="date" name="date" placeholder="Select Date">
       </div>
-      <div class="form-group mx-sm-3 mb-2">
+      <div class="col-auto">
         <label for="month" class="sr-only">Month</label>
         <input type="month" class="form-control" id="month" name="month" placeholder="Select Month">
       </div>
-      <div class="form-group mx-sm-3 mb-2">
+      <div class="col-auto">
         <label for="year" class="sr-only">Year</label>
         <input type="number" class="form-control" id="year" name="year" placeholder="Select Year">
       </div>
-      <button type="submit" class="btn btn-primary-theme mb-2">
-        <i class="bi bi-printer"></i> Print
-      </button>
-    </form>
-  </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary-theme mb-2">
+          <i class="bi bi-printer"></i> Print
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
   <div class="card shadow mb-4 mt-3">
     <div class="card-body">
 
