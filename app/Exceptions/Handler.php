@@ -1,10 +1,9 @@
 <?php
-
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
-// use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -29,10 +28,21 @@ class Handler extends ExceptionHandler
         });
     }
 
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof HttpException) {
+            $statusCode = $exception->getStatusCode();
+            if ($statusCode == 404) {
+                return response()->view('user.errors.404', [], 404);
+            }
+        }
+        return parent::render($request, $exception);
+    }
+}
+
     //     public function report(Throwable $exception)
     // {
     //     Log::error($exception);
     //     parent::report($exception);
     // }
 
-}
