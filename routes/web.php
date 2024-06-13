@@ -115,7 +115,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
 // User Routes
 Route::middleware(['auth', 'role:user'])->group(function () {
-    Route::get('/user/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
+    Route::get('/user/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
 
     // Coffee Routes Resource
     Route::resource('user/coffees', UserCoffeeController::class);

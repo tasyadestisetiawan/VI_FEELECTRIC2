@@ -38,11 +38,12 @@ return $cartItem->type == 'drink';
         </h3>
         <hr>
 
-        @if (session('success'))
+        @if (session('success-cart'))
         <div class="alert alert-success alert-dismissible rounded-4 fade show text-light" role="alert"
           style="background-color: #3b2621;">
           <i class="bi bi-check-circle"></i>
-          Your order has been placed successfully. Please go back to the product page to order another item or visit the order list page.
+          You have successfully placed an order, please return to the product page to order another item or to the
+          order list page.
           <br><br>
           <a href="{{ route('products.index') }}" class="btn btn-sm rounded-3 p-2 mt-2 text-light"
             style="margin-right: 5px; background-color: #3b2621; border: solid 1px #fff7e8;">Products</a>
@@ -195,7 +196,7 @@ return $cartItem->type == 'drink';
                         <h5 class="mb-1">
                           @foreach ( $beans as $bean )
                           @if ( $cartItem->product_id == $bean->id )
-                          {{ $bean->name }}
+                          {{ $bean->name }} Rp {{ number_format($cartItem->price, 0, ',', '.') }}
                           @endif
                           @endforeach
                         </h5>
@@ -205,8 +206,15 @@ return $cartItem->type == 'drink';
                             {{ $cartItem->quantity }} x
                           </span>
                           {{-- Temperature --}}
-                          <span class="badge bg-secondary">
+                          <span class="badge bg-primary">
                             Bean
+                          </span>
+                          <span class="badge bg-danger">
+                            @foreach ( $beans as $bean )
+                            @if ( $cartItem->product_id == $bean->id )
+                            {{ $bean->weight }}
+                            @endif
+                            @endforeach
                           </span>
                         </div>
                         <p class="mb-0 mt-3">
@@ -367,6 +375,7 @@ return $cartItem->type == 'drink';
               <label for="destinationAddress" class="form-label">
                 Full Address
               </label>
+              @if ($addresses->count() !== 0)
               <select class="form-select" id="destinationAddress" name="destinationAddress" required>
                 <option selected>Choose Address</option>
 
@@ -380,12 +389,16 @@ return $cartItem->type == 'drink';
                 @endif
 
               </select>
+              @else
+              <input type="text" class="form-control" id="destinationAddress" name="destinationAddress" required
+                placeholder="Please add your address first in Profile Page" disabled>
+              @endif
             </div>
 
             {{-- Weight --}}
             <div class="mb-3">
               <label for="weight" class="form-label">
-                Weight (Kg)
+                Weight (gram)
               </label>
               <input type="number" class="form-control" id="weight" name="weight" required
                 value="{{ $cartItem->quantity }}">
@@ -552,11 +565,25 @@ return $cartItem->type == 'drink';
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="productModalLabel">
+            @if ($cartItem->type == 'coffee')
             @foreach($coffees as $coffee)
             @if($cartItem->product_id == $coffee->id)
             {{ $coffee->name }}
             @endif
             @endforeach
+            @elseif ($cartItem->type == 'bean')
+            @foreach($beans as $bean)
+            @if($cartItem->product_id == $bean->id)
+            {{ $bean->name }}
+            @endif
+            @endforeach
+            @elseif ($cartItem->type == 'machine')
+            @foreach($machines as $machine)
+            @if($cartItem->product_id == $machine->id)
+            {{ $machine->name }}
+            @endif
+            @endforeach
+            @endif
           </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -567,7 +594,7 @@ return $cartItem->type == 'drink';
             <div class="row">
               <div class="col-5">
                 <div class="mb-3">
-                  <!-- Product Image 250px -->
+                  @if ($cartItem->type == 'coffee')
                   @foreach($coffees as $coffee)
                   @if($cartItem->product_id == $coffee->id)
                   @if ($cartItem->temperature == 'hot')
@@ -579,6 +606,21 @@ return $cartItem->type == 'drink';
                   @endif
                   @endif
                   @endforeach
+                  @elseif ($cartItem->type == 'bean')
+                  @foreach($beans as $bean)
+                  @if($cartItem->product_id == $bean->id)
+                  <img src="{{ asset('storage/img/products/beans/' . $bean->image) }}" class="img-fluid rounded"
+                    style="width: 150px; height: 150px;" alt="Espresso Double">
+                  @endif
+                  @endforeach
+                  @elseif ($cartItem->type == 'machine')
+                  @foreach($machines as $machine)
+                  @if($cartItem->product_id == $machine->id)
+                  <img src="{{ asset('storage/img/products/machines/' . $machine->image) }}" class="img-fluid rounded"
+                    style="width: 150px; height: 150px;" alt="Espresso Double">
+                  @endif
+                  @endforeach
+                  @endif
                 </div>
               </div>
               <div class="col-7">
@@ -589,9 +631,10 @@ return $cartItem->type == 'drink';
                   <input type="number" class="form-control" id="quantity" name="quantity"
                     value="{{ $cartItem->quantity }}">
                 </div>
-
               </div>
             </div>
+
+            @if ($cartItem->type == 'coffee')
             <div class="mb-3">
               <label for="temperature" class="form-label">
                 Variant
@@ -612,6 +655,8 @@ return $cartItem->type == 'drink';
                 @endforeach
               </select>
             </div>
+            @endif
+
             <div class="mb-3">
               <label for="notes" class="form-label">
                 Notes

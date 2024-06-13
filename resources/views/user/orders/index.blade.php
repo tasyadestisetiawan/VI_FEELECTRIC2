@@ -21,30 +21,25 @@
             <div class="card-header bg-white border-0 mt-2">
               <ul class="nav nav-pills gap-3">
                 <li class="nav-item">
-                  <a class="nav-link active rounded-pill" style="background-color: #fff7e8;  color: #3b2621;"
-                    href="{{route('user.profile')}}">
+                  <a class="nav-link active rounded-pill" style="background-color: #fff7e8;  color: #3b2621;" href="{{route('user.profile')}}">
                     Profile
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link rounded-pill border-2" style="background-color: #3b2621; color: #fff7e8"
-                    href="{{route('orders.index')}}">
+                  <a class="nav-link rounded-pill border-2" style="background-color: #3b2621; color: #fff7e8" href="{{route('orders.index')}}">
                     Orders
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link rounded-pill border-2" style="background-color: #fff7e8; color: #3b2621"
-                    href="{{ route('user.reservations.my') }}">
+                  <a class="nav-link rounded-pill border-2" style="background-color: #fff7e8; color: #3b2621" href="{{ route('user.reservations.my') }}">
                     Reservations
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link rounded-pill border-2" style="background-color: #fff7e8; color: #3b2621"
-                    href="{{route('user.address')}}">Address</a>
+                  <a class="nav-link rounded-pill border-2" style="background-color: #fff7e8; color: #3b2621" href="{{route('user.address')}}">Address</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link rounded-pill border-2" style="background-color: #fff7e8; color: #3b2621"
-                    href="{{route('vouchers.index')}}">Vouchers</a>
+                  <a class="nav-link rounded-pill border-2" style="background-color: #fff7e8; color: #3b2621" href="{{route('vouchers.index')}}">Vouchers</a>
                 </li>
               </ul>
             </div>
@@ -64,9 +59,8 @@
                 <tbody>
                   @forelse ($orders as $order)
                   <tr>
-                    <td>
-                      {{-- 5 Charachter with xxx--}}
-                      {{ substr($order->order_id, 0, 5) . 'xxxx' }}
+                    <td class="text-uppercase" style="color: #3b2621; font-family: 'Monospace';">
+                      {{ $order->order_id }}
                     </td>
                     <td>
                       @if ($order->type == 'bean')
@@ -98,40 +92,31 @@
                       @endif
                     </td>
                     <td>
-                      {{-- Status --}}
                       @if ($order->type == 'bean' || $order->type == 'machine')
-                      <a class="btn btn-sm" style="background-color: #e7c52f; color: #544242;"
-                        href="{{ route('user.orders.status', $order->id) }}" tooltip="tooltip" title="Tracking Order"
-                        data-bs-toggle="tooltip" data-bs-placement="top">
+                      <a class="btn btn-sm" style="background-color: #2f41e7; color: #ffffff;" href="{{ route('user.orders.status', $order->id) }}" tooltip="tooltip" title="Tracking Order" data-bs-toggle="tooltip" data-bs-placement="top">
                         <i class="bi bi-truck"></i>
                       </a>
-                      <a class="btn btn-sm" style="background-color: #3b2621; color: #fff;"
-                        href="{{ route('orders.show', $order->id) }}" tooltip="tooltip" title="Detail"
-                        data-bs-toggle="tooltip" data-bs-placement="top">
+                      <a class="btn btn-sm" style="background-color: #3b2621; color: #fff;" href="{{ route('orders.show', $order->id) }}" tooltip="tooltip" title="Detail" data-bs-toggle="tooltip" data-bs-placement="top">
                         <i class="bi bi-info-circle"></i>
                       </a>
                       @else
-                      {{-- Detail --}}
-                      <a class="btn btn-sm" style="background-color: #3b2621; color: #fff;"
-                        href="{{ route('orders.show', $order->id) }}" tooltip="tooltip" title="Detail"
-                        data-bs-toggle="tooltip" data-bs-placement="top">
+                      <a class="btn btn-sm" style="background-color: #3b2621; color: #fff;" href="{{ route('orders.show', $order->id) }}" tooltip="tooltip" title="Detail" data-bs-toggle="tooltip" data-bs-placement="top">
                         <i class="bi bi-info-circle"></i> Detail
                       </a>
                       @endif
-
-
                     </td>
                   </tr>
                   @empty
                   <tr>
                     <td colspan="5" class="text-center">
-                      <img src="{{ asset('frontend/img/notfound.png') }}" alt="Empty" class="img-fluid"
-                        style="width: 100px;">
+                      <img src="{{ asset('frontend/img/notfound.png') }}" alt="Empty" class="img-fluid" style="width: 100px;">
+                      <p class="text-center">No Orders Found</p>
                     </td>
                   </tr>
                   @endforelse
                 </tbody>
               </table>
+
             </div>
           </div>
         </div>
