@@ -30,8 +30,8 @@ return $cartItem->type == 'drink';
 <div class="container my-5 py-5">
   <div class="row mt-4">
     <div class="row">
-      <!-- Cart Items -->
-      <div class="col-md-8 mb-4">
+<!-- Cart Items -->
+<div class="col-md-8 mb-4">
     <h3>
         <i class="bi bi-cart3"></i>
         Cart Orders
@@ -130,12 +130,6 @@ return $cartItem->type == 'drink';
                                         </span>
                                         @endif
                                     </div>
-                                    <p class="mb-0 mt-3">
-                                    <blockquote
-                                        style="font-size: 0.9em; font-style: italic; color: #6c757d; border-left: 2px solid #6c757d; padding-left: 10px; margin-top: 0; background-color: #26552634; padding: 6px;">
-                                        {{ $cartItem->notes }}
-                                    </blockquote>
-                                    </p>
                                 </div>
                             </div>
                             <div class="d-flex flex-column align-items-end">
@@ -216,15 +210,9 @@ return $cartItem->type == 'drink';
                                             {{ $bean->weight }}
                                             @endif
                                             @endforeach
-                                            gr
+                                            
                                         </span>
                                     </div>
-                                    <p class="mb-0 mt-3">
-                                    <blockquote
-                                        style="font-size: 0.9em; font-style: italic; color: #6c757d; border-left: 2px solid #6c757d; padding-left: 10px; margin-top: 0; background-color: #26552634; padding: 6px;">
-                                        {{ $cartItem->notes }}
-                                    </blockquote>
-                                    </p>
                                 </div>
                             </div>
                             <div class="d-flex flex-column align-items-end">
@@ -299,13 +287,7 @@ return $cartItem->type == 'drink';
                                         <span class="badge bg-secondary">
                                             Machine
                                         </span>
-                                    </div>
-                                    <p class="mb-0 mt-3">
-                                    <blockquote
-                                        style="font-size: 0.9em; font-style: italic; color: #6c757d; border-left: 2px solid #6c757d; padding-left: 10px; margin-top: 0; background-color: #26552634; padding: 6px;">
-                                        {{ $cartItem->notes }}
-                                    </blockquote>
-                                    </p>
+                                    </div>                       
                                 </div>
                             </div>
                             <div class="d-flex flex-column align-items-end">
@@ -350,7 +332,6 @@ return $cartItem->type == 'drink';
         </div>
     </div>
 </div>
-
 
       <!-- Pickup Detail -->
       <div class="col-md-4">
@@ -563,7 +544,6 @@ return $cartItem->type == 'drink';
           </div>
         </form>
       </div>
-
     </div>
   </div>
 
