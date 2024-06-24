@@ -19,6 +19,12 @@
     background-color: #3b2621 !important;
     color: white !important;
   }
+
+  .card-img-top {
+    height: auto;
+    width: 100%;
+    object-fit: cover;
+  }
 </style>
 
 @section('content')
@@ -43,12 +49,12 @@
         $bootcamp = $bootcamps->firstWhere('id', $data->bootcamp_id);
       @endphp
       @if($bootcamp)
-      <div class="col-4">
-        <div class="card rounded-3 shadow-sm" style="border: solid 2px #3b2621; max-height: 900px !important;">
+      <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+        <div class="card rounded-3 shadow-sm h-100" style="border: solid 2px #3b2621;">
           <div class="m-3">
             <img src="{{ asset('storage/img/bootcamps/poster/' . $bootcamp->image) }}" class="card-img-top" alt="...">
           </div>
-          <div class="card-body">
+          <div class="card-body d-flex flex-column">
             <h5 class="card-title">{{ $bootcamp->name }}</h5>
             <p class="card-text">{{ $bootcamp->description }}</p>
             <div class="row mb-3">
@@ -66,19 +72,19 @@
                 </span>
               </div>
             </div>
-            <div class="row mx-1">
+            <div class="mt-auto">
               @if ($data->payment_status == 'unpaid')
-              <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#updatePayment{{ $data->id }}"
+              <button type="button" class="btn w-100" data-bs-toggle="modal" data-bs-target="#updatePayment{{ $data->id }}"
                 style="background-color: #3b2621; color: white;">
                 Update Payment
               </button>
               @elseif ($data->payment_status == 'pending')
-              <span class="badge bg-warning py-2 text-dark">
+              <span class="badge bg-warning py-2 text-dark w-100">
                 Wait for Admin Confirmation
               </span>
               @else
               {{-- Course Detail Buttons Modal --}}
-              <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#bootcampDetail{{ $data->id }}"
+              <button type="button" class="btn w-100" data-bs-toggle="modal" data-bs-target="#bootcampDetail{{ $data->id }}"
                 style="background-color: #3b2621; color: white;">
                 View Detail
               </button>
@@ -89,7 +95,7 @@
       </div>
       @endif
       @empty
-      <div class="col-md-12">
+      <div class="col-12">
         <div class="card rounded-3 shadow-sm" style="border: solid 2px #3b2621;">
           <div class="card-body">
             <h5 class="card-title">
@@ -148,10 +154,10 @@
       </div>
       <div class="modal-body mx-3">
         <div class="row">
-          <div class="col-6">
+          <div class="col-lg-6 col-12 mb-3 mb-lg-0">
             <img src="{{ asset('storage/img/bootcamps/poster/' . $bootcamp->image) }}" class="img-fluid" alt="...">
           </div>
-          <div class="col-6">
+          <div class="col-lg-6 col-12">
             <table class="table">
               <tbody>
                 <tr>

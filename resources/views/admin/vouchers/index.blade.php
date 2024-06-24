@@ -14,8 +14,7 @@
             </div>
             <div class="col-6">
               {{-- Button Add --}}
-              <button type="button" class="btn btn-dark btn-sm float-end" data-bs-toggle="modal"
-                data-bs-target="#addVoucherModal">
+              <button type="button" class="btn btn-dark btn-sm float-end" data-bs-toggle="modal" data-bs-target="#addVoucherModal">
                 <i class="bi bi-plus-lg"></i>
                 Add Voucher
               </button>
@@ -50,8 +49,7 @@
                   <td>{{ $voucher->limit }}</td>
                   <td>
                     {{-- Button Edit --}}
-                    <button type="button" class="btn btn-edit-theme btn-sm" data-bs-toggle="modal"
-                      data-bs-target="#editVoucherModal{{ $voucher->id }}">
+                    <button type="button" class="btn btn-edit-theme btn-sm" data-bs-toggle="modal" data-bs-target="#editVoucherModal{{ $voucher->id }}">
                       Edit
                     </button>
                     {{-- Button Delete --}}
@@ -103,6 +101,11 @@
             <label for="discount" class="form-label">Discount</label>
             <input type="number" class="form-control" id="discount" name="discount" required>
           </div>
+          {{-- Expired --}}
+          <div class="mb-3">
+            <label for="expired" class="form-label">Expired</label>
+            <input type="date" class="form-control" id="expired" name="expired_at">
+          </div>
           <button type="submit" class="btn btn-sm rounded-3 btn-primary">Save</button>
         </form>
       </div>
@@ -110,14 +113,14 @@
   </div>
 </div>
 
+
 {{-- Modal Edit Voucher --}}
 @foreach ($vouchers as $voucher)
-<div class="modal fade" id="editVoucherModal{{ $voucher->id }}" tabindex="-1" aria-labelledby="editVoucherModalLabel"
-  aria-hidden="true">
+<div class="modal fade" id="editVoucherModal{{ $voucher->id }}" tabindex="-1" aria-labelledby="editVoucherModalLabel{{ $voucher->id }}" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editVoucherModalLabel">Edit Voucher</h5>
+        <h5 class="modal-title" id="editVoucherModalLabel{{ $voucher->id }}">Edit Voucher</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body text-start">
@@ -126,30 +129,28 @@
           @method('PUT')
           {{-- Name --}}
           <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" id="name" name="name" value="{{ $voucher->name }}" required>
+            <label for="name{{ $voucher->id }}" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name{{ $voucher->id }}" name="name" value="{{ $voucher->name }}" required>
           </div>
           {{-- Code --}}
           <div class="mb-3">
-            <label for="code" class="form-label">Code</label>
-            <input type="text" class="form-control" id="code" name="code" value="{{ $voucher->code }}" required>
+            <label for="code{{ $voucher->id }}" class="form-label">Code</label>
+            <input type="text" class="form-control" id="code{{ $voucher->id }}" name="code" value="{{ $voucher->code }}" required>
           </div>
           {{-- Limit --}}
           <div class="mb-3">
-            <label for="limit" class="form-label">Limit</label>
-            <input type="number" class="form-control" id="limit" name="limit" value="{{ $voucher->limit }}" required>
+            <label for="limit{{ $voucher->id }}" class="form-label">Limit</label>
+            <input type="number" class="form-control" id="limit{{ $voucher->id }}" name="limit" value="{{ $voucher->limit }}" required>
           </div>
           {{-- Discount --}}
           <div class="mb-3">
-            <label for="discount" class="form-label">Discount</label>
-            <input type="number" class="form-control" id="discount" name="discount" value="{{ $voucher->discount }}"
-              required>
+            <label for="discount{{ $voucher->id }}" class="form-label">Discount</label>
+            <input type="number" class="form-control" id="discount{{ $voucher->id }}" name="discount" value="{{ $voucher->discount }}" required>
           </div>
-          {{-- Rxpired --}}
+          {{-- Expired --}}
           <div class="mb-3">
-            <label for="expired" class="form-label">Expired</label>
-            <input type="date" class="form-control" id="expired" name="expired_at" value="{{ $voucher->expired }}"
-              required>
+            <label for="expired{{ $voucher->id }}" class="form-label">Expired</label>
+            <input type="date" class="form-control" id="expired{{ $voucher->id }}" name="expired_at" value="{{ $voucher->expired_at }}" required>
           </div>
           <button type="submit" class="btn btn-sm rounded-3 btn-primary">Save</button>
         </form>
@@ -158,5 +159,6 @@
   </div>
 </div>
 @endforeach
+
 
 @endsection

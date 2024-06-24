@@ -39,10 +39,9 @@
             <div class="col-lg-3 col-md-6 footer-links">
                 <h4>Follow Us</h4>
                 <div class="social-links d-flex">
-                    <a href="" class="twitter"><i class="bi bi-twitter"></i></a>
-                    <a href="" class="facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61560574042832" class="facebook"><i class="bi bi-facebook"></i></a>
                     <a href="https://www.instagram.com/feelectric.id?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="instagram"><i class="bi bi-instagram"></i></a>
-                    <a href="" class="tiktok"><i class="bi bi-tiktok"></i></a>
+                    <a href="https://www.tiktok.com/@coffeeandelectric?_t=8nLn1rxOww4&_r=1" class="tiktok"><i class="bi bi-tiktok"></i></a>
                 </div>
             </div>
 

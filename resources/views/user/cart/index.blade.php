@@ -32,316 +32,325 @@ return $cartItem->type == 'drink';
     <div class="row">
       <!-- Cart Items -->
       <div class="col-md-8 mb-4">
-        <h3>
-          <i class="bi bi-cart3"></i>
-          Cart Orders
-        </h3>
-        <hr>
+    <h3>
+        <i class="bi bi-cart3"></i>
+        Cart Orders
+    </h3>
+    <hr>
 
-        @if (session('success-cart'))
-        <div class="alert alert-success alert-dismissible rounded-4 fade show text-light" role="alert"
-          style="background-color: #3b2621;">
-          <i class="bi bi-check-circle"></i>
-          You have successfully placed an order, please return to the product page to order another item or to the
-          order list page.
-          <br><br>
-          <a href="{{ route('products.index') }}" class="btn btn-sm rounded-3 p-2 mt-2 text-light"
+    @if (session('success-cart'))
+    <div class="alert alert-success alert-dismissible rounded-4 fade show text-light" role="alert"
+        style="background-color: #3b2621;">
+        <i class="bi bi-check-circle"></i>
+        You have successfully placed an order, please return to the product page to order another item or to the
+        order list page.
+        <br><br>
+        <a href="{{ route('products.index') }}" class="btn btn-sm rounded-3 p-2 mt-2 text-light"
             style="margin-right: 5px; background-color: #3b2621; border: solid 1px #fff7e8;">Products</a>
-          <a href="{{ route('orders.index') }}" class="btn btn-sm rounded-3 p-2 mt-2 text-light"
+        <a href="{{ route('orders.index') }}" class="btn btn-sm rounded-3 p-2 mt-2 text-light"
             style="background-color: #3b2621; border: solid 1px #fff7e8;">Orders</a>
-          {{-- Button Close --}}
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        @endif
+        {{-- Button Close --}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
 
-        <div class="card p-2 rounded-4 shadow-sm w-100" style="border: solid 2px #3b2621;">
+    <div class="card p-2 rounded-4 shadow-sm w-100" style="border: solid 2px #3b2621;">
 
-          <ul class="nav nav-pills mb-3 m-2" id="pills-tab" role="tablist">
+        <ul class="nav nav-pills mb-3 m-2" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
-              <button class="nav-link active rounded-3" id="pills-home-tab" data-bs-toggle="pill"
-                data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-                aria-selected="true">Drinks</button>
+                <button class="nav-link active rounded-3" id="pills-home-tab" data-bs-toggle="pill"
+                    data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+                    aria-selected="true">Drinks</button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
-                type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Beans</button>
+                <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
+                    type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Beans</button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact"
-                type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Machines</button>
+                <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact"
+                    type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Machines</button>
             </li>
-          </ul>
+        </ul>
 
-          <div class="tab-content" id="pills-tabContent">
+        <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
-              tabindex="0">
-              {{-- CartItem with type drink --}}
-              <ul class="list-group list-group-flush">
-                @forelse($cartItems as $cartItem)
-                @if ($cartItem->type == 'drink')
-                <li class="list-group-item">
-                  <div class="d-flex justify-content-between">
-                    <div class="d-flex align-items-center">
-                      @foreach($coffees as $coffee)
-                      @if($cartItem->product_id == $coffee->id)
-                      @if ($cartItem->temperature == 'hot')
-                      <img src="{{ asset('storage/img/products/coffees/' . $coffee->imageHot) }}"
-                        class="img-fluid rounded" style="width: 90px; height: 90px; margin-right: 15px;"
-                        alt="Espresso Double">
-                      @elseif ($cartItem->temperature == 'ice')
-                      <img src="{{ asset('storage/img/products/coffees/' . $coffee->imageIce) }}"
-                        class="img-fluid rounded" style="width: 90px; height: 90px; margin-right: 15px;"
-                        alt="Espresso Double">
-                      @endif
-                      @endif
-                      @endforeach
-                      <div>
-                        <h5 class="mb-1">
-                          @foreach($coffees as $coffee)
-                          @if($cartItem->product_id == $coffee->id)
-                          {{ $coffee->name }}
-                          @endif
-                          @endforeach
-                        </h5>
-                        <div class="variants">
-                          {{-- Badge --}}
-                          <span class="badge bg-secondary">
-                            {{ $cartItem->quantity }} x
-                          </span>
+                tabindex="0">
+                {{-- CartItem with type drink --}}
+                <ul class="list-group list-group-flush">
+                    @forelse($cartItems as $cartItem)
+                    @if ($cartItem->type == 'drink')
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                @foreach($coffees as $coffee)
+                                @if($cartItem->product_id == $coffee->id)
+                                @if ($cartItem->temperature == 'hot')
+                                <img src="{{ asset('storage/img/products/coffees/' . $coffee->imageHot) }}"
+                                    class="img-fluid rounded" style="width: 90px; height: 90px; margin-right: 15px;"
+                                    alt="Espresso Double">
+                                @elseif ($cartItem->temperature == 'ice')
+                                <img src="{{ asset('storage/img/products/coffees/' . $coffee->imageIce) }}"
+                                    class="img-fluid rounded" style="width: 90px; height: 90px; margin-right: 15px;"
+                                    alt="Espresso Double">
+                                @endif
+                                @endif
+                                @endforeach
+                                <div>
+                                    <h5 class="mb-1">
+                                        @foreach($coffees as $coffee)
+                                        @if($cartItem->product_id == $coffee->id)
+                                        {{ $coffee->name }}
+                                        @endif
+                                        @endforeach
+                                    </h5>
+                                    <div class="variants">
+                                        {{-- Badge --}}
+                                        <span class="badge bg-secondary">
+                                            {{ $cartItem->quantity }} x
+                                        </span>
 
-                          {{-- Temperature --}}
-                          @if ($cartItem->type == 'coffee')
-                          @foreach($coffees as $coffee)
-                          @if($cartItem->product_id == $coffee->id)
-                          @if ($cartItem->temperature == 'hot')
-                          <span class="badge bg-danger">
-                            Hot
-                          </span>
-                          @elseif ($cartItem->temperature == 'ice')
-                          <span class="badge bg-info">
-                            Ice
-                          </span>
-                          @endif
-                          @endif
-                          @endforeach
-                          @else
-                          <span class="badge bg-secondary">
-                            Bean
-                          </span>
-                          @endif
+                                        {{-- Temperature --}}
+                                        @if ($cartItem->type == 'coffee')
+                                        @foreach($coffees as $coffee)
+                                        @if($cartItem->product_id == $coffee->id)
+                                        @if ($cartItem->temperature == 'hot')
+                                        <span class="badge bg-danger">
+                                            Hot
+                                        </span>
+                                        @elseif ($cartItem->temperature == 'ice')
+                                        <span class="badge bg-info">
+                                            Ice
+                                        </span>
+                                        @endif
+                                        @endif
+                                        @endforeach
+                                        @else
+                                        <span class="badge bg-secondary">
+                                            Bean
+                                        </span>
+                                        @endif
+                                    </div>
+                                    <p class="mb-0 mt-3">
+                                    <blockquote
+                                        style="font-size: 0.9em; font-style: italic; color: #6c757d; border-left: 2px solid #6c757d; padding-left: 10px; margin-top: 0; background-color: #26552634; padding: 6px;">
+                                        {{ $cartItem->notes }}
+                                    </blockquote>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column align-items-end">
+                                <div class="d-flex">
+                                    <button type="button" class="btn btn-sm m-2 p-2" data-bs-toggle="modal"
+                                        data-bs-target="#productModal"
+                                        style="color: #ffffff; background-color: #3b2621; border: solid 1px #3b2621; width: 40px; height: 40px;">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <form action="{{ route('cart.destroy', $cartItem->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm m-2 p-2"
+                                            onclick="return confirm('Are you sure you want to delete this item?')"
+                                            style="color: #3b2621; background-color: #fff7e8; border: solid 1px #3b2621; width: 40px; height: 40px;">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="text-dark fw-bold mt-2">
+                                    Rp{{ number_format($cartItem->total_price, 0, ',', '.') }}
+                                </div>
+                            </div>
                         </div>
-                        <p class="mb-0 mt-3">
-                        <blockquote
-                          style="font-size: 0.9em; font-style: italic; color: #6c757d; border-left: 2px solid #6c757d; padding-left: 10px; margin-top: 0; background-color: #26552634; padding: 6px;">
-                          {{ $cartItem->notes }}
-                        </blockquote>
-                        </p>
-                      </div>
-                    </div>
-                    <div>
-                      <div class="align-items-center">
-                        <button type="button" class="btn rounded btn-sm m-2" data-bs-toggle="modal"
-                          data-bs-target="#productModal"
-                          style="color: #ffffff; background-color: #3b2621; border: solid 1px #3b2621;">
-                          <i class="bi bi-pencil"></i>
-                        </button>
-                        <form action="{{ route('cart.destroy', $cartItem->id) }}" method="POST">
-                          @csrf
-                          @method('DELETE')
-                          <button type="submit" class="btn btn-sm m-2"
-                            onclick="return confirm('Are you sure you want to delete this item?')"
-                            style="color: #3b2621; background-color: #fff7e8; border: solid 1px #3b2621;">
-                            <i class="bi bi-trash"></i>
-                          </button>
-                        </form>
-                      </div>
-                      <div class="text-dark fw-bold mt-3">
-                        Rp{{ number_format($cartItem->total_price, 0, ',', '.') }}
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                @endif
-                @empty
-                <li class="list-group-item">
-                  <div class="d-flex justify-content-between">
-                    <div class="d-flex align-items-center">
-                      <div class="text-center">
-                        <h5 class="mb-1" style="color: #6c757d;">
-                          No items in the cart
-                        </h5>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                @endforelse
-              </ul>
+                    </li>
+                    @endif
+                    @empty
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <div class="text-center">
+                                    <h5 class="mb-1" style="color: #6c757d;">
+                                        No items in the cart
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    @endforelse
+                </ul>
             </div>
             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"
-              tabindex="0">
-              {{-- CartItem with type bean --}}
-              <ul class="list-group list-group-flush">
-                @forelse($cartItems as $cartItem)
-                @if ($cartItem->type == 'bean')
-                <li class="list-group item">
-                  <div class="d-flex justify-content-between">
-                    <div class="d-flex align-items-center">
-                      @foreach ( $beans as $bean )
-                      @if ( $cartItem->product_id == $bean->id )
-                      <img src="{{ asset('storage/img/products/beans/' . $bean->image) }}" class="img-fluid rounded"
-                        style="width: 90px; height: 90px; margin-right: 15px;" alt="Espresso Double">
-                      @endif
-                      @endforeach
-                      <div>
-                        <h5 class="mb-1">
-                          @foreach ( $beans as $bean )
-                          @if ( $cartItem->product_id == $bean->id )
-                          {{ $bean->name }} Rp {{ number_format($cartItem->price, 0, ',', '.') }}
-                          @endif
-                          @endforeach
-                        </h5>
-                        <div class="variants">
-                          {{-- Badge --}}
-                          <span class="badge bg-secondary">
-                            {{ $cartItem->quantity }} x
-                          </span>
-                          {{-- Temperature --}}
-                          <span class="badge bg-primary">
-                            Bean
-                          </span>
-                          <span class="badge bg-danger">
-                            @foreach ( $beans as $bean )
-                            @if ( $cartItem->product_id == $bean->id )
-                            {{ $bean->weight }}
-                            @endif
-                            @endforeach
-                          </span>
+                tabindex="0">
+                {{-- CartItem with type bean --}}
+                <ul class="list-group list-group-flush">
+                    @forelse($cartItems as $cartItem)
+                    @if ($cartItem->type == 'bean')
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                @foreach ( $beans as $bean )
+                                @if ( $cartItem->product_id == $bean->id )
+                                <img src="{{ asset('storage/img/products/beans/' . $bean->image) }}"
+                                    class="img-fluid rounded" style="width: 90px; height: 90px; margin-right: 15px;"
+                                    alt="Espresso Double">
+                                @endif
+                                @endforeach
+                                <div>
+                                    <h5 class="mb-1">
+                                        @foreach ( $beans as $bean )
+                                        @if ( $cartItem->product_id == $bean->id )
+                                        {{ $bean->name }} Rp {{ number_format($cartItem->price, 0, ',', '.') }}
+                                        @endif
+                                        @endforeach
+                                    </h5>
+                                    <div class="variants">
+                                        {{-- Badge --}}
+                                        <span class="badge bg-secondary">
+                                            {{ $cartItem->quantity }} x
+                                        </span>
+                                        {{-- Temperature --}}
+                                        <span class="badge bg-primary">
+                                            Bean
+                                        </span>
+                                        <span class="badge bg-danger">
+                                            @foreach ( $beans as $bean )
+                                            @if ( $cartItem->product_id == $bean->id )
+                                            {{ $bean->weight }}
+                                            @endif
+                                            @endforeach
+                                            gr
+                                        </span>
+                                    </div>
+                                    <p class="mb-0 mt-3">
+                                    <blockquote
+                                        style="font-size: 0.9em; font-style: italic; color: #6c757d; border-left: 2px solid #6c757d; padding-left: 10px; margin-top: 0; background-color: #26552634; padding: 6px;">
+                                        {{ $cartItem->notes }}
+                                    </blockquote>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column align-items-end">
+                                <div class="d-flex">
+                                    <button type="button" class="btn btn-sm m-2 p-2" data-bs-toggle="modal"
+                                        data-bs-target="#productModal"
+                                        style="color: #ffffff; background-color: #3b2621; border: solid 1px #3b2621; width: 40px; height: 40px;">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <form action="{{ route('cart.destroy', $cartItem->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm m-2 p-2"
+                                            onclick="return confirm('Are you sure you want to delete this item?')"
+                                            style="color: #3b2621; background-color: #fff7e8; border: solid 1px #3b2621; width: 40px; height: 40px;">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="text-dark fw-bold mt-2">
+                                    Rp{{ number_format($cartItem->total_price, 0, ',', '.') }}
+                                </div>
+                            </div>
                         </div>
-                        <p class="mb-0 mt-3">
-                        <blockquote
-                          style="font-size: 0.9em; font-style: italic; color: #6c757d; border-left: 2px solid #6c757d; padding-left: 10px; margin-top: 0; background-color: #26552634; padding: 6px;">
-                          {{ $cartItem->notes }}
-                        </blockquote>
-                        </p>
-                      </div>
-                    </div>
-                    <div>
-                      <div class="d-flex align-items-center">
-                        <button type="button" class="btn rounded btn-sm m-2" data-bs-toggle="modal"
-                          data-bs-target="#productModal"
-                          style="color: #ffffff; background-color: #3b2621; border: solid 1px #3b2621;">
-                          <i class="bi bi-pencil"></i>
-                        </button>
-                        <form action="{{ route('cart.destroy', $cartItem->id) }}" method="POST">
-                          @csrf
-                          @method('DELETE')
-                          <button type="submit" class="btn btn-sm m-2"
-                            onclick="return confirm('Are you sure you want to delete this item?')"
-                            style="color: #3b2621; background-color: #fff7e8; border: solid 1px #3b2621;">
-                            <i class="bi bi-trash"></i>
-                          </button>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                @endif
-                @empty
-                <li class="list-group item">
-                  <div class="d-flex justify-content-between">
-                    <div class="d-flex align-items-center">
-                      <div class="text-center">
-                        <h5 class="mb-1" style="color: #6c757d;">
-                          No items in the cart
-                        </h5>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                @endforelse
-              </ul>
+                    </li>
+                    @endif
+                    @empty
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <div class="text-center">
+                                    <h5 class="mb-1" style="color: #6c757d;">
+                                        No items in the cart
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    @endforelse
+                </ul>
             </div>
             <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab"
-              tabindex="0">
-              {{-- CartItem with type machine --}}
-              <ul class="list-group list-group-flush">
-                @forelse($cartItems as $cartItem)
-                @if ($cartItem->type == 'machine')
-                <li class="list-group item">
-                  <div class="d-flex justify-content-between">
-                    <div class="d-flex align-items-center">
-                      @foreach ( $machines as $machine )
-                      @if ( $cartItem->product_id == $machine->id )
-                      <img src="{{ asset('storage/img/products/machines/' . $machine->image) }}"
-                        class="img-fluid rounded" style="width: 90px; height: 90px; margin-right: 15px;"
-                        alt="Espresso Double">
-                      @endif
-                      @endforeach
-                      <div>
-                        <h5 class="mb-1">
-                          @foreach ( $machines as $machine )
-                          @if ( $cartItem->product_id == $machine->id )
-                          {{ $machine->name }}
-                          @endif
-                          @endforeach
-                        </h5>
-                        <div class="variants">
-                          {{-- Badge --}}
-                          <span class="badge bg-secondary">
-                            {{ $cartItem->quantity }} x
-                          </span>
-                          {{-- Temperature --}}
-                          <span class="badge bg-secondary">
-                            Machine
-                          </span>
+                tabindex="0">
+                {{-- CartItem with type machine --}}
+                <ul class="list-group list-group-flush">
+                    @forelse($cartItems as $cartItem)
+                    @if ($cartItem->type == 'machine')
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                @foreach ( $machines as $machine )
+                                @if ( $cartItem->product_id == $machine->id )
+                                <img src="{{ asset('storage/img/products/machines/' . $machine->image) }}"
+                                    class="img-fluid rounded" style="width: 90px; height: 90px; margin-right: 15px;"
+                                    alt="Espresso Double">
+                                @endif
+                                @endforeach
+                                <div>
+                                    <h5 class="mb-1">
+                                        @foreach ( $machines as $machine )
+                                        @if ( $cartItem->product_id == $machine->id )
+                                        {{ $machine->name }}
+                                        @endif
+                                        @endforeach
+                                    </h5>
+                                    <div class="variants">
+                                        {{-- Badge --}}
+                                        <span class="badge bg-secondary">
+                                            {{ $cartItem->quantity }} x
+                                        </span>
+                                        {{-- Temperature --}}
+                                        <span class="badge bg-secondary">
+                                            Machine
+                                        </span>
+                                    </div>
+                                    <p class="mb-0 mt-3">
+                                    <blockquote
+                                        style="font-size: 0.9em; font-style: italic; color: #6c757d; border-left: 2px solid #6c757d; padding-left: 10px; margin-top: 0; background-color: #26552634; padding: 6px;">
+                                        {{ $cartItem->notes }}
+                                    </blockquote>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column align-items-end">
+                                <div class="d-flex">
+                                    <button type="button" class="btn btn-sm m-2 p-2" data-bs-toggle="modal"
+                                        data-bs-target="#productModal"
+                                        style="color: #ffffff; background-color: #3b2621; border: solid 1px #3b2621; width: 40px; height: 40px;">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <form action="{{ route('cart.destroy', $cartItem->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm m-2 p-2"
+                                            onclick="return confirm('Are you sure you want to delete this item?')"
+                                            style="color: #3b2621; background-color: #fff7e8; border: solid 1px #3b2621; width: 40px; height: 40px;">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="text-dark fw-bold mt-2">
+                                    Rp{{ number_format($cartItem->total_price, 0, ',', '.') }}
+                                </div>
+                            </div>
                         </div>
-                        <p class="mb-0 mt-3">
-                        <blockquote
-                          style="font-size: 0.9em; font-style: italic; color: #6c757d; border-left: 2px solid #6c757d; padding-left: 10px; margin-top: 0; background-color: #26552634; padding: 6px;">
-                          {{ $cartItem->notes }}
-                        </blockquote>
-                        </p>
-                      </div>
-                    </div>
-                    <div>
-                      <div class="d-flex align-items-center">
-                        <button type="button" class="btn rounded btn-sm m-2" data-bs-toggle="modal"
-                          data-bs-target="#productModal"
-                          style="color: #ffffff; background-color: #3b2621; border: solid 1px #3b2621;">
-                          <i class="bi bi-pencil"></i>
-                        </button>
-                        <form action="{{ route('cart.destroy', $cartItem->id) }}" method="POST">
-                          @csrf
-                          @method('DELETE')
-                          <button type="submit" class="btn btn-sm m-2"
-                            onclick="return confirm('Are you sure you want to delete this item?')"
-                            style="color: #3b2621; background-color: #fff7e8; border: solid 1px #3b2621;">
-                            <i class="bi bi-trash"></i>
-                          </button>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                @endif
-                @empty
-                <li class="list-group item">
-                  <div class="d-flex justify-content-between">
-                    <div class="d-flex align-items-center">
-                      <div class="text-center">
-                        <h5 class="mb-1" style="color: #6c757d;">
-                          No items in the cart
-                        </h5>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                @endforelse
-              </ul>
+                    </li>
+                    @endif
+                    @empty
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <div class="text-center">
+                                    <h5 class="mb-1" style="color: #6c757d;">
+                                        No items in the cart
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    @endforelse
+                </ul>
             </div>
-          </div>
         </div>
-      </div>
+    </div>
+</div>
+
 
       <!-- Pickup Detail -->
       <div class="col-md-4">

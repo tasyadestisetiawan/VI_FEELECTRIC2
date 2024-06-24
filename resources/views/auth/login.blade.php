@@ -14,7 +14,7 @@
     <link rel="shortcut icon" href="asset/image/favicon.svg" type="image/x-icon">
     <script src="https://kit.fontawesome.com/18b04d2726.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="asset/css/style.css">
-    <script src="asset/js/index.js"></script>
+    <script src="{{asset ('VI_FEELECTRIC2/public/frontend/js/index.js')}}"></script>
     <style>
         .divider:after,
         .divider:before {
@@ -49,18 +49,16 @@
 
         .container-fluid {
             display: flex;
-            height: 100vh;
-            /* mengatur tinggi sama dengan viewport */
-            /* menghilangkan padding */
+            align-items: stretch; /* Mengubah align-items menjadi stretch untuk membuat tinggi kontainer sama dengan tinggi viewport */
+            justify-content: center;
+            min-height: 100vh;
+            overflow: auto;
+            background-color: #FFF7E7;
         }
 
         .image-form {
-            flex: 0 0 600px;
-            /* flex basis tanpa grow dan shrink */
-            height: 100%;
-            /* tinggi penuh */
-            margin: 0;
-            /* tanpa margin */
+            flex: 1;
+            height: 595px; /* Mengatur tinggi div agar mengisi penuh tinggi halaman */
         }
 
         .image-form img {
@@ -71,15 +69,21 @@
         }
 
         .form-login {
-            flex-grow: 1;
+            flex: 1;
             /* mengambil sisa ruang */
             display: flex;
             flex-direction: column;
             /* membuat elemen anak dalam bentuk kolom */
             justify-content: center;
             /* sentralisasi konten */
-            padding: 5px;
+            padding: 20px;
             /* padding minimal */
+        }
+
+        .form-container {
+            max-width: 400px; /* Atur lebar maksimum form */
+            margin: auto;
+            width: 100%;
         }
 
         input {
@@ -110,16 +114,41 @@
             border: none;
             padding: 0;
         }
+
+        @media (max-width: 768px) {
+            .image-form {
+                display: none;
+            }
+
+            .form-login {
+                padding: 20px;
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .form-login {
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 425px) {
+            .form-login {
+                padding: 10px 5px;
+            }
+        }
+
     </style>
 </head>
 
 <body>
-    <div class="container-fluid px-0 d-flex" style="width: 100%; background-color: #FFF7E7;">
+    <div class="container-fluid px-0">
         <div class="image-form m-0">
             <img src="{{ asset('frontend/img/login-bg.png') }}" class="object-fit cover"
-                style="width: 100%; height: 1000px;">
+            >
         </div>
-        <div class="form-login py-4" style="flex-grow: 1; margin: 0; padding:160px; width: 462px;">
+        <div class="form-login py-4">
+            <div class="form-container">
             <div class="img m-0 p-2 text-center">
                 <img src="{{ asset('frontend/img/logo.png') }}" alt="" style="width: 150px;">
             </div>
@@ -157,16 +186,16 @@
                 <a href="/auth/google" class="btn google-btn d-flex align-items-center justify-content-center"
                     style="border:2px solid #3C2A21;">
                     <img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google">
-                    <span>&nbsp; Google Account</span>
+                    <span>&nbsp; Login with Google</span>
                 </a>
             </div>
 
             <div class="text-center text-decoration-none">
                 <p class="m-0">
-                    Don't have an account yet?
+                    Belum memiliki akun?
                 </p>
                 <a href="{{ route('register') }}" class="text-decoration-none fw-semibold" style="color: #073220;">
-                    Register here
+                    Daftar disini
                 </a>
             </div>
         </div>

@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Voucher;
-use App\Models\Order;
-use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminVoucherController extends Controller
@@ -22,36 +20,41 @@ class AdminVoucherController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Store a newly created resource in storage.
      */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
+        // Validate the request
+        $request->validate([
+            'name' => 'required',
+            'limit' => 'required|numeric',
+            'code' => 'required',
+            'discount' => 'required|numeric',
+            'expired_at' => 'nullable|date' // Allow expired_at to be nullable
+        ]);
+
+        // Create and save the voucher
+        $voucher = new Voucher();
+        $voucher->name = $request->name;
+        $voucher->limit = $request->limit;
+        $voucher->code = $request->code;
+        $voucher->discount = $request->discount;
+        $voucher->expired_at = $request->expired_at;
+
+        // Save the voucher
+        $saved = $voucher->save();
+
+        // Check if voucher was saved successfully
+        if ($saved) {
+            return redirect()->route('admin.vouchers.index')->with('success', 'Voucher created successfully');
+        } else {
+            return redirect()->back()->with('error', 'Failed to create voucher');
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -61,17 +64,22 @@ class AdminVoucherController extends Controller
         // Get the voucher
         $voucher = Voucher::find($id);
 
+        // Check if voucher exists
+        if (!$voucher) {
+            return redirect()->back()->with('error', 'Voucher not found');
+        }
+
         // Validate the request
         $request->validate([
             'name' => 'required',
             'limit' => 'required|numeric',
             'code' => 'required',
             'discount' => 'required|numeric',
-            'expired_at' => 'required|date'
+            'expired_at' => 'nullable|date' // Allow expired_at to be nullable
         ]);
 
         // Update the voucher
-        $voucher->update([
+        $updated = $voucher->update([
             'name' => $request->name,
             'limit' => $request->limit,
             'code' => $request->code,
@@ -79,15 +87,11 @@ class AdminVoucherController extends Controller
             'expired_at' => $request->expired_at
         ]);
 
-        // Redirect to the index page
-        return redirect()->route('admin.vouchers.index')->with('success', 'Voucher updated successfully');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        // Check if update was successful
+        if ($updated) {
+            return redirect()->route('admin.vouchers.index')->with('success', 'Voucher updated successfully');
+        } else {
+            return redirect()->back()->with('error', 'Failed to update voucher');
+        }
     }
 }

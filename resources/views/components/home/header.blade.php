@@ -51,7 +51,7 @@
             <a href="{{ url('/user/profile') }}" class="btn-book-a-table">My Profile</a>
             @endif
             @else
-            <a class="btn-book-a-table" href="{{ route('login') }}">Login or Register</a>
+            <a class="btn-book-a-table" href="{{ route('login') }}">Masuk/Daftar</a>
             @endauth
         </div>
         @endif
