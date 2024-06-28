@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
   <div class="header clearfix">
-    <a href="{{ route('admin.rooms.create') }}" class="btn btn-primary-theme btn-sm float-end mb-3">Add Room</a>
+    <a href="{{ route('admin.rooms.create') }}" class="btn btn-primary-theme btn-sm float-end mb-3">Add Feedback</a>
   </div>
   <div class="row">
     <div class="col-md-12">
